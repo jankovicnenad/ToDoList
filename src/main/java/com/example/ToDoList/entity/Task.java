@@ -25,7 +25,7 @@ public class Task {
     private Status status;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "comment_id")
-    private int comment_id;
+    private Comment comment;
 
     public Task(){}
 
@@ -83,12 +83,12 @@ public class Task {
         this.status = status;
     }
 
-    public int getComment_id() {
-        return comment_id;
+    public Comment getComment() {
+        return comment;
     }
 
-    public void setComment_id(int comment_id) {
-        this.comment_id = comment_id;
+    public void setComment(Comment comment) {
+        this.comment = comment;
     }
 
     @Override

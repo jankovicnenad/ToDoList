@@ -11,7 +11,7 @@ public class Comment {
         private int id;
     @Column(name = "comment")
         private String comment;
-    @OneToOne(mappedBy = "Comment", cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "comment", cascade = CascadeType.ALL)
     private Task taks;
 
     public Comment(){}
