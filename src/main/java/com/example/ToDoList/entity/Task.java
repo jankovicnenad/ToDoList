@@ -3,6 +3,7 @@ package com.example.ToDoList.entity;
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name="task")
@@ -13,25 +14,24 @@ public class Task {
     private int id;
     @Column(name = "name")
     private String name;
-    @Column(name = "startDate")
-    private Timestamp starDate;
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date startDate = new Date(System.currentTimeMillis());
     @Column(name = "endDate")
     private Date endDate;
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "priority_id")
+    @JoinColumn(name="priority_id")
     private Priority priority;
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "status_id")
     private Status status;
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "comment_id")
-    private Comment comment;
+    @OneToMany(mappedBy = "task", cascade = CascadeType.ALL)
+    private List<Comment> comments;
 
     public Task(){}
 
-    public Task(String name, Timestamp starDate, Date endDate) {
+    public Task(String name, Timestamp startDate, Date endDate) {
         this.name = name;
-        this.starDate = starDate;
+        this.startDate = startDate;
         this.endDate = endDate;
     }
 
@@ -51,12 +51,12 @@ public class Task {
         this.name = name;
     }
 
-    public Timestamp getStarDate() {
-        return starDate;
+    public Date getStartDate() {
+        return startDate;
     }
 
-    public void setStarDate(Timestamp starDate) {
-        this.starDate = starDate;
+    public void setStartDate(Date startDate) {
+        this.startDate = startDate;
     }
 
     public Date getEndDate() {
@@ -83,12 +83,12 @@ public class Task {
         this.status = status;
     }
 
-    public Comment getComment() {
-        return comment;
+    public List<Comment> getComments() {
+        return comments;
     }
 
-    public void setComment(Comment comment) {
-        this.comment = comment;
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
     }
 
     @Override
@@ -96,7 +96,7 @@ public class Task {
         return "Task{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", starDate=" + starDate +
+                ", starDate=" + startDate +
                 ", endDate=" + endDate +
                 '}';
     }

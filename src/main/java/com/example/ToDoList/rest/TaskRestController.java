@@ -19,12 +19,12 @@ public class TaskRestController {
     {
         taskService = TheTask;
     }
-    @GetMapping("/home")
+    @GetMapping("/tasks")
     public List<Task> findAll(){
-        return taskService.finfAll();
+        return taskService.findAll();
     }
 
-    @PutMapping("/home")
+    @PutMapping("/task")
     public Task addTask(@RequestBody Task theTask){
         theTask.setId(0);
 
@@ -32,4 +32,14 @@ public class TaskRestController {
 
         return theTask;
     }
+    /*@DeleteMapping("/home/{taskId}")
+    public String deleteTask(@PathVariable int taskId)
+        {
+            Task tempTask = taskService.findById(taskId);
+
+            if(tempTask == null)
+            {throw new RuntimeException("Task id not found - " +taskId);}
+            taskService.deleteById(taskId);
+            return "Delete task id - " +taskId;
+        }*/
 }

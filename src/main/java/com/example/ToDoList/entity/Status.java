@@ -9,12 +9,12 @@ public class Status {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="id")
-    private int id;
+    private Integer id;
     @Column(name="status")
     private String status;
 
-    @OneToMany(mappedBy = "Status", cascade = CascadeType.ALL)
-    private List<Status>statusList;
+    @OneToMany(mappedBy = "status", cascade = CascadeType.ALL)
+    private List<Task> tasks;
 
     public Status(){}
 
@@ -22,11 +22,11 @@ public class Status {
         this.status = status;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -38,12 +38,12 @@ public class Status {
         this.status = status;
     }
 
-    public List<Status> getStatusList() {
-        return statusList;
+    public List<Task> getTasks() {
+        return tasks;
     }
 
-    public void setStatusList(List<Status> statusList) {
-        this.statusList = statusList;
+    public void setTasks(List<Task> tasks) {
+        this.tasks = tasks;
     }
 
     @Override

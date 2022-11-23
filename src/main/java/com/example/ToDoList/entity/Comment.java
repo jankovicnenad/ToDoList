@@ -11,8 +11,9 @@ public class Comment {
         private int id;
     @Column(name = "comment")
         private String comment;
-    @OneToOne(mappedBy = "comment", cascade = CascadeType.ALL)
-    private Task taks;
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name="task_id")
+    private Task task;
 
     public Comment(){}
 
@@ -36,12 +37,12 @@ public class Comment {
         this.comment = comment;
     }
 
-    public Task getTaks() {
-        return taks;
+    public Task getTask() {
+        return task;
     }
 
-    public void setTaks(Task taks) {
-        this.taks = taks;
+    public void setTask(Task task) {
+        this.task = task;
     }
 
     @Override

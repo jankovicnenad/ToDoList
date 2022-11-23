@@ -14,8 +14,8 @@ public class Priority {
     @Column(name="priority")
     private String priority;
     @OneToMany(mappedBy = "priority", cascade = CascadeType.ALL)
-    private List<Priority>prioriryList;
-    Priority(){}
+    private List<Task> priorities;
+    public Priority(){}
 
     public Priority(String priority) {
         this.priority = priority;
@@ -37,12 +37,12 @@ public class Priority {
         this.priority = priority;
     }
 
-    public List<Priority> getPrioriryList() {
-        return prioriryList;
+    public List<Task> getPriorities() {
+        return priorities;
     }
 
-    public void setPrioriryList(List<Priority> prioriryList) {
-        this.prioriryList = prioriryList;
+    public void setPriorities(List<Task> priorities) {
+        this.priorities = priorities;
     }
 
     @Override
