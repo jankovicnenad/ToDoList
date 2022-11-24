@@ -21,7 +21,7 @@ public class CommentRestController {
 
     @GetMapping("/comments")
     public List<CommentDto> getAllComments(){
-     return null;
+     return commentService.getAllComments();
     }
 
 }
