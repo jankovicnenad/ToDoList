@@ -14,10 +14,11 @@ public class Task {
     private int id;
     @Column(name = "name")
     private String name;
+    @Column(name = "start_date")
+    private Date startDate;
     @Temporal(TemporalType.TIMESTAMP)
-    private Date startDate = new Date(System.currentTimeMillis());
-    @Column(name = "endDate")
-    private Date endDate;
+    @Column(name = "end_date")
+    private Date endDate = new Date(System.currentTimeMillis());
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="priority_id")
     private Priority priority;
@@ -29,10 +30,10 @@ public class Task {
 
     public Task(){}
 
-    public Task(String name, Timestamp startDate, Date endDate) {
+    public Task(String name, Priority priority, Status status) {
         this.name = name;
-        this.startDate = startDate;
-        this.endDate = endDate;
+        this.priority = priority;
+        this.status = status;
     }
 
     public int getId() {

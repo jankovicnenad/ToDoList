@@ -1,15 +1,15 @@
 package com.example.ToDoList.service;
 
 import com.example.ToDoList.entity.Task;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface TaskService {
 
     public List<Task> findAll();
 
-    public List<Task> findById(int id);
+    public Optional<Task> findById(int id);
 
     public void save(Task task);
 

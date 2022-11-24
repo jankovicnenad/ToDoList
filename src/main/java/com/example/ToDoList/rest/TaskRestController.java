@@ -24,7 +24,7 @@ public class TaskRestController {
         return taskService.findAll();
     }
 
-    @PutMapping("/task")
+    @PostMapping("/task")
     public Task addTask(@RequestBody Task theTask){
         theTask.setId(0);
 

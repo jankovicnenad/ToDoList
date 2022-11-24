@@ -22,7 +22,7 @@ public class Status {
         this.status = status;
     }
 
-    public Integer getId() {
+    public int getId() {
         return id;
     }
 
