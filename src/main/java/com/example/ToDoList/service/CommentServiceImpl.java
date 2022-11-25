@@ -44,15 +44,15 @@ public class CommentServiceImpl implements CommentService{
         }  return cDto;
         }
 
-
     @Override
     public Optional<Comment> findById(int id) {
         return commentRepository.findById(id);
     }
 
     @Override
-    public void save(Comment comm) {
-
+    public void save(CommentDto commentDto) {
+        Comment c = comment(commentDto);
+        commentRepository.save(c);
     }
 
     @Override

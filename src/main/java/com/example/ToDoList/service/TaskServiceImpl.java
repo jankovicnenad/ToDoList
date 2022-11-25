@@ -1,6 +1,7 @@
 package com.example.ToDoList.service;
 
 import com.example.ToDoList.DAO.TaskRepository;
+import com.example.ToDoList.DTO.TaskDto;
 import com.example.ToDoList.entity.Comment;
 import com.example.ToDoList.entity.Priority;
 import com.example.ToDoList.entity.Status;
@@ -27,14 +28,14 @@ public class TaskServiceImpl implements TaskService{
     public Optional<Task> findById(int id) {
         return taskRepository.findById(id);
     }
+
     @Override
-    public void save(Task task) {
+    public void save(TaskDto taskDto) {
         Priority priority = new Priority();
         Status status = new Status();
-        task.setId(status.getId());
-        task.setId(priority.getId());
-        //task.setPriority(priority);
-        taskRepository.save(task);
+        taskDto.setId(status.getId());
+        taskDto.setId(priority.getId());
+        //taskRepository.save(taskDto);
     }
     @Override
     public void deleteById(int id) {

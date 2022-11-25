@@ -1,6 +1,6 @@
 package com.example.ToDoList.rest;
 
-import com.example.ToDoList.DAO.TaskRepository;
+import com.example.ToDoList.DTO.TaskDto;
 import com.example.ToDoList.entity.Task;
 import com.example.ToDoList.service.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +25,7 @@ public class TaskRestController {
     }
 
     @PostMapping("/task")
-    public Task addTask(@RequestBody Task theTask){
+    public TaskDto addTask(@RequestBody TaskDto theTask){
         theTask.setId(0);
 
         taskService.save(theTask);

@@ -4,8 +4,6 @@ public class CommentDto {
     private int id;
     private String comment;
 
-    private TaskDto taskDto;
-
     public int getId() {
         return id;
     }
@@ -22,11 +20,4 @@ public class CommentDto {
         this.comment = comment;
     }
 
-    public TaskDto getTaskDto() {
-        return taskDto;
-    }
-
-    public void setTaskDto(TaskDto taskDto) {
-        this.taskDto = taskDto;
-    }
 }
