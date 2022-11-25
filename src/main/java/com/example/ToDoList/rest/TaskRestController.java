@@ -26,8 +26,6 @@ public class TaskRestController {
 
     @PostMapping("/task")
     public TaskDto addTask(@RequestBody TaskDto theTask){
-        theTask.setId(0);
-
         taskService.save(theTask);
 
         return theTask;
