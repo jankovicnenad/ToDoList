@@ -13,7 +13,7 @@ public class Status {
     @Column(name="status")
     private String status;
 
-    @OneToMany(mappedBy = "status", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "status")
     private List<Task> tasks;
 
     public Status(){}

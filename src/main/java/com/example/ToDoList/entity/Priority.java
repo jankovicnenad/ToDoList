@@ -13,7 +13,7 @@ public class Priority {
     private int id;
     @Column(name="priority")
     private String priority;
-    @OneToMany(mappedBy = "priority", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "priority")
     private List<Task> priorities;
     public Priority(){}
 
