@@ -2,13 +2,11 @@ package com.example.ToDoList.service;
 
 import com.example.ToDoList.DAO.TaskRepository;
 import com.example.ToDoList.DTO.TaskDto;
-import com.example.ToDoList.entity.Comment;
 import com.example.ToDoList.entity.Priority;
 import com.example.ToDoList.entity.Status;
 import com.example.ToDoList.entity.Task;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,7 +22,7 @@ public class TaskServiceImpl implements TaskService{
         Task t = new Task();
         t.setId(taskDto.getId());
         t.setName(taskDto.getName());
-        t.setStartDate(taskDto.getStartDate());
+        t.setStart_date(taskDto.getStartDate());
         return t;
     }
 
@@ -32,7 +30,7 @@ public class TaskServiceImpl implements TaskService{
         TaskDto taskDto = new TaskDto();
         taskDto.setId(task.getId());
         taskDto.setName(task.getName());
-        taskDto.setStartDate(task.getStartDate());
+        taskDto.setStartDate(task.getStart_date());
         return taskDto;
     }
     @Override
@@ -48,10 +46,11 @@ public class TaskServiceImpl implements TaskService{
     @Override
     public void save(TaskDto taskDto) {
         Task task = new Task();
+        int id=1;
         Priority priority = new Priority();
         Status status = new Status();
-        task.setId(status.getId());
-        task.setId(priority.getId());
+        task.setStatus(status);
+        task.setPriority(priority);
         task = convertTaskToDto(taskDto);
         taskRepository.save(task);
     }

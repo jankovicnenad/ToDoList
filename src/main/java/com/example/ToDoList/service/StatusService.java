@@ -9,5 +9,7 @@ public interface StatusService {
 
     public List<StatusDto> getAllStatus();
 
+    public List<StatusDto> getById(int id);
+
     public void save(StatusDto statusDto);
 }

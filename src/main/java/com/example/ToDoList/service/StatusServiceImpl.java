@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class StatusServiceImpl implements StatusService{
@@ -42,6 +43,12 @@ public class StatusServiceImpl implements StatusService{
         }
         return sDto;
     }
+
+    @Override
+    public List<StatusDto> getById(int id) {
+        return null;
+    }
+
 
     @Override
     public void save(StatusDto statusDto) {
