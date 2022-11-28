@@ -1,6 +1,7 @@
 package com.example.ToDoList.entity;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -14,7 +15,7 @@ public class Priority {
     @Column(name="priority")
     private String priority;
     @OneToMany(mappedBy = "priority")
-    private List<Task> priorities;
+    private List<Task> tasks = new ArrayList<>();
     public Priority(){}
 
     public Priority(String priority) {
@@ -37,12 +38,12 @@ public class Priority {
         this.priority = priority;
     }
 
-    public List<Task> getPriorities() {
-        return priorities;
+    public List<Task> getTasks() {
+        return tasks;
     }
 
-    public void setPriorities(List<Task> priorities) {
-        this.priorities = priorities;
+    public void setTasks(List<Task> tasks) {
+        this.tasks = tasks;
     }
 
     @Override

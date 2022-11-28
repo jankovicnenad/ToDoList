@@ -23,7 +23,6 @@ public class StatusRestController {
     }
     @PostMapping("/status")
     public StatusDto addStatus(@RequestBody StatusDto theStatus){
-        theStatus.setId(0);
         statusService.save(theStatus);
         return theStatus;
     }

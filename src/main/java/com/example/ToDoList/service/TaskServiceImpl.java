@@ -1,5 +1,6 @@
 package com.example.ToDoList.service;
 
+import com.example.ToDoList.DAO.StatusRepository;
 import com.example.ToDoList.DAO.TaskRepository;
 import com.example.ToDoList.DTO.TaskDto;
 import com.example.ToDoList.entity.Priority;
@@ -15,10 +16,15 @@ public class TaskServiceImpl implements TaskService{
 
     private final TaskRepository taskRepository;
 
+   /* private StatusRepository statusRepository;
+
+    public TaskServiceImpl(StatusRepository theStatus)
+    {statusRepository = theStatus;}*/
+
     public TaskServiceImpl(TaskRepository task)
     {taskRepository = task;}
 
-    public Task convertTaskToDto(TaskDto taskDto){
+    public Task convertTaskDtoToTask(TaskDto taskDto){
         Task t = new Task();
         t.setId(taskDto.getId());
         t.setName(taskDto.getName());
@@ -26,7 +32,7 @@ public class TaskServiceImpl implements TaskService{
         return t;
     }
 
-    public TaskDto convertDtoToTask(Task task){
+    public TaskDto convertTaskToTaskDto(Task task){
         TaskDto taskDto = new TaskDto();
         taskDto.setId(task.getId());
         taskDto.setName(task.getName());
@@ -45,13 +51,13 @@ public class TaskServiceImpl implements TaskService{
 
     @Override
     public void save(TaskDto taskDto) {
-        Task task = new Task();
-        int id=1;
+        Task task = convertTaskDtoToTask(taskDto);
         Priority priority = new Priority();
         Status status = new Status();
         task.setStatus(status);
         task.setPriority(priority);
-        task = convertTaskToDto(taskDto);
+        priority.getTasks().add(task);
+        status.getTasks().add(task);
         taskRepository.save(task);
     }
     @Override

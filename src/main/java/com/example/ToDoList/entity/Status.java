@@ -1,6 +1,7 @@
 package com.example.ToDoList.entity;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -14,7 +15,7 @@ public class Status {
     private String status;
 
     @OneToMany(mappedBy = "status")
-    private List<Task> tasks;
+    private List<Task> tasks = new ArrayList<>();
 
     public Status(){}
 

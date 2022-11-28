@@ -22,7 +22,6 @@ public class PriorityRestController {
 
     @PostMapping("/priority")
     public PriorityDto addPriority(@RequestBody PriorityDto thePriority){
-        thePriority.setId(0);
         priorityService.savePriority(thePriority);
         return thePriority;
     }
