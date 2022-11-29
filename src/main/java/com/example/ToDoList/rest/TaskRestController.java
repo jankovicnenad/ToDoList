@@ -22,8 +22,8 @@ public class TaskRestController {
             taskService = TheTask;
         }
         @GetMapping("/tasks")
-        public List<Task> findAll(){
-            return taskService.findAll();
+        public List<TaskDto> getAllTasks(){
+            return taskService.getAllTasks();
         }
 
        /* @GetMapping("/tasks/{taskId}")

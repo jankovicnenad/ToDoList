@@ -8,7 +8,7 @@ import java.util.Optional;
 
 public interface TaskService {
 
-    public List<Task> findAll();
+    public List<TaskDto> getAllTasks();
 
     public Optional<Task> findById(int id);
 

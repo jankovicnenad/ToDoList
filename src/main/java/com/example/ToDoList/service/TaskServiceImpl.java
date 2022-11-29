@@ -11,6 +11,7 @@ import com.example.ToDoList.entity.Status;
 import com.example.ToDoList.entity.Task;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -56,8 +57,14 @@ public class TaskServiceImpl implements TaskService{
         return taskDto;
     }
     @Override
-    public List<Task> findAll() {
-        return taskRepository.findAll();
+    public List<TaskDto> getAllTasks() {
+        List<Task> tasks = taskRepository.findAll();
+        List <TaskDto> tDto = new ArrayList<>();
+        for (Task t : tasks){
+            TaskDto taskDto = convertTaskToTaskDto(t);
+            tDto.add(taskDto);
+        }
+        return tDto;
     }
 
     @Override
