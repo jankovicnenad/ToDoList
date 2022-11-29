@@ -41,6 +41,7 @@ public class TaskServiceImpl implements TaskService{
 
     public TaskDto convertTaskToTaskDto(Task task){
         TaskDto taskDto = new TaskDto();
+
         taskDto.setId(task.getId());
         taskDto.setName(task.getName());
         taskDto.setStart_date(task.getStart_date());
