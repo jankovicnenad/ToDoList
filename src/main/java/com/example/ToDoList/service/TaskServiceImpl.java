@@ -1,7 +1,10 @@
 package com.example.ToDoList.service;
 
+import com.example.ToDoList.DAO.PriorityRepository;
 import com.example.ToDoList.DAO.StatusRepository;
 import com.example.ToDoList.DAO.TaskRepository;
+import com.example.ToDoList.DTO.PriorityDto;
+import com.example.ToDoList.DTO.StatusDto;
 import com.example.ToDoList.DTO.TaskDto;
 import com.example.ToDoList.entity.Priority;
 import com.example.ToDoList.entity.Status;
@@ -16,19 +19,23 @@ public class TaskServiceImpl implements TaskService{
 
     private final TaskRepository taskRepository;
 
-   /* private StatusRepository statusRepository;
 
-    public TaskServiceImpl(StatusRepository theStatus)
-    {statusRepository = theStatus;}*/
+    private StatusRepository statusRepository;
 
-    public TaskServiceImpl(TaskRepository task)
-    {taskRepository = task;}
+    private PriorityRepository priorityRepository;
+
+    public TaskServiceImpl(TaskRepository task, StatusRepository status, PriorityRepository priority)
+    {taskRepository = task;
+     statusRepository = status;
+     priorityRepository = priority;
+    }
+
 
     public Task convertTaskDtoToTask(TaskDto taskDto){
         Task t = new Task();
         t.setId(taskDto.getId());
         t.setName(taskDto.getName());
-        t.setStart_date(taskDto.getStartDate());
+        t.setStart_date(taskDto.getStart_date());
         return t;
     }
 
@@ -36,7 +43,15 @@ public class TaskServiceImpl implements TaskService{
         TaskDto taskDto = new TaskDto();
         taskDto.setId(task.getId());
         taskDto.setName(task.getName());
-        taskDto.setStartDate(task.getStart_date());
+        taskDto.setStart_date(task.getStart_date());
+        PriorityDto priorityDto = new PriorityDto();
+        priorityDto.setId(task.getPriority().getId());
+        priorityDto.setPriority(task.getPriority().getPriority());
+        taskDto.setPriority_dto(priorityDto);
+        StatusDto statusDto = new StatusDto();
+        statusDto.setId(task.getStatus().getId());
+        statusDto.setStatus_name(task.getStatus().getStatus());
+        taskDto.setStatus_dto(statusDto);
         return taskDto;
     }
     @Override
@@ -50,15 +65,19 @@ public class TaskServiceImpl implements TaskService{
     }
 
     @Override
-    public void save(TaskDto taskDto) {
+    public TaskDto save(TaskDto taskDto) {
         Task task = convertTaskDtoToTask(taskDto);
-        Priority priority = new Priority();
-        Status status = new Status();
-        task.setStatus(status);
-        task.setPriority(priority);
-        priority.getTasks().add(task);
-        status.getTasks().add(task);
+        Optional<Status> status = statusRepository.findById(taskDto.getStatus_dto().getId());
+
+        Optional<Priority> priority = priorityRepository.findById(taskDto.getPriority_dto().getId());
+
+        task.setPriority(priority.get());
+
+        task.setStatus(status.get());
+
         taskRepository.save(task);
+        return convertTaskToTaskDto(task);
+
     }
     @Override
     public void deleteById(int id) {

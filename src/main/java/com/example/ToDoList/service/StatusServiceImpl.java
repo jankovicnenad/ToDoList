@@ -45,11 +45,9 @@ public class StatusServiceImpl implements StatusService{
     }
 
     @Override
-    public List<StatusDto> getById(int id) {
-        return null;
+    public Optional<Status> findById(int id) {
+        return statusRepository.findById(id);
     }
-
-
     @Override
     public void save(StatusDto statusDto) {
     Status s = status(statusDto);

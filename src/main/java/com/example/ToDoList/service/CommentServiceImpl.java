@@ -18,6 +18,7 @@ public class CommentServiceImpl implements CommentService{
         commentRepository = theComm;
     }
 
+
     private CommentDto commentD(Comment comment){
 
         CommentDto commentDto = new CommentDto();
@@ -57,6 +58,5 @@ public class CommentServiceImpl implements CommentService{
 
     @Override
     public void deletebyId(int id) {
-
     }
 }

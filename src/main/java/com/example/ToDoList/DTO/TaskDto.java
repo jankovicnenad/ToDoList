@@ -10,11 +10,11 @@ public class TaskDto {
     private int id;
     private String name;
 
-    private Date startDate;
+    private Date start_date;
 
-    private StatusDto statusDto;
+    private StatusDto status_dto;
 
-    private PriorityDto priorityDto;
+    private PriorityDto priority_dto;
 
     public int getId() {
         return id;
@@ -32,28 +32,28 @@ public class TaskDto {
         this.name = name;
     }
 
-    public Date getStartDate() {
-        return startDate;
+    public Date getStart_date() {
+        return start_date;
     }
 
-    public void setStartDate(Date startDate) {
-        this.startDate = startDate;
+    public void setStart_date(Date start_date) {
+        this.start_date = start_date;
     }
 
-    public StatusDto getStatusDto() {
-        return statusDto;
+    public StatusDto getStatus_dto() {
+        return status_dto;
     }
 
-    public void setStatusDto(StatusDto statusDto) {
-        this.statusDto = statusDto;
+    public void setStatus_dto(StatusDto status_dto) {
+        this.status_dto = status_dto;
     }
 
-    public PriorityDto getPriorityDto() {
-        return priorityDto;
+    public PriorityDto getPriority_dto() {
+        return priority_dto;
     }
 
-    public void setPriorityDto(PriorityDto priorityDto) {
-        this.priorityDto = priorityDto;
+    public void setPriority_dto(PriorityDto priority_dto) {
+        this.priority_dto = priority_dto;
     }
 }
 

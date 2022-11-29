@@ -1,5 +1,6 @@
 package com.example.ToDoList.entity;
 
+import com.example.ToDoList.DTO.StatusDto;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import javax.persistence.*;
@@ -103,4 +104,16 @@ public class Task {
                 ", endDate=" + endDate +
                 '}';
     }
-}
+
+  /*  public void add(StatusServiceImpl statusService) {
+
+            if (status == null) {
+                status = new ArrayList<>();
+            }
+
+            status.add(statusService);
+
+            statusService.setTask(this);
+        }*/
+    }
+

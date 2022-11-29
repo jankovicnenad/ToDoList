@@ -12,7 +12,7 @@ public interface TaskService {
 
     public Optional<Task> findById(int id);
 
-    public void save(TaskDto taskDto);
+    public TaskDto save(TaskDto taskDto);
 
     public void deleteById(int id);
 

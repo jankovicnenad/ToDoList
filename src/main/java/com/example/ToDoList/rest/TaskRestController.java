@@ -26,9 +26,9 @@ public class TaskRestController {
 
     @PostMapping("/task")
     public TaskDto addTask(@RequestBody TaskDto theTask){
-        taskService.save(theTask);
 
-        return theTask;
+
+        return taskService.save(theTask);
     }
     /*@DeleteMapping("/home/{taskId}")
     public String deleteTask(@PathVariable int taskId)
