@@ -26,4 +26,9 @@ public class StatusRestController {
         statusService.save(theStatus);
         return theStatus;
     }
+    @PutMapping("/status")
+    public StatusDto updateStatus(@RequestBody StatusDto statusDto){
+        statusService.save(statusDto);
+        return statusDto;
+    }
 }

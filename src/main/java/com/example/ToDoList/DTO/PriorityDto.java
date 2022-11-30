@@ -2,7 +2,7 @@ package com.example.ToDoList.DTO;
 
 public class PriorityDto {
 
-    private Integer id;
+    private int id;
     private String priority;
 
     public String getPriority() {
@@ -13,11 +13,11 @@ public class PriorityDto {
         this.priority = priority;
     }
 
-    public Integer getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 }

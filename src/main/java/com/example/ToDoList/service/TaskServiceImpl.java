@@ -12,6 +12,7 @@ import com.example.ToDoList.entity.Task;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 
@@ -68,8 +69,12 @@ public class TaskServiceImpl implements TaskService{
     }
 
     @Override
-    public Optional<Task> findById(int id) {
-        return taskRepository.findById(id);
+    public List<TaskDto> findById(int id) {
+       Optional<Task> task = taskRepository.findById(id);
+       List<TaskDto> taskDto = new ArrayList<>();
+           TaskDto tDto = convertTaskToTaskDto(task.get());
+           taskDto.add(tDto);
+        return taskDto;
     }
 
     @Override
@@ -89,7 +94,7 @@ public class TaskServiceImpl implements TaskService{
     }
     @Override
     public void deleteById(int id) {
-        taskRepository.deleteById(id);
+       taskRepository.deleteById(id);
     }
 
 }

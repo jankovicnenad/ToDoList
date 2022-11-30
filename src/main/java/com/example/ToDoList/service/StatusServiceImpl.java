@@ -4,6 +4,7 @@ import com.example.ToDoList.DAO.StatusRepository;
 import com.example.ToDoList.DTO.StatusDto;
 import com.example.ToDoList.entity.Status;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,9 +46,20 @@ public class StatusServiceImpl implements StatusService{
     }
 
     @Override
-    public Optional<Status> findById(int id) {
-        return statusRepository.findById(id);
+    public List<StatusDto> findById(int id) {
+        return null;
     }
+
+    /*@Override
+    public List<StatusDto> findById(@PathVariable int id) {
+        Optional<Status> statList = statusRepository.findById(id);
+        List<StatusDto> sDto = new ArrayList<>();
+        for(Status s : statList)
+        {StatusDto statusDto = statusD(s);
+        sDto.add(statusDto);
+        return sDto;
+        }
+    }*/
     @Override
     public void save(StatusDto statusDto) {
     Status s = status(statusDto);

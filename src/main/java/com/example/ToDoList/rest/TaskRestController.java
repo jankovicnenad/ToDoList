@@ -21,6 +21,7 @@ public class TaskRestController {
         {
             taskService = TheTask;
         }
+        @CrossOrigin(origins = "http://localhost:8080")
         @GetMapping("/tasks")
         public List<TaskDto> getAllTasks(){
             return taskService.getAllTasks();
@@ -35,11 +36,16 @@ public class TaskRestController {
             }
             return theTask;
         }*/
-        @PostMapping("/task")
+        @CrossOrigin(origins = "http://localhost:8080")
+        @PostMapping("/tasks")
         public TaskDto addTask(@RequestBody TaskDto theTask){
 
 
             return taskService.save(theTask);
+        }
+        @PutMapping("/tasks")
+        public TaskDto updateTask(@RequestBody TaskDto taskDto){
+            return taskService.save(taskDto);
         }
 
         @GetMapping("/tasks/{taskId}")
@@ -48,6 +54,12 @@ public class TaskRestController {
              throw new TaskNotFoundException("Task id not found - " +taskId);
          }
          return tasks.get(taskId);
+        }
+
+        @DeleteMapping("/tasks/{taskId}")
+        public TaskDto deleteTasks(@PathVariable int taskId){
+        return null;
+            //return taskService.deleteById(taskId);
         }
         /*@DeleteMapping("/home/{taskId}")
         public String deleteTask(@PathVariable int taskId)

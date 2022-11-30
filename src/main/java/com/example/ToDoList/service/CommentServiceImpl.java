@@ -1,8 +1,13 @@
 package com.example.ToDoList.service;
 
 import com.example.ToDoList.DAO.CommentRepository;
+import com.example.ToDoList.DAO.TaskRepository;
 import com.example.ToDoList.DTO.CommentDto;
+import com.example.ToDoList.DTO.PriorityDto;
+import com.example.ToDoList.DTO.StatusDto;
+import com.example.ToDoList.DTO.TaskDto;
 import com.example.ToDoList.entity.Comment;
+import com.example.ToDoList.entity.Task;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -14,24 +19,37 @@ public class CommentServiceImpl implements CommentService{
 
     private CommentRepository commentRepository;
 
-    public CommentServiceImpl(CommentRepository theComm){
+    private TaskRepository taskRepository;
+
+    public CommentServiceImpl(CommentRepository theComm, TaskRepository theTask){
         commentRepository = theComm;
+        taskRepository = theTask;
     }
 
 
-    private CommentDto commentD(Comment comment){
+    private CommentDto convertCommentToCommentDto(Comment comment){
 
         CommentDto commentDto = new CommentDto();
         commentDto.setId(comment.getId());
         commentDto.setComment(comment.getComment());
+        TaskDto taskDto = new TaskDto();
+        taskDto.setId(comment.getTask().getId());
+        taskDto.setName(comment.getTask().getName());
+        taskDto.setStart_date(comment.getTask().getStart_date());
+//        StatusDto statusDto = new StatusDto();
+//        taskDto.setStatus_dto(comment.getTask().getStatus());
 
+        PriorityDto priorityDto = new PriorityDto();
+        commentDto.setTask_dto(taskDto);
         return commentDto;
     }
-    private Comment comment(CommentDto commentD){
+
+    private Comment convertCommentDtoToComment(CommentDto commentDto) {
 
         Comment comment = new Comment();
-        comment.setId(commentD.getId());
-        comment.setComment(commentD.getComment());
+        comment.setId(commentDto.getId());
+        comment.setComment(commentDto.getComment());
+
         return comment;
     }
 
@@ -40,7 +58,7 @@ public class CommentServiceImpl implements CommentService{
         List<Comment> commentList = commentRepository.findAll();
         List <CommentDto> cDto = new ArrayList<>();
         for (Comment c : commentList){
-            CommentDto commDto = commentD(c);
+            CommentDto commDto = convertCommentToCommentDto(c);
             cDto.add(commDto);
         }  return cDto;
         }
@@ -51,9 +69,12 @@ public class CommentServiceImpl implements CommentService{
     }
 
     @Override
-    public void save(CommentDto commentDto) {
-        Comment c = comment(commentDto);
+    public CommentDto save(CommentDto commentDto) {
+        Comment c = convertCommentDtoToComment(commentDto);
+        Optional<Task> task = taskRepository.findById(commentDto.getTask_dto().getId());
+        c.setTask(task.get());
         commentRepository.save(c);
+        return convertCommentToCommentDto(c);
     }
 
     @Override

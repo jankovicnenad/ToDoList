@@ -25,4 +25,9 @@ public class PriorityRestController {
         priorityService.savePriority(thePriority);
         return thePriority;
     }
+    @PutMapping("/priority")
+    public PriorityDto updatePriority(@RequestBody PriorityDto priorityDto){
+        priorityService.savePriority(priorityDto);
+        return priorityDto;
+    }
 }

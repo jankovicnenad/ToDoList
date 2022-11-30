@@ -21,10 +21,9 @@ public class CommentRestController {
     public List<CommentDto> getAllComments(){
      return commentService.getAllComments();
     }
-    @PostMapping("/comment")
+    @PostMapping("/comments")
     public CommentDto addComment(@RequestBody CommentDto commDto)
     {
-        commDto.setId(0);
         commentService.save(commDto);
         return commDto;
     }
