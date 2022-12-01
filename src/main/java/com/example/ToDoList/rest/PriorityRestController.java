@@ -35,4 +35,8 @@ public class PriorityRestController {
         priorityService.savePriority(priorityDto);
         return priorityDto;
     }
+    @DeleteMapping("/priority/{priorityId}")
+    public void deletePriority(@PathVariable int priorityId){
+        priorityService.delete(priorityId);
+    }
 }

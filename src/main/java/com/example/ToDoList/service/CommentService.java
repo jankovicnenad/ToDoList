@@ -12,7 +12,7 @@ public interface CommentService {
 
     public CommentDto findById(int id);
 
-    CommentDto save(CommentDto commentDto);
+    public CommentDto save(CommentDto commentDto);
 
-    void deletebyId(int id);
+    public void delete(int id);
 }

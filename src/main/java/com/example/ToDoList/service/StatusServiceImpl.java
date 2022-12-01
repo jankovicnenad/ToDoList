@@ -67,4 +67,10 @@ public class StatusServiceImpl implements StatusService{
     Status s = convertStatusDtoToStatus(statusDto);
     statusRepository.save(s);
     }
+
+    @Override
+    public void delete(int id) {
+        Optional<Status> status = statusRepository.findById(id);
+        statusRepository.delete(status.get());
+    }
 }

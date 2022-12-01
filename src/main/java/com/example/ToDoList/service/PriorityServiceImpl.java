@@ -59,4 +59,10 @@ public class PriorityServiceImpl implements PriorityService{
         Priority p = convertPriorityDtoToPriority(priorityDto);
         priorityRepository.save(p);
     }
+
+    @Override
+    public void delete(int id) {
+        Optional<Priority> priority = priorityRepository.findById(id);
+        priorityRepository.delete(priority.get());
+    }
 }

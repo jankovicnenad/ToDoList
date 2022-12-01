@@ -13,4 +13,6 @@ public interface PriorityService {
 
     public void savePriority(PriorityDto priorityDto);
 
+    public void delete(int id);
+
 }

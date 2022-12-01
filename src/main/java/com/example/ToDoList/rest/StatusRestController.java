@@ -36,4 +36,8 @@ public class StatusRestController {
         statusService.save(statusDto);
         return statusDto;
     }
+    @DeleteMapping("/status/{statusId}")
+    public void deleteStatus(@PathVariable int statusId){
+        statusService.delete(statusId);
+    }
 }

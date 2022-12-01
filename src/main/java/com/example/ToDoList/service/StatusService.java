@@ -13,4 +13,6 @@ public interface StatusService {
     public StatusDto findById(int id);
 
     public void save(StatusDto statusDto);
+
+    public void delete(int id);
 }
