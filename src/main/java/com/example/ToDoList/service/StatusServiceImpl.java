@@ -4,7 +4,6 @@ import com.example.ToDoList.DAO.StatusRepository;
 import com.example.ToDoList.DTO.StatusDto;
 import com.example.ToDoList.entity.Status;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,14 +18,14 @@ public class StatusServiceImpl implements StatusService{
     }
 
 
-    private StatusDto statusD(Status status){
+    private StatusDto convertStatusToStatusDto(Status status){
 
         StatusDto statustDto = new StatusDto();
         statustDto.setId(status.getId());
         statustDto.setStatus_name(status.getStatus());
         return statustDto;
     }
-    private Status status(StatusDto statusD){
+    private Status convertStatusDtoToStatus(StatusDto statusD){
 
         Status status = new Status();
         status.setId(statusD.getId());
@@ -39,15 +38,18 @@ public class StatusServiceImpl implements StatusService{
         List<Status> statusList = statusRepository.findAll();
         List <StatusDto> sDto = new ArrayList<>();
         for (Status s : statusList){
-            StatusDto statDto = statusD(s);
+            StatusDto statDto = convertStatusToStatusDto(s);
             sDto.add(statDto);
         }
         return sDto;
     }
 
     @Override
-    public List<StatusDto> findById(int id) {
-        return null;
+    public StatusDto findById(int id) {
+        Optional<Status> status = statusRepository.findById(id);
+        StatusDto statusDto = convertStatusToStatusDto(status.get());
+
+        return statusDto;
     }
 
     /*@Override
@@ -62,7 +64,7 @@ public class StatusServiceImpl implements StatusService{
     }*/
     @Override
     public void save(StatusDto statusDto) {
-    Status s = status(statusDto);
+    Status s = convertStatusDtoToStatus(statusDto);
     statusRepository.save(s);
     }
 }

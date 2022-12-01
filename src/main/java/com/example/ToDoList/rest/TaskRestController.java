@@ -1,8 +1,10 @@
 package com.example.ToDoList.rest;
 
+import com.example.ToDoList.DAO.TaskRepository;
 import com.example.ToDoList.DTO.TaskDto;
 import com.example.ToDoList.entity.Task;
 import com.example.ToDoList.service.TaskService;
+import com.example.ToDoList.service.TaskServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,12 +16,15 @@ import java.util.Optional;
 public class TaskRestController {
 
         private List<Task> tasks;
-        private TaskService taskService;
+        private TaskServiceImpl taskService;
+
+        private TaskRepository taskRepository;
 
         @Autowired
-        public TaskRestController(TaskService TheTask)
+        public TaskRestController(TaskServiceImpl TheTask, TaskRepository theRepo)
         {
             taskService = TheTask;
+            taskRepository = theRepo;
         }
         @CrossOrigin(origins = "http://localhost:8080")
         @GetMapping("/tasks")
@@ -49,26 +54,14 @@ public class TaskRestController {
         }
 
         @GetMapping("/tasks/{taskId}")
-        public Task getTasks(@PathVariable int taskId){
-         if((taskId >= tasks.size())|| (taskId<0)){
-             throw new TaskNotFoundException("Task id not found - " +taskId);
-         }
-         return tasks.get(taskId);
+        public TaskDto getTasks(@PathVariable int taskId){
+
+            return taskService.findById(taskId);
+//
         }
 
         @DeleteMapping("/tasks/{taskId}")
-        public TaskDto deleteTasks(@PathVariable int taskId){
-        return null;
-            //return taskService.deleteById(taskId);
+        public void deleteTasks(@PathVariable int taskId){
+            taskService.deleteById(taskId);
         }
-        /*@DeleteMapping("/home/{taskId}")
-        public String deleteTask(@PathVariable int taskId)
-            {
-                Task tempTask = taskService.findById(taskId);
-
-                if(tempTask == null)
-                {throw new RuntimeException("Task id not found - " +taskId);}
-                taskService.deleteById(taskId);
-                return "Delete task id - " +taskId;
-            }*/
 }

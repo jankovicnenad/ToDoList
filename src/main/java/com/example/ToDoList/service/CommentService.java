@@ -10,7 +10,7 @@ public interface CommentService {
 
     public List<CommentDto> getAllComments();
 
-    public Optional<Comment> findById(int id);
+    public CommentDto findById(int id);
 
     CommentDto save(CommentDto commentDto);
 

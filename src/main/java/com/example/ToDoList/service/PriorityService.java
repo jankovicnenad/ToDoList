@@ -9,6 +9,8 @@ public interface PriorityService {
 
     public List<PriorityDto> getAllPriority();
 
+    public PriorityDto findById(int id);
+
     public void savePriority(PriorityDto priorityDto);
 
 }

@@ -10,7 +10,7 @@ public interface StatusService {
 
     public List<StatusDto> getAllStatus();
 
-    public List<StatusDto> findById(int id);
+    public StatusDto findById(int id);
 
     public void save(StatusDto statusDto);
 }

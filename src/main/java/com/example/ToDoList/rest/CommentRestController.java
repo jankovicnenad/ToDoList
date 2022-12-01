@@ -21,6 +21,11 @@ public class CommentRestController {
     public List<CommentDto> getAllComments(){
      return commentService.getAllComments();
     }
+
+    @GetMapping("/comments/{commentId}")
+    public CommentDto findByid(@PathVariable int commentId){
+        return commentService.findById(commentId);
+    }
     @PostMapping("/comments")
     public CommentDto addComment(@RequestBody CommentDto commDto)
     {

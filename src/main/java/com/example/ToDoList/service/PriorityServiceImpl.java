@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+
 @Service
 public class PriorityServiceImpl implements PriorityService{
 
@@ -17,13 +19,13 @@ public class PriorityServiceImpl implements PriorityService{
         priorityRepository = thePriority;
     }
 
-    private PriorityDto priorityD(Priority priority){
+    private PriorityDto convertPriorityToPriorityDto(Priority priority){
         PriorityDto priorityDto = new PriorityDto();
         priorityDto.setId(priority.getId());
         priorityDto.setPriority(priority.getPriority());
         return priorityDto;
     }
-    private Priority priorityE(PriorityDto priorityDto){
+    private Priority convertPriorityDtoToPriority(PriorityDto priorityDto){
         Priority priority = new Priority();
         priority.setId(priorityDto.getId());
         priority.setPriority(priorityDto.getPriority());
@@ -37,7 +39,7 @@ public class PriorityServiceImpl implements PriorityService{
         List<PriorityDto> pDto = new ArrayList<>();
         for(Priority p : priorities)
         {
-            PriorityDto priorityDto = priorityD(p);
+            PriorityDto priorityDto = convertPriorityToPriorityDto(p);
             pDto.add(priorityDto);
         }
 
@@ -46,8 +48,15 @@ public class PriorityServiceImpl implements PriorityService{
     }
 
     @Override
+    public PriorityDto findById(int id) {
+       Optional<Priority> priority = priorityRepository.findById(id);
+       PriorityDto priorityDto = convertPriorityToPriorityDto(priority.get());
+       return priorityDto;
+    }
+
+    @Override
     public void savePriority(PriorityDto priorityDto) {
-        Priority p = priorityE(priorityDto);
+        Priority p = convertPriorityDtoToPriority(priorityDto);
         priorityRepository.save(p);
     }
 }

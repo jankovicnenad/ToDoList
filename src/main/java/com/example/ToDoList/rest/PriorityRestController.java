@@ -20,6 +20,11 @@ public class PriorityRestController {
     @GetMapping("/priority")
     public List<PriorityDto> getAllPriority(){return priorityService.getAllPriority();}
 
+    @GetMapping("/priority/{priorityId}")
+    public PriorityDto findById(@PathVariable int priorityId){
+        return priorityService.findById(priorityId);
+    }
+
     @PostMapping("/priority")
     public PriorityDto addPriority(@RequestBody PriorityDto thePriority){
         priorityService.savePriority(thePriority);

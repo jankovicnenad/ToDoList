@@ -1,6 +1,7 @@
 package com.example.ToDoList.rest;
 
 import com.example.ToDoList.DTO.StatusDto;
+import com.example.ToDoList.entity.Status;
 import com.example.ToDoList.service.StatusServiceImpl;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,6 +21,10 @@ public class StatusRestController {
     @GetMapping("/status")
     public List<StatusDto> getAllStatus(){
         return statusService.getAllStatus();
+    }
+    @GetMapping("/status/{statusId}")
+    public StatusDto findById(@PathVariable int statusId){
+        return statusService.findById(statusId);
     }
     @PostMapping("/status")
     public StatusDto addStatus(@RequestBody StatusDto theStatus){

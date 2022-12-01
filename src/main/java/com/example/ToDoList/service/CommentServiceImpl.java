@@ -30,16 +30,28 @@ public class CommentServiceImpl implements CommentService{
     private CommentDto convertCommentToCommentDto(Comment comment){
 
         CommentDto commentDto = new CommentDto();
+
         commentDto.setId(comment.getId());
         commentDto.setComment(comment.getComment());
+
         TaskDto taskDto = new TaskDto();
+
         taskDto.setId(comment.getTask().getId());
         taskDto.setName(comment.getTask().getName());
         taskDto.setStart_date(comment.getTask().getStart_date());
-//        StatusDto statusDto = new StatusDto();
-//        taskDto.setStatus_dto(comment.getTask().getStatus());
+
+        StatusDto statusDto = new StatusDto();
+
+        statusDto.setId(comment.getTask().getStatus().getId());
+        statusDto.setStatus_name(comment.getTask().getStatus().getStatus());
+        taskDto.setStatus_dto(statusDto);
 
         PriorityDto priorityDto = new PriorityDto();
+
+        priorityDto.setId(comment.getTask().getPriority().getId());
+        priorityDto.setPriority(comment.getTask().getPriority().getPriority());
+        taskDto.setPriority_dto(priorityDto);
+
         commentDto.setTask_dto(taskDto);
         return commentDto;
     }
@@ -64,8 +76,11 @@ public class CommentServiceImpl implements CommentService{
         }
 
     @Override
-    public Optional<Comment> findById(int id) {
-        return commentRepository.findById(id);
+    public CommentDto findById(int id) {
+
+        Optional<Comment> comment = commentRepository.findById(id);
+        CommentDto commentDto = convertCommentToCommentDto(comment.get());
+        return commentDto;
     }
 
     @Override
@@ -79,5 +94,6 @@ public class CommentServiceImpl implements CommentService{
 
     @Override
     public void deletebyId(int id) {
+
     }
 }
