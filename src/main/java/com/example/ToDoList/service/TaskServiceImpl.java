@@ -92,9 +92,8 @@ public class TaskServiceImpl implements TaskService{
 
     @Override
     public void deleteById(int id) {
-//        Optional<Task> task = taskRepository.findById(id);
-//        task
-//        TaskDto taskDto = convertTaskToTaskDto(task.get());
+        Optional<Task> task = taskRepository.findById(id);
+        taskRepository.delete(task.get());
 
 
     }

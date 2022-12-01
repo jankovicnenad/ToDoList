@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
-
+@CrossOrigin(origins = "localhost:8080")
 @RestController
 @RequestMapping("/api")
 public class TaskRestController {
@@ -26,7 +26,7 @@ public class TaskRestController {
             taskService = TheTask;
             taskRepository = theRepo;
         }
-        @CrossOrigin(origins = "http://localhost:8080")
+
         @GetMapping("/tasks")
         public List<TaskDto> getAllTasks(){
             return taskService.getAllTasks();
@@ -41,7 +41,7 @@ public class TaskRestController {
             }
             return theTask;
         }*/
-        @CrossOrigin(origins = "http://localhost:8080")
+
         @PostMapping("/tasks")
         public TaskDto addTask(@RequestBody TaskDto theTask){
 
@@ -64,4 +64,6 @@ public class TaskRestController {
         public void deleteTasks(@PathVariable int taskId){
             taskService.deleteById(taskId);
         }
+
+
 }
