@@ -7,7 +7,7 @@ import org.springframework.data.repository.cdi.Eager;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
+@CrossOrigin(origins = "localhost:8080")
 @RestController
 @RequestMapping("/api")
 public class CommentRestController {
