@@ -9,11 +9,12 @@ import com.example.ToDoList.DTO.TaskDto;
 import com.example.ToDoList.entity.Priority;
 import com.example.ToDoList.entity.Status;
 import com.example.ToDoList.entity.Task;
-import com.example.ToDoList.exception.TaskNotFound;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Service
@@ -70,8 +71,8 @@ public class TaskServiceImpl implements TaskService{
 
     @Override
     public TaskDto findById(int id) {
-       Optional<Task> task = Optional.ofNullable(taskRepository.findById(id).orElseThrow(() -> new TaskNotFound("task not found with id " + id)));
-       TaskDto tDto = convertTaskToTaskDto(task.get());
+       Task task = taskRepository.findById(id).orElseThrow(()-> new NoSuchElementException("No task with id - " + id));
+       TaskDto tDto = convertTaskToTaskDto(task);
         return tDto;
     }
 
@@ -95,8 +96,8 @@ public class TaskServiceImpl implements TaskService{
     public void deleteById(int id) {
         Optional<Task> task = taskRepository.findById(id);
         taskRepository.delete(task.get());
-
-
     }
+
+
 
 }

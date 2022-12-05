@@ -55,5 +55,6 @@ public class TaskDto {
     public void setPriority_dto(PriorityDto priority_dto) {
         this.priority_dto = priority_dto;
     }
+
 }
 

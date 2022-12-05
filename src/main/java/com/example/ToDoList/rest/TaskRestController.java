@@ -2,20 +2,18 @@ package com.example.ToDoList.rest;
 
 import com.example.ToDoList.DAO.TaskRepository;
 import com.example.ToDoList.DTO.TaskDto;
-import com.example.ToDoList.entity.Task;
-import com.example.ToDoList.service.TaskService;
 import com.example.ToDoList.service.TaskServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
+
 @CrossOrigin(origins = "localhost:8080")
 @RestController
 @RequestMapping("/api")
 public class TaskRestController {
 
-        private List<Task> tasks;
+        private List<TaskDto> tasks;
         private TaskServiceImpl taskService;
 
         private TaskRepository taskRepository;
@@ -55,14 +53,20 @@ public class TaskRestController {
 
         @GetMapping("/tasks/{taskId}")
         public TaskDto getTasks(@PathVariable int taskId){
-
-            return taskService.findById(taskId);
-//
+            TaskDto taskDto = taskService.findById(taskId);
+            if (taskDto == null){
+                throw new NotFoundException("Task id not found - " +taskId);
+            }
+            return taskDto;
         }
 
         @DeleteMapping("/tasks/{taskId}")
         public void deleteTasks(@PathVariable int taskId){
             taskService.deleteById(taskId);
+          if((tasks.size()<= taskId) || taskId<0)
+          {
+              throw new NotFoundException("Task id not found - " +taskId);
+          }
         }
 
 
