@@ -9,6 +9,7 @@ import com.example.ToDoList.DTO.TaskDto;
 import com.example.ToDoList.entity.Priority;
 import com.example.ToDoList.entity.Status;
 import com.example.ToDoList.entity.Task;
+import com.example.ToDoList.exception.TaskNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -69,7 +70,7 @@ public class TaskServiceImpl implements TaskService{
 
     @Override
     public TaskDto findById(int id) {
-       Optional<Task> task = taskRepository.findById(id);
+       Optional<Task> task = Optional.ofNullable(taskRepository.findById(id).orElseThrow(() -> new TaskNotFoundException("task not found with id " + id)));
        TaskDto tDto = convertTaskToTaskDto(task.get());
         return tDto;
     }
