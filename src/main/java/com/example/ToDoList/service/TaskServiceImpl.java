@@ -9,6 +9,7 @@ import com.example.ToDoList.DTO.TaskDto;
 import com.example.ToDoList.entity.Priority;
 import com.example.ToDoList.entity.Status;
 import com.example.ToDoList.entity.Task;
+import com.example.ToDoList.rest.NotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
@@ -71,7 +72,7 @@ public class TaskServiceImpl implements TaskService{
 
     @Override
     public TaskDto findById(int id) {
-       Task task = taskRepository.findById(id).orElseThrow(()-> new NoSuchElementException("No task with id - " + id));
+       Task task = taskRepository.findById(id).orElseThrow(()-> new NotFoundException("Task id not found - " +id));
        TaskDto tDto = convertTaskToTaskDto(task);
         return tDto;
     }

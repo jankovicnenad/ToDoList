@@ -13,12 +13,10 @@ import java.util.List;
 @RequestMapping("/api")
 public class TaskRestController {
 
-        private List<TaskDto> tasks;
-        private TaskServiceImpl taskService;
+        private final TaskServiceImpl taskService;
 
-        private TaskRepository taskRepository;
+        private final TaskRepository taskRepository;
 
-        @Autowired
         public TaskRestController(TaskServiceImpl TheTask, TaskRepository theRepo)
         {
             taskService = TheTask;
@@ -63,10 +61,10 @@ public class TaskRestController {
         @DeleteMapping("/tasks/{taskId}")
         public void deleteTasks(@PathVariable int taskId){
             taskService.deleteById(taskId);
-          if((tasks.size()<= taskId) || taskId<0)
-          {
-              throw new NotFoundException("Task id not found - " +taskId);
-          }
+//          if((tasks.size()<= taskId) || taskId<0)
+//          {
+//              throw new NotFoundException("Task id not found - " +taskId);
+//          }
         }
 
 
