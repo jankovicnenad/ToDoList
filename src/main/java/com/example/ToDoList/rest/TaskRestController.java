@@ -60,6 +60,9 @@ public class TaskRestController {
 
         @DeleteMapping("/tasks/{taskId}")
         public void deleteTasks(@PathVariable int taskId){
+            TaskDto taskDto = taskService.findById(taskId);
+            if(taskDto == null)
+                throw new NotFoundException("Task id not found - " +taskId);
             taskService.deleteById(taskId);
 //          if((tasks.size()<= taskId) || taskId<0)
 //          {

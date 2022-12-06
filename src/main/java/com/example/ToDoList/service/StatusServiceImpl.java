@@ -3,6 +3,8 @@ package com.example.ToDoList.service;
 import com.example.ToDoList.DAO.StatusRepository;
 import com.example.ToDoList.DTO.StatusDto;
 import com.example.ToDoList.entity.Status;
+import com.example.ToDoList.entity.Task;
+import com.example.ToDoList.rest.NotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -46,7 +48,7 @@ public class StatusServiceImpl implements StatusService{
 
     @Override
     public StatusDto findById(int id) {
-        Optional<Status> status = statusRepository.findById(id);
+        Optional<Status> status = Optional.ofNullable(statusRepository.findById(id).orElseThrow(() -> new NotFoundException("Status id not found - " + id)));
         StatusDto statusDto = convertStatusToStatusDto(status.get());
 
         return statusDto;
@@ -70,7 +72,7 @@ public class StatusServiceImpl implements StatusService{
 
     @Override
     public void delete(int id) {
-        Optional<Status> status = statusRepository.findById(id);
+        Optional<Status> status = Optional.ofNullable(statusRepository.findById(id).orElseThrow(() -> new NotFoundException("Status id not found - " + id)));
         statusRepository.delete(status.get());
     }
 }

@@ -24,7 +24,11 @@ public class StatusRestController {
     }
     @GetMapping("/status/{statusId}")
     public StatusDto findById(@PathVariable int statusId){
-        return statusService.findById(statusId);
+
+        StatusDto statusDto = statusService.findById(statusId);
+        if(statusDto == null)
+        throw new NotFoundException("Status id is not found - " +statusId);
+        return statusDto;
     }
     @PostMapping("/status")
     public StatusDto addStatus(@RequestBody StatusDto theStatus){
@@ -38,6 +42,10 @@ public class StatusRestController {
     }
     @DeleteMapping("/status/{statusId}")
     public void deleteStatus(@PathVariable int statusId){
+
+        StatusDto statusDto = statusService.findById(statusId);
+        if(statusDto == null)
+            throw new NotFoundException("Status id not found - " +statusId);
         statusService.delete(statusId);
     }
 }

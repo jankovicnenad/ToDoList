@@ -22,7 +22,11 @@ public class PriorityRestController {
 
     @GetMapping("/priority/{priorityId}")
     public PriorityDto findById(@PathVariable int priorityId){
-        return priorityService.findById(priorityId);
+
+        PriorityDto priorityDto = priorityService.findById(priorityId);
+        if(priorityDto == null)
+            throw new NotFoundException("Priority id not found - " +priorityId);
+        return priorityDto;
     }
 
     @PostMapping("/priority")
@@ -37,6 +41,10 @@ public class PriorityRestController {
     }
     @DeleteMapping("/priority/{priorityId}")
     public void deletePriority(@PathVariable int priorityId){
+
+        PriorityDto priorityDto = priorityService.findById(priorityId);
+        if(priorityDto == null)
+            throw new NotFoundException("Priority id not found - " +priorityId);
         priorityService.delete(priorityId);
     }
 }

@@ -8,6 +8,7 @@ import com.example.ToDoList.DTO.StatusDto;
 import com.example.ToDoList.DTO.TaskDto;
 import com.example.ToDoList.entity.Comment;
 import com.example.ToDoList.entity.Task;
+import com.example.ToDoList.rest.NotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -78,7 +79,7 @@ public class CommentServiceImpl implements CommentService{
     @Override
     public CommentDto findById(int id) {
 
-        Optional<Comment> comment = commentRepository.findById(id);
+        Optional<Comment> comment = Optional.ofNullable(commentRepository.findById(id).orElseThrow(() -> new NotFoundException("Comment id is not found - " + id)));
         CommentDto commentDto = convertCommentToCommentDto(comment.get());
         return commentDto;
     }
@@ -94,7 +95,7 @@ public class CommentServiceImpl implements CommentService{
 
     @Override
     public void delete(int id) {
-        Optional<Comment> comment = commentRepository.findById(id);
+        Optional<Comment> comment = Optional.ofNullable(commentRepository.findById(id).orElseThrow(() -> new NotFoundException("Priority id not found - " + id)));
         commentRepository.delete(comment.get());
     }
 

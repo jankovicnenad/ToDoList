@@ -3,6 +3,8 @@ package com.example.ToDoList.service;
 import com.example.ToDoList.DAO.PriorityRepository;
 import com.example.ToDoList.DTO.PriorityDto;
 import com.example.ToDoList.entity.Priority;
+import com.example.ToDoList.entity.Status;
+import com.example.ToDoList.rest.NotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -49,7 +51,7 @@ public class PriorityServiceImpl implements PriorityService{
 
     @Override
     public PriorityDto findById(int id) {
-       Optional<Priority> priority = priorityRepository.findById(id);
+        Optional<Priority> priority = Optional.ofNullable(priorityRepository.findById(id).orElseThrow(() -> new NotFoundException("Priority id not found - " + id)));
        PriorityDto priorityDto = convertPriorityToPriorityDto(priority.get());
        return priorityDto;
     }
@@ -62,7 +64,7 @@ public class PriorityServiceImpl implements PriorityService{
 
     @Override
     public void delete(int id) {
-        Optional<Priority> priority = priorityRepository.findById(id);
+        Optional<Priority> priority = Optional.ofNullable(priorityRepository.findById(id).orElseThrow(() -> new NotFoundException("Priority id not found - " + id)));
         priorityRepository.delete(priority.get());
     }
 }

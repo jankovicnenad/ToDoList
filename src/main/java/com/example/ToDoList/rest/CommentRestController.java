@@ -24,7 +24,10 @@ public class CommentRestController {
 
     @GetMapping("/comments/{commentId}")
     public CommentDto findByid(@PathVariable int commentId){
-        return commentService.findById(commentId);
+        CommentDto commentDto = commentService.findById(commentId);
+        if(commentDto == null)
+            throw new NotFoundException("Comment id not found - " +commentId);
+        return commentDto;
     }
     @PostMapping("/comments")
     public CommentDto addComment(@RequestBody CommentDto commDto)
@@ -34,6 +37,10 @@ public class CommentRestController {
     }
     @DeleteMapping("/comments/{commentId}")
     public void deleteComment(@PathVariable int commentId){
+
+        CommentDto commentDto = commentService.findById(commentId);
+        if(commentDto == null)
+            throw new NotFoundException("Comment id not found - " +commentId);
         commentService.delete(commentId);
     }
 

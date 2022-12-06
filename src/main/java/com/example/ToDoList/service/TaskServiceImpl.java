@@ -95,7 +95,7 @@ public class TaskServiceImpl implements TaskService{
 
     @Override
     public void deleteById(int id) {
-        Optional<Task> task = taskRepository.findById(id);
+        Optional<Task> task = Optional.ofNullable(taskRepository.findById(id).orElseThrow(() -> new NotFoundException("Task id is not found - " + id)));
         taskRepository.delete(task.get());
     }
 
