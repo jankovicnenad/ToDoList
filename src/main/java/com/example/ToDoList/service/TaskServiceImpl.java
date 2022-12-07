@@ -13,6 +13,8 @@ import com.example.ToDoList.rest.NotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -40,6 +42,12 @@ public class TaskServiceImpl implements TaskService{
         t.setId(taskDto.getId());
         t.setName(taskDto.getName());
         t.setStart_date(taskDto.getStart_date());
+        Status status = new Status();
+        status.setId(taskDto.getStatus_dto().getId());
+        Priority priority = new Priority();
+        priority.setId(taskDto.getPriority_dto().getId());
+        t.setStatus(status);
+        t.setPriority(priority);
         return t;
     }
 
@@ -95,10 +103,27 @@ public class TaskServiceImpl implements TaskService{
 
     @Override
     public void deleteById(int id) {
-        Optional<Task> task = Optional.ofNullable(taskRepository.findById(id).orElseThrow(() -> new NotFoundException("Task id is not found - " + id)));
-        taskRepository.delete(task.get());
+        Task task = taskRepository.findById(id).orElseThrow(() -> new NotFoundException("Task id is not found - " + id));
+        taskRepository.delete(task);
     }
 
+    @Override
+    public void updateTask(int id, TaskDto taskDto) {
+       Task task = taskRepository.findById(id).orElseThrow(() -> new NotFoundException("Task id is not found - " + id));
+        Task task1 = convertTaskDtoToTask(taskDto);
+        task1.setId(task.getId());
+        Status status = statusRepository.findById(taskDto.getStatus_dto().getId()).orElseThrow(() -> new NotFoundException("Task id is not found - " + id));
+        Priority priority = priorityRepository.findById(taskDto.getPriority_dto().getId()).orElseThrow(() -> new NotFoundException("Task id is not found - " + id));
+        task1.setStatus(status);
+        task1.setPriority(priority);
+        if(status.getStatus()!=null){
+        if(status.getStatus().equals("DONE")){
+            task1.setEndDate(Timestamp.valueOf(LocalDateTime.now()));
+        }}
+        taskRepository.save(task1);
+
+
+    }
 
 
 }

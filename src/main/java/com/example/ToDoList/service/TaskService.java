@@ -15,4 +15,6 @@ public interface TaskService {
 
     public void deleteById(int id);
 
+    public void updateTask(int id, TaskDto taskDto);
+
 }

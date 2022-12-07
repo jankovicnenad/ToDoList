@@ -44,9 +44,10 @@ public class TaskRestController {
 
             return taskService.save(theTask);
         }
-        @PutMapping("/tasks")
-        public TaskDto updateTask(@RequestBody TaskDto taskDto){
-            return taskService.save(taskDto);
+        @PutMapping("/tasks/{taskId}")
+        public void updateTask(@PathVariable int taskId, @RequestBody TaskDto taskDto){
+
+            taskService.updateTask(taskId,taskDto);
         }
 
         @GetMapping("/tasks/{taskId}")
