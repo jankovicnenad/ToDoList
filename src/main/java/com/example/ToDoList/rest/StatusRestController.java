@@ -35,10 +35,9 @@ public class StatusRestController {
         statusService.save(theStatus);
         return theStatus;
     }
-    @PutMapping("/status")
-    public StatusDto updateStatus(@RequestBody StatusDto statusDto){
-        statusService.save(statusDto);
-        return statusDto;
+    @PutMapping("/status/{statusId}")
+    public void updateStatus(@PathVariable int statusId, @RequestBody StatusDto statusDto){
+        statusService.updateStatus(statusId, statusDto);
     }
     @DeleteMapping("/status/{statusId}")
     public void deleteStatus(@PathVariable int statusId){

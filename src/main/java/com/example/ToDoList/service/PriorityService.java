@@ -15,4 +15,6 @@ public interface PriorityService {
 
     public void delete(int id);
 
+    public void updatePriority(int id, PriorityDto priorityDto);
+
 }

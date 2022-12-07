@@ -15,4 +15,6 @@ public interface CommentService {
     public CommentDto save(CommentDto commentDto);
 
     public void delete(int id);
+
+    public void updateComment(int id, CommentDto commentDto);
 }

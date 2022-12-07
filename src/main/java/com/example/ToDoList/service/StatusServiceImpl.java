@@ -3,7 +3,6 @@ package com.example.ToDoList.service;
 import com.example.ToDoList.DAO.StatusRepository;
 import com.example.ToDoList.DTO.StatusDto;
 import com.example.ToDoList.entity.Status;
-import com.example.ToDoList.entity.Task;
 import com.example.ToDoList.rest.NotFoundException;
 import org.springframework.stereotype.Service;
 
@@ -74,5 +73,12 @@ public class StatusServiceImpl implements StatusService{
     public void delete(int id) {
         Optional<Status> status = Optional.ofNullable(statusRepository.findById(id).orElseThrow(() -> new NotFoundException("Status id not found - " + id)));
         statusRepository.delete(status.get());
+    }
+    @Override
+    public void updateStatus(int id, StatusDto statusDto) {
+        Status status = statusRepository.findById(id).orElseThrow(() -> new NotFoundException("Task id is not found - " + id));
+        Status status1 = convertStatusDtoToStatus(statusDto);
+        status1.setId(status.getId());
+        statusRepository.save(status1);
     }
 }

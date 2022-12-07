@@ -29,6 +29,10 @@ public class CommentRestController {
             throw new NotFoundException("Comment id not found - " +commentId);
         return commentDto;
     }
+    @PutMapping("/comments/{commentId}")
+    public void updateComment(@PathVariable int commentId, @RequestBody CommentDto commentDto){
+        commentService.updateComment(commentId, commentDto);
+    }
     @PostMapping("/comments")
     public CommentDto addComment(@RequestBody CommentDto commDto)
     {

@@ -7,10 +7,14 @@ import com.example.ToDoList.DTO.PriorityDto;
 import com.example.ToDoList.DTO.StatusDto;
 import com.example.ToDoList.DTO.TaskDto;
 import com.example.ToDoList.entity.Comment;
+import com.example.ToDoList.entity.Priority;
+import com.example.ToDoList.entity.Status;
 import com.example.ToDoList.entity.Task;
 import com.example.ToDoList.rest.NotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -40,6 +44,7 @@ public class CommentServiceImpl implements CommentService{
         taskDto.setId(comment.getTask().getId());
         taskDto.setName(comment.getTask().getName());
         taskDto.setStart_date(comment.getTask().getStart_date());
+        taskDto.setEnd_date(comment.getTask().getEndDate());
 
         StatusDto statusDto = new StatusDto();
 
@@ -97,6 +102,16 @@ public class CommentServiceImpl implements CommentService{
     public void delete(int id) {
         Optional<Comment> comment = Optional.ofNullable(commentRepository.findById(id).orElseThrow(() -> new NotFoundException("Priority id not found - " + id)));
         commentRepository.delete(comment.get());
+    }
+
+    @Override
+    public void updateComment(int id, CommentDto commentDto) {
+        Comment comment = commentRepository.findById(id).orElseThrow(() -> new NotFoundException("Task id is not found - " + id));
+        Comment comment1 = convertCommentDtoToComment(commentDto);
+        comment1.setId(comment.getId());
+        Task task = taskRepository.findById(commentDto.getTask_dto().getId()).orElseThrow(() -> new NotFoundException("Task id is not found - " + id));
+        comment1.setTask(task);
+        commentRepository.save(comment1);
     }
 
 }

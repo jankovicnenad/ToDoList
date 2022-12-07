@@ -15,4 +15,6 @@ public interface StatusService {
     public void save(StatusDto statusDto);
 
     public void delete(int id);
+
+    void updateStatus(int id, StatusDto statusDto);
 }

@@ -12,9 +12,19 @@ public class TaskDto {
 
     private Date start_date;
 
+    private Date end_date;
+
     private StatusDto status_dto;
 
     private PriorityDto priority_dto;
+
+    public Date getEnd_date() {
+        return end_date;
+    }
+
+    public void setEnd_date(Date end_date) {
+        this.end_date = end_date;
+    }
 
     public int getId() {
         return id;

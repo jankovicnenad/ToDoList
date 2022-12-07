@@ -67,4 +67,12 @@ public class PriorityServiceImpl implements PriorityService{
         Optional<Priority> priority = Optional.ofNullable(priorityRepository.findById(id).orElseThrow(() -> new NotFoundException("Priority id not found - " + id)));
         priorityRepository.delete(priority.get());
     }
+
+    @Override
+    public void updatePriority(int id, PriorityDto priorityDto) {
+        Priority priority = priorityRepository.findById(id).orElseThrow(() -> new NotFoundException("Task id is not found - " + id));
+        Priority priority1 = convertPriorityDtoToPriority(priorityDto);
+        priority1.setId(priority.getId());
+        priorityRepository.save(priority1);
+    }
 }

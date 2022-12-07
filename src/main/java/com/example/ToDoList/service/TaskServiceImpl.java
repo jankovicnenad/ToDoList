@@ -42,6 +42,7 @@ public class TaskServiceImpl implements TaskService{
         t.setId(taskDto.getId());
         t.setName(taskDto.getName());
         t.setStart_date(taskDto.getStart_date());
+        t.setEndDate(taskDto.getEnd_date());
         Status status = new Status();
         status.setId(taskDto.getStatus_dto().getId());
         Priority priority = new Priority();
@@ -57,6 +58,7 @@ public class TaskServiceImpl implements TaskService{
         taskDto.setId(task.getId());
         taskDto.setName(task.getName());
         taskDto.setStart_date(task.getStart_date());
+        taskDto.setEnd_date(task.getEndDate());
         PriorityDto priorityDto = new PriorityDto();
         priorityDto.setId(task.getPriority().getId());
         priorityDto.setPriority(task.getPriority().getPriority());
