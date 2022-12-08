@@ -45,9 +45,9 @@ public class TaskRestController {
             return taskService.save(theTask);
         }
         @PutMapping("/tasks/{taskId}")
-        public void updateTask(@PathVariable int taskId, @RequestBody TaskDto taskDto){
-
+        public String updateTask(@PathVariable int taskId, @RequestBody TaskDto taskDto){
             taskService.updateTask(taskId,taskDto);
+            return "Updated task with id - " +taskId;
         }
 
         @GetMapping("/tasks/{taskId}")
@@ -60,15 +60,12 @@ public class TaskRestController {
         }
 
         @DeleteMapping("/tasks/{taskId}")
-        public void deleteTasks(@PathVariable int taskId){
+        public String deleteTasks(@PathVariable int taskId){
             TaskDto taskDto = taskService.findById(taskId);
             if(taskDto == null)
                 throw new NotFoundException("Task id not found - " +taskId);
             taskService.deleteById(taskId);
-//          if((tasks.size()<= taskId) || taskId<0)
-//          {
-//              throw new NotFoundException("Task id not found - " +taskId);
-//          }
+            return "Deleted task with id - " +taskId;
         }
 
 

@@ -36,15 +36,17 @@ public class StatusRestController {
         return theStatus;
     }
     @PutMapping("/status/{statusId}")
-    public void updateStatus(@PathVariable int statusId, @RequestBody StatusDto statusDto){
+    public String updateStatus(@PathVariable int statusId, @RequestBody StatusDto statusDto){
         statusService.updateStatus(statusId, statusDto);
+        return "Update status with id - " +statusId;
     }
     @DeleteMapping("/status/{statusId}")
-    public void deleteStatus(@PathVariable int statusId){
+    public String deleteStatus(@PathVariable int statusId){
 
         StatusDto statusDto = statusService.findById(statusId);
         if(statusDto == null)
             throw new NotFoundException("Status id not found - " +statusId);
         statusService.delete(statusId);
+        return "Deleted status with id - " +statusId;
     }
 }

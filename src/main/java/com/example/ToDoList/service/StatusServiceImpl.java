@@ -52,17 +52,6 @@ public class StatusServiceImpl implements StatusService{
 
         return statusDto;
     }
-
-    /*@Override
-    public List<StatusDto> findById(@PathVariable int id) {
-        Optional<Status> statList = statusRepository.findById(id);
-        List<StatusDto> sDto = new ArrayList<>();
-        for(Status s : statList)
-        {StatusDto statusDto = statusD(s);
-        sDto.add(statusDto);
-        return sDto;
-        }
-    }*/
     @Override
     public void save(StatusDto statusDto) {
     Status s = convertStatusDtoToStatus(statusDto);

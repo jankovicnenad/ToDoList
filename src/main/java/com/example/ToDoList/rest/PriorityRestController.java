@@ -35,15 +35,17 @@ public class PriorityRestController {
         return thePriority;
     }
     @PutMapping("/priority/{priorityId}")
-    public void updatePriority(@PathVariable int priorityId, @RequestBody PriorityDto priorityDto){
+    public String updatePriority(@PathVariable int priorityId, @RequestBody PriorityDto priorityDto){
         priorityService.updatePriority(priorityId, priorityDto);
+        return "Updated priority with id - " +priorityId;
     }
     @DeleteMapping("/priority/{priorityId}")
-    public void deletePriority(@PathVariable int priorityId){
+    public String deletePriority(@PathVariable int priorityId){
 
         PriorityDto priorityDto = priorityService.findById(priorityId);
         if(priorityDto == null)
             throw new NotFoundException("Priority id not found - " +priorityId);
         priorityService.delete(priorityId);
+        return "Deleted priority with id - " +priorityId;
     }
 }
