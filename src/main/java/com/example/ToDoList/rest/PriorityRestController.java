@@ -6,7 +6,7 @@ import com.example.ToDoList.service.PriorityServiceImpl;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
+@CrossOrigin(origins = "192.168.0.105")
 @RestController
 @RequestMapping("/api")
 public class PriorityRestController {

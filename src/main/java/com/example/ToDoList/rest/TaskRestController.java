@@ -5,10 +5,12 @@ import com.example.ToDoList.DTO.TaskDto;
 import com.example.ToDoList.service.TaskServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
-@CrossOrigin(origins = "localhost:8080")
+@CrossOrigin(origins = "192.168.0.105")
 @RestController
 @RequestMapping("/api")
 public class TaskRestController {
@@ -22,7 +24,6 @@ public class TaskRestController {
             taskService = TheTask;
             taskRepository = theRepo;
         }
-
         @GetMapping("/tasks")
         public List<TaskDto> getAllTasks(){
             return taskService.getAllTasks();
@@ -39,13 +40,13 @@ public class TaskRestController {
         }*/
 
         @PostMapping("/tasks")
-        public TaskDto addTask(@RequestBody TaskDto theTask){
+        public TaskDto addTask(@RequestPart TaskDto theTask, @RequestPart MultipartFile file) throws IOException {
 
 
-            return taskService.save(theTask);
+            return taskService.save(theTask, file);
         }
         @PutMapping("/tasks/{taskId}")
-        public String updateTask(@PathVariable int taskId, @RequestBody TaskDto taskDto){
+        public String updateTask(@PathVariable int taskId, @RequestBody TaskDto taskDto) throws IOException {
             taskService.updateTask(taskId,taskDto);
             return "Updated task with id - " +taskId;
         }

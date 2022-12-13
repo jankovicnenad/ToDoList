@@ -1,8 +1,5 @@
 package com.example.ToDoList.DTO;
 
-import com.example.ToDoList.entity.Priority;
-import com.example.ToDoList.entity.Status;
-
 import java.util.Date;
 
 public class TaskDto {
@@ -13,6 +10,8 @@ public class TaskDto {
     private Date start_date;
 
     private Date end_date;
+
+    private Byte[] image;
 
     private StatusDto status_dto;
 
@@ -66,5 +65,12 @@ public class TaskDto {
         this.priority_dto = priority_dto;
     }
 
+    public Byte[] getImage() {
+        return image;
+    }
+
+    public void setImage(Byte[] image) {
+        this.image = image;
+    }
 }
 

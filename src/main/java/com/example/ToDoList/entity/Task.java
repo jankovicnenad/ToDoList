@@ -1,6 +1,5 @@
 package com.example.ToDoList.entity;
 
-import com.example.ToDoList.DTO.StatusDto;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import javax.persistence.*;
@@ -22,6 +21,10 @@ public class Task {
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "end_date")
     private Date endDate;
+    @Lob //Large object
+    @Column(name = "image")
+    private Byte[] image;
+
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH})
     @JoinColumn(name="priority_id")
     private Priority priority;
@@ -93,6 +96,14 @@ public class Task {
 
     public void setComments(List<Comment> comments) {
         this.comments = comments;
+    }
+
+    public Byte[] getImage() {
+        return image;
+    }
+
+    public void setImage(Byte[] image) {
+        this.image = image;
     }
 
     @Override
