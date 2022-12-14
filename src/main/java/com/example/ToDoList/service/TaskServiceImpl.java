@@ -45,7 +45,6 @@ public class TaskServiceImpl implements TaskService{
         t.setName(taskDto.getName());
         t.setStart_date(taskDto.getStart_date());
         t.setEndDate(taskDto.getEnd_date());
-        t.setImage(taskDto.getImage());
         Status status = new Status();
         status.setId(taskDto.getStatus_dto().getId());
         Priority priority = new Priority();
@@ -62,7 +61,6 @@ public class TaskServiceImpl implements TaskService{
         taskDto.setName(task.getName());
         taskDto.setStart_date(task.getStart_date());
         taskDto.setEnd_date(task.getEndDate());
-        taskDto.setImage(task.getImage());
         PriorityDto priorityDto = new PriorityDto();
         priorityDto.setId(task.getPriority().getId());
         priorityDto.setPriority(task.getPriority().getPriority());
@@ -92,7 +90,7 @@ public class TaskServiceImpl implements TaskService{
     }
 
     @Override
-    public TaskDto save(TaskDto taskDto, MultipartFile file) throws IOException {
+    public TaskDto save(TaskDto taskDto){
         Task task = convertTaskDtoToTask(taskDto);
         Optional<Status> status = statusRepository.findById(taskDto.getStatus_dto().getId());
 
@@ -102,12 +100,6 @@ public class TaskServiceImpl implements TaskService{
 
         task.setStatus(status.get());
 
-        Byte[] imageBytes = new Byte[file.getBytes().length];
-        int i = 0;
-        for(byte temp : file.getBytes()){
-            imageBytes[i++] = temp;
-        }
-        task.setImage(imageBytes);
         taskRepository.save(task);
         return convertTaskToTaskDto(task);
 

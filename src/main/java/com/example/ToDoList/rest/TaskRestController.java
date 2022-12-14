@@ -10,7 +10,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.util.List;
 
-@CrossOrigin(origins = "192.168.0.105")
+//@CrossOrigin(origins = "http://192.168.0.105:8080", allowedHeaders = "*", maxAge = 3600)
 @RestController
 @RequestMapping("/api")
 public class TaskRestController {
@@ -40,10 +40,10 @@ public class TaskRestController {
         }*/
 
         @PostMapping("/tasks")
-        public TaskDto addTask(@RequestPart TaskDto theTask, @RequestPart MultipartFile file) throws IOException {
+        public TaskDto addTask(@RequestBody TaskDto theTask) {
 
 
-            return taskService.save(theTask, file);
+            return taskService.save(theTask);
         }
         @PutMapping("/tasks/{taskId}")
         public String updateTask(@PathVariable int taskId, @RequestBody TaskDto taskDto) throws IOException {

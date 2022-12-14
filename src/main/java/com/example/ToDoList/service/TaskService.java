@@ -13,7 +13,7 @@ public interface TaskService {
 
     public TaskDto findById(int id);
 
-    public TaskDto save(TaskDto taskDto, MultipartFile file) throws IOException;
+    public TaskDto save(TaskDto taskDto);
 
     public void deleteById(int id);
 
