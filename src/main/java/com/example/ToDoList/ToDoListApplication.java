@@ -1,19 +1,25 @@
 package com.example.ToDoList;
 
+import com.google.api.client.googleapis.auth.oauth2.GoogleCredential;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.FirebaseOptions;
 import org.modelmapper.ModelMapper;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.Objects;
+
 @SpringBootApplication
 public class ToDoListApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(ToDoListApplication.class, args);
-	}
+	public static void main(String[] args) {SpringApplication.run(ToDoListApplication.class, args);}
 	@Bean
 	public ModelMapper modelMapper() {
-
 		return new ModelMapper();
 
 	}
