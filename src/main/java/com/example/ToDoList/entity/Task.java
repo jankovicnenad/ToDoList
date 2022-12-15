@@ -21,9 +21,6 @@ public class Task {
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "end_date")
     private Date endDate;
-    @Lob //Large object
-    @Column(name = "image")
-    private Byte[] image;
 
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH})
     @JoinColumn(name="priority_id")
@@ -98,13 +95,6 @@ public class Task {
         this.comments = comments;
     }
 
-    public Byte[] getImage() {
-        return image;
-    }
-
-    public void setImage(Byte[] image) {
-        this.image = image;
-    }
 
     @Override
     public String toString() {

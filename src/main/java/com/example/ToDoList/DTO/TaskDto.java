@@ -11,8 +11,6 @@ public class TaskDto {
 
     private Date end_date;
 
-    private Byte[] image;
-
     private StatusDto status_dto;
 
     private PriorityDto priority_dto;
@@ -65,12 +63,5 @@ public class TaskDto {
         this.priority_dto = priority_dto;
     }
 
-    public Byte[] getImage() {
-        return image;
-    }
-
-    public void setImage(Byte[] image) {
-        this.image = image;
-    }
 }
 
