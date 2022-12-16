@@ -11,7 +11,7 @@ public class Comment {
         private int id;
     @Column(name = "comment")
         private String comment;
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH,CascadeType.REFRESH})
     @JoinColumn(name="task_id")
     private Task task;
 

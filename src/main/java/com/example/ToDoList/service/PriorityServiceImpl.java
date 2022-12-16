@@ -60,6 +60,7 @@ public class PriorityServiceImpl implements PriorityService{
     public void savePriority(PriorityDto priorityDto) {
         Priority p = convertPriorityDtoToPriority(priorityDto);
         priorityRepository.save(p);
+        priorityDto.setId(p.getId());
     }
 
     @Override

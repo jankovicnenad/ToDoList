@@ -91,6 +91,9 @@ public class TaskServiceImpl implements TaskService{
 
     @Override
     public TaskDto save(TaskDto taskDto){
+//        FirebaseStorage storage = FirebaseStorage.getInstance();
+//        StorageReference storageRef = storage.getReference();
+
         Task task = convertTaskDtoToTask(taskDto);
         Optional<Status> status = statusRepository.findById(taskDto.getStatus_dto().getId());
 

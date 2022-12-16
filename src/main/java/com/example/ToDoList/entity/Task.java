@@ -31,6 +31,9 @@ public class Task {
     @OneToMany(mappedBy = "task", cascade = CascadeType.ALL)
     private List<Comment> comments;
 
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<Image> images;
+
     public Task(){}
 
     public Task(String name, Priority priority, Status status) {
@@ -95,6 +98,13 @@ public class Task {
         this.comments = comments;
     }
 
+    public List<Image> getImages() {
+        return images;
+    }
+
+    public void setImages(List<Image> images) {
+        this.images = images;
+    }
 
     @Override
     public String toString() {
