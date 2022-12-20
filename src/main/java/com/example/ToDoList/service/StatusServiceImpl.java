@@ -22,7 +22,7 @@ public class StatusServiceImpl implements StatusService{
     private StatusDto convertStatusToStatusDto(Status status){
 
         StatusDto statustDto = new StatusDto();
-        statustDto.setId(status.getId());
+        statustDto.setId(status.getId(1));
         statustDto.setStatus_name(status.getStatus());
         return statustDto;
     }
@@ -67,7 +67,7 @@ public class StatusServiceImpl implements StatusService{
     public void updateStatus(int id, StatusDto statusDto) {
         Status status = statusRepository.findById(id).orElseThrow(() -> new NotFoundException("Task id is not found - " + id));
         Status status1 = convertStatusDtoToStatus(statusDto);
-        status1.setId(status.getId());
+        status1.setId(status.getId(1));
         statusRepository.save(status1);
     }
 }

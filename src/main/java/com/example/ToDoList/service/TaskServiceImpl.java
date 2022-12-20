@@ -11,15 +11,11 @@ import com.example.ToDoList.entity.Status;
 import com.example.ToDoList.entity.Task;
 import com.example.ToDoList.rest.NotFoundException;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Service
@@ -66,7 +62,7 @@ public class TaskServiceImpl implements TaskService{
         priorityDto.setPriority(task.getPriority().getPriority());
         taskDto.setPriority_dto(priorityDto);
         StatusDto statusDto = new StatusDto();
-        statusDto.setId(task.getStatus().getId());
+        statusDto.setId(task.getStatus().getId(1));
         statusDto.setStatus_name(task.getStatus().getStatus());
         taskDto.setStatus_dto(statusDto);
         return taskDto;
@@ -96,7 +92,6 @@ public class TaskServiceImpl implements TaskService{
 
         Task task = convertTaskDtoToTask(taskDto);
         Optional<Status> status = statusRepository.findById(taskDto.getStatus_dto().getId());
-
         Optional<Priority> priority = priorityRepository.findById(taskDto.getPriority_dto().getId());
 
         task.setPriority(priority.get());

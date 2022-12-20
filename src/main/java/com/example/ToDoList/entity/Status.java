@@ -1,7 +1,5 @@
 package com.example.ToDoList.entity;
 
-import com.example.ToDoList.service.StatusServiceImpl;
-
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +23,7 @@ public class Status {
         this.status = status;
     }
 
-    public int getId() {
+    public int getId(Integer i) {
         return id;
     }
 
