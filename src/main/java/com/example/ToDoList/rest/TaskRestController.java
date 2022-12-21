@@ -41,9 +41,9 @@ public class TaskRestController {
         }*/
 
         @PostMapping("/tasks")
-        public TaskDto addTask(@RequestBody TaskDto theTask) {
+        public TaskDto addTask(@RequestPart TaskDto task, @RequestPart MultipartFile file) {
 
-            return taskService.save(theTask);
+            return taskService.save(task, file);
         }
         @PutMapping("/tasks/{taskId}")
         public String updateTask(@PathVariable int taskId, @RequestBody TaskDto taskDto) throws IOException {

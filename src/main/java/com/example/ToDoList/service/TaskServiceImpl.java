@@ -6,12 +6,15 @@ import com.example.ToDoList.DAO.TaskRepository;
 import com.example.ToDoList.DTO.PriorityDto;
 import com.example.ToDoList.DTO.StatusDto;
 import com.example.ToDoList.DTO.TaskDto;
+import com.example.ToDoList.entity.Image;
 import com.example.ToDoList.entity.Priority;
 import com.example.ToDoList.entity.Status;
 import com.example.ToDoList.entity.Task;
 import com.example.ToDoList.rest.NotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -24,14 +27,17 @@ public class TaskServiceImpl implements TaskService{
     private final TaskRepository taskRepository;
 
 
-    private StatusRepository statusRepository;
+    private final StatusRepository statusRepository;
 
-    private PriorityRepository priorityRepository;
+    private final PriorityRepository priorityRepository;
 
-    public TaskServiceImpl(TaskRepository task, StatusRepository status, PriorityRepository priority)
+    private final ImageService imageService;
+
+    public TaskServiceImpl(TaskRepository task, StatusRepository status, PriorityRepository priority, ImageService imageService)
     {taskRepository = task;
      statusRepository = status;
      priorityRepository = priority;
+     this.imageService = imageService;
     }
 
 
@@ -86,9 +92,8 @@ public class TaskServiceImpl implements TaskService{
     }
 
     @Override
-    public TaskDto save(TaskDto taskDto){
-//        FirebaseStorage storage = FirebaseStorage.getInstance();
-//        StorageReference storageRef = storage.getReference();
+    public TaskDto save(TaskDto taskDto, MultipartFile multipartFile){
+
         Task task = convertTaskDtoToTask(taskDto);
         Optional<Status> status = statusRepository.findById(taskDto.getStatus_dto().getId());
         Optional<Priority> priority = priorityRepository.findById(taskDto.getPriority_dto().getId());
@@ -96,6 +101,16 @@ public class TaskServiceImpl implements TaskService{
         task.setPriority(priority.get());
 
         task.setStatus(status.get());
+        Image image = new Image();
+        try {
+            String imageUrl = imageService.uploadFile(multipartFile);
+            image.setUrl(imageUrl);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        image.setTask(task);
+        task.getImages().add(image);
+
 
         taskRepository.save(task);
         return convertTaskToTaskDto(task);

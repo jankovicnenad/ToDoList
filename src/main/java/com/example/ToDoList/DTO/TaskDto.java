@@ -15,6 +15,7 @@ public class TaskDto {
 
     private PriorityDto priority_dto;
 
+
     public Date getEnd_date() {
         return end_date;
     }

@@ -3,6 +3,7 @@ package com.example.ToDoList.entity;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -29,10 +30,10 @@ public class Task {
     @JoinColumn(name = "status_id")
     private Status status;
     @OneToMany(mappedBy = "task", cascade = CascadeType.ALL)
-    private List<Comment> comments;
+    private List<Comment> comments = new ArrayList<>();
 
-    @OneToMany(cascade = CascadeType.ALL)
-    private List<Image> images;
+    @OneToMany(mappedBy = "task", cascade = CascadeType.ALL)
+    private List<Image> images = new ArrayList<>();
 
     public Task(){}
 

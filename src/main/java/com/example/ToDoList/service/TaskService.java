@@ -13,7 +13,7 @@ public interface TaskService {
 
     public TaskDto findById(int id);
 
-    public TaskDto save(TaskDto taskDto);
+    public TaskDto save(TaskDto taskDto, MultipartFile multipartFile);
 
     public void deleteById(int id);
 

@@ -17,6 +17,6 @@ public class ImageRestController {
 
     @PostMapping("/post-image")
     public String uploadFile(@RequestPart("files") MultipartFile multipartFile) throws Exception {
-        imageService.uploadFile(multipartFile);
+        System.out.println(imageService.uploadFile(multipartFile));
         return "Uspesno odradjena metoda!";
 }}
