@@ -107,7 +107,7 @@ public class ImageServiceImpl implements ImageService{
         BlobId blobId = BlobId.of(bucketName, objectName);
         BlobInfo blobInfo = BlobInfo.newBuilder(blobId).build();
         Blob blob = storage.create(blobInfo, Files.readAllBytes(filePath));
-
+        file.delete();
         log.info("File " + filePath + " uploaded to bucket " + bucketName + " as " + objectName);
         return storageBaseUrl+objectName;
     }
