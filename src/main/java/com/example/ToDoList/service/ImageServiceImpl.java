@@ -84,12 +84,12 @@ public class ImageServiceImpl implements ImageService{
     }
 
     private void initializeFirebase() throws IOException {
-        bucketName = environment.getRequiredProperty("FIREBASE_BUCKET_NAME");
-        projectId = environment.getRequiredProperty("FIREBASE_PROJECT_ID");
+        bucketName = "tasksimage.appspot.com";
+        projectId = "tasksimage";
 
         InputStream firebaseCredential = createFirebaseCredential();
         this.storageOptions = StorageOptions.newBuilder()
-                .setProjectId("tasksimage")
+                .setProjectId(projectId)
                 .setCredentials(GoogleCredentials.fromStream(firebaseCredential)).build();
 
     }

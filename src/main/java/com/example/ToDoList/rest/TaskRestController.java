@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 //@CrossOrigin(origins = "http://192.168.0.105:8080", allowedHeaders = "*", maxAge = 3600)
@@ -41,7 +42,6 @@ public class TaskRestController {
 
         @PostMapping("/tasks")
         public TaskDto addTask(@RequestBody TaskDto theTask) {
-
 
             return taskService.save(theTask);
         }

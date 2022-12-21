@@ -1,15 +1,22 @@
 package com.example.ToDoList.rest;
 
-import org.springframework.http.ResponseEntity;
+import com.example.ToDoList.service.ImageServiceImpl;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 
 @RequestMapping("/api")
 public class ImageRestController {
-    @PostMapping("/download-file")
-    public ResponseEntity<Object> downloadFile(@RequestBody FileDTO fileDTO, HttpServletRequest request) throws Exception {
-        return storageService.downloadFile(fileDTO.getFileDownloadUri(), request);
-}
+
+    ImageServiceImpl imageService;
+
+    public ImageRestController(ImageServiceImpl imageService){this.imageService = imageService;}
+
+    @PostMapping("/post-image")
+    public String uploadFile(@RequestParam("files") MultipartFile multipartFile) throws Exception {
+        imageService.uploadFile(multipartFile);
+        return "Uspesno odradjena metoda!";
+}}

@@ -89,7 +89,6 @@ public class TaskServiceImpl implements TaskService{
     public TaskDto save(TaskDto taskDto){
 //        FirebaseStorage storage = FirebaseStorage.getInstance();
 //        StorageReference storageRef = storage.getReference();
-
         Task task = convertTaskDtoToTask(taskDto);
         Optional<Status> status = statusRepository.findById(taskDto.getStatus_dto().getId());
         Optional<Priority> priority = priorityRepository.findById(taskDto.getPriority_dto().getId());
