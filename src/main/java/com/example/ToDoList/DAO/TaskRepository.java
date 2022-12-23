@@ -8,4 +8,5 @@ import org.springframework.stereotype.Repository;
 @RepositoryRestResource(path="tasks")
 public interface TaskRepository extends JpaRepository<Task, Integer> {
 
+    //komentraisanje sa nove grane
 }
