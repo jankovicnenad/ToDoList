@@ -19,4 +19,6 @@ public interface TaskRepository extends JpaRepository<Task, Long> {
     //Ninko Komentarisao
 
     //komentraisanje sa nove grane
+
+    //Komentarisanje sa grane NinkoDevelop
 }
