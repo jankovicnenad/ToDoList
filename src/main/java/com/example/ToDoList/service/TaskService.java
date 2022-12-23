@@ -13,7 +13,9 @@ public interface TaskService {
 
     public TaskDto findById(int id);
 
-    public TaskDto save(TaskDto taskDto, MultipartFile multipartFile);
+    public TaskDto saveImage(TaskDto taskDto, MultipartFile multipartFile);
+
+    public TaskDto save(TaskDto taskDto);
 
     public void deleteById(int id);
 

@@ -25,6 +25,11 @@ public class TaskRestController {
             taskService = TheTask;
             taskRepository = theRepo;
         }
+
+        @PostMapping("/tasks")
+        public TaskDto addTasks(@RequestBody TaskDto task){
+            return taskService.save(task);
+        }
         @GetMapping("/tasks")
         public List<TaskDto> getAllTasks(){
             return taskService.getAllTasks();
@@ -40,10 +45,10 @@ public class TaskRestController {
             return theTask;
         }*/
 
-        @PostMapping("/tasks")
+        @PostMapping("/tasks-image")
         public TaskDto addTask(@RequestPart TaskDto task, @RequestPart MultipartFile file) {
 
-            return taskService.save(task, file);
+            return taskService.saveImage(task, file);
         }
         @PutMapping("/tasks/{taskId}")
         public String updateTask(@PathVariable int taskId, @RequestBody TaskDto taskDto) throws IOException {

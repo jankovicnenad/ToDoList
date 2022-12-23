@@ -20,6 +20,6 @@ public class ImageRestController {
     @PostMapping("/post-image")
     public String uploadFile(@RequestPart("files") MultipartFile multipartFile, @RequestPart TaskDto taskDto) throws Exception {
         System.out.println(imageService.uploadFile(multipartFile));
-        taskService.save(taskDto, multipartFile);
+        taskService.saveImage(taskDto, multipartFile);
         return "Uspesno odradjena metoda!";
 }}

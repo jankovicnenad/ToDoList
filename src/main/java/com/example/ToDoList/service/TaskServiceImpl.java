@@ -93,7 +93,7 @@ public class TaskServiceImpl implements TaskService{
     }
 
     @Override
-    public TaskDto save(TaskDto taskDto, MultipartFile multipartFile){
+    public TaskDto saveImage(TaskDto taskDto, MultipartFile multipartFile){
 
         Task task = convertTaskDtoToTask(taskDto);
         Optional<Status> status = statusRepository.findById(taskDto.getStatus_dto().getId());
@@ -116,6 +116,20 @@ public class TaskServiceImpl implements TaskService{
         taskRepository.save(task);
         return convertTaskToTaskDto(task);
 
+    }
+
+    @Override
+    public TaskDto save(TaskDto taskDto) {
+        Task task = convertTaskDtoToTask(taskDto);
+        Optional<Status> status = statusRepository.findById(taskDto.getStatus_dto().getId());
+        Optional<Priority> priority = priorityRepository.findById(taskDto.getPriority_dto().getId());
+
+        task.setPriority(priority.get());
+
+        task.setStatus(status.get());
+
+        taskRepository.save(task);
+        return  convertTaskToTaskDto(task);
     }
 
     @Override
