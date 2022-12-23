@@ -17,4 +17,5 @@ public interface PriorityService {
 
     public void updatePriority(int id, PriorityDto priorityDto);
 
+
 }

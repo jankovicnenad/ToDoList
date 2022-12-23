@@ -14,24 +14,11 @@ import java.util.Optional;
 public class StatusServiceImpl implements StatusService{
 
     private StatusRepository statusRepository;
-    public StatusServiceImpl(StatusRepository theStatus) {
+
+    private final MapperDto mapperDto;
+    public StatusServiceImpl(StatusRepository theStatus, MapperDto mapperDto) {
         this.statusRepository = theStatus;
-    }
-
-
-    private StatusDto convertStatusToStatusDto(Status status){
-
-        StatusDto statustDto = new StatusDto();
-        statustDto.setId(status.getId(1));
-        statustDto.setStatus_name(status.getStatus());
-        return statustDto;
-    }
-    private Status convertStatusDtoToStatus(StatusDto statusD){
-
-        Status status = new Status();
-        status.setId(statusD.getId());
-        status.setStatus(statusD.getStatus_name());
-        return status;
+        this.mapperDto = mapperDto;
     }
 
     @Override
@@ -39,7 +26,7 @@ public class StatusServiceImpl implements StatusService{
         List<Status> statusList = statusRepository.findAll();
         List <StatusDto> sDto = new ArrayList<>();
         for (Status s : statusList){
-            StatusDto statDto = convertStatusToStatusDto(s);
+            StatusDto statDto = mapperDto.convertStatusToStatusDto(s);
             sDto.add(statDto);
         }
         return sDto;
@@ -48,13 +35,13 @@ public class StatusServiceImpl implements StatusService{
     @Override
     public StatusDto findById(int id) {
         Optional<Status> status = Optional.ofNullable(statusRepository.findById(id).orElseThrow(() -> new NotFoundException("Status id not found - " + id)));
-        StatusDto statusDto = convertStatusToStatusDto(status.get());
+        StatusDto statusDto = mapperDto.convertStatusToStatusDto(status.get());
 
         return statusDto;
     }
     @Override
     public void save(StatusDto statusDto) {
-    Status s = convertStatusDtoToStatus(statusDto);
+    Status s = mapperDto.convertStatusDtoToStatus(statusDto);
     statusRepository.save(s);
     }
 
@@ -66,7 +53,7 @@ public class StatusServiceImpl implements StatusService{
     @Override
     public void updateStatus(int id, StatusDto statusDto) {
         Status status = statusRepository.findById(id).orElseThrow(() -> new NotFoundException("Task id is not found - " + id));
-        Status status1 = convertStatusDtoToStatus(statusDto);
+        Status status1 = mapperDto.convertStatusDtoToStatus(statusDto);
         status1.setId(status.getId(1));
         statusRepository.save(status1);
     }
