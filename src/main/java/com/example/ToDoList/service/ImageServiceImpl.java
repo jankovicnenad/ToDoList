@@ -1,10 +1,8 @@
 package com.example.ToDoList.service;
 
 import com.example.ToDoList.DAO.ImageRepository;
-import com.example.ToDoList.DTO.CommentDto;
 import com.example.ToDoList.DTO.ImageDTO;
 import com.example.ToDoList.DTO.TaskDto;
-import com.example.ToDoList.entity.Comment;
 import com.example.ToDoList.entity.Image;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.google.cloud.storage.*;

@@ -3,12 +3,10 @@ package com.example.ToDoList.rest;
 import com.example.ToDoList.DAO.TaskRepository;
 import com.example.ToDoList.DTO.TaskDto;
 import com.example.ToDoList.service.TaskServiceImpl;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 //@CrossOrigin(origins = "http://192.168.0.105:8080", allowedHeaders = "*", maxAge = 3600)
@@ -31,8 +29,8 @@ public class TaskRestController {
             return taskService.save(task);
         }
         @GetMapping("/tasks")
-        public List<TaskDto> getAllTasks(){
-            return taskService.getAllTasks();
+        public List<TaskDto> getAllTasks(@RequestParam(required = false, name = "status") Long statusId, @RequestParam(required = false, name = "priority") Long priorityId){
+            return taskService.getAllTasks(priorityId, statusId);
         }
 
        /* @GetMapping("/tasks/{taskId}")
@@ -46,18 +44,18 @@ public class TaskRestController {
         }*/
 
         @PostMapping("/tasks-image")
-        public TaskDto addTask(@RequestPart TaskDto task, @RequestPart MultipartFile file) {
+        public TaskDto addTask(@RequestPart TaskDto task, @RequestPart(required = false) MultipartFile file) {
 
             return taskService.saveImage(task, file);
         }
         @PutMapping("/tasks/{taskId}")
-        public String updateTask(@PathVariable int taskId, @RequestBody TaskDto taskDto) throws IOException {
+        public String updateTask(@PathVariable Long taskId, @RequestBody TaskDto taskDto) throws IOException {
             taskService.updateTask(taskId,taskDto);
             return "Updated task with id - " +taskId;
         }
 
         @GetMapping("/tasks/{taskId}")
-        public TaskDto getTasks(@PathVariable int taskId){
+        public TaskDto getTasks(@PathVariable Long taskId){
             TaskDto taskDto = taskService.findById(taskId);
             if (taskDto == null){
                 throw new NotFoundException("Task id not found - " +taskId);
@@ -66,7 +64,7 @@ public class TaskRestController {
         }
 
         @DeleteMapping("/tasks/{taskId}")
-        public String deleteTasks(@PathVariable int taskId){
+        public String deleteTasks(@PathVariable Long taskId){
             TaskDto taskDto = taskService.findById(taskId);
             if(taskDto == null)
                 throw new NotFoundException("Task id not found - " +taskId);

@@ -40,7 +40,7 @@ public class PriorityServiceImpl implements PriorityService{
     }
 
     @Override
-    public PriorityDto findById(int id) {
+    public PriorityDto findById(Long id) {
         Optional<Priority> priority = Optional.ofNullable(priorityRepository.findById(id).orElseThrow(() -> new NotFoundException("Priority id not found - " + id)));
        PriorityDto priorityDto = mapperDto.convertPriorityToPriorityDto(priority.get());
        return priorityDto;
@@ -54,13 +54,13 @@ public class PriorityServiceImpl implements PriorityService{
     }
 
     @Override
-    public void delete(int id) {
+    public void delete(Long id) {
         Optional<Priority> priority = Optional.ofNullable(priorityRepository.findById(id).orElseThrow(() -> new NotFoundException("Priority id not found - " + id)));
         priorityRepository.delete(priority.get());
     }
 
     @Override
-    public void updatePriority(int id, PriorityDto priorityDto) {
+    public void updatePriority(Long id, PriorityDto priorityDto) {
         Priority priority = priorityRepository.findById(id).orElseThrow(() -> new NotFoundException("Task id is not found - " + id));
         Priority priority1 = mapperDto.convertPriorityDtoToPriority(priorityDto);
         priority1.setId(priority.getId());

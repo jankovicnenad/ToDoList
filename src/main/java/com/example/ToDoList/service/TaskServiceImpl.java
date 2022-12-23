@@ -19,6 +19,7 @@ import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -75,8 +76,14 @@ public class TaskServiceImpl implements TaskService{
         return taskDto;
     }
     @Override
-    public List<TaskDto> getAllTasks() {
-        List<Task> tasks = taskRepository.findAll();
+    public List<TaskDto> getAllTasks(Long priorityId, Long statusId) {
+        List<Task> tasks = new ArrayList<>();
+        if(Objects.nonNull(priorityId)){
+            tasks = taskRepository.selectTasksByPriority(priorityId);
+        }
+        else {
+            tasks = taskRepository.findAll();
+        }
         List <TaskDto> tDto = new ArrayList<>();
         for (Task t : tasks){
             TaskDto taskDto = convertTaskToTaskDto(t);
@@ -86,7 +93,7 @@ public class TaskServiceImpl implements TaskService{
     }
 
     @Override
-    public TaskDto findById(int id) {
+    public TaskDto findById(Long id) {
        Task task = taskRepository.findById(id).orElseThrow(()-> new NotFoundException("Task id not found - " +id));
        TaskDto tDto = convertTaskToTaskDto(task);
         return tDto;
@@ -102,6 +109,7 @@ public class TaskServiceImpl implements TaskService{
         task.setPriority(priority.get());
 
         task.setStatus(status.get());
+        if(Objects.nonNull(multipartFile)){
         Image image = new Image();
         try {
             String imageUrl = imageService.uploadFile(multipartFile);
@@ -111,6 +119,7 @@ public class TaskServiceImpl implements TaskService{
         }
         image.setTask(task);
         task.getImages().add(image);
+        }
 
 
         taskRepository.save(task);
@@ -133,13 +142,13 @@ public class TaskServiceImpl implements TaskService{
     }
 
     @Override
-    public void deleteById(int id) {
+    public void deleteById(Long id) {
         Task task = taskRepository.findById(id).orElseThrow(() -> new NotFoundException("Task id is not found - " + id));
         taskRepository.delete(task);
     }
 
     @Override
-    public void updateTask(int id, TaskDto taskDto) {
+    public void updateTask(Long id, TaskDto taskDto) {
        Task task = taskRepository.findById(id).orElseThrow(() -> new NotFoundException("Task id is not found - " + id));
         Task task1 = convertTaskDtoToTask(taskDto);
         task1.setId(task.getId());

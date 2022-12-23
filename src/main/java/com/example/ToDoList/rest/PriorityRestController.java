@@ -1,7 +1,6 @@
 package com.example.ToDoList.rest;
 
 import com.example.ToDoList.DTO.PriorityDto;
-import com.example.ToDoList.service.PriorityService;
 import com.example.ToDoList.service.PriorityServiceImpl;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,7 +20,7 @@ public class PriorityRestController {
     public List<PriorityDto> getAllPriority(){return priorityService.getAllPriority();}
 
     @GetMapping("/priority/{priorityId}")
-    public PriorityDto findById(@PathVariable int priorityId){
+    public PriorityDto findById(@PathVariable Long priorityId){
 
         PriorityDto priorityDto = priorityService.findById(priorityId);
         if(priorityDto == null)
@@ -35,12 +34,12 @@ public class PriorityRestController {
         return thePriority;
     }
     @PutMapping("/priority/{priorityId}")
-    public String updatePriority(@PathVariable int priorityId, @RequestBody PriorityDto priorityDto){
+    public String updatePriority(@PathVariable Long priorityId, @RequestBody PriorityDto priorityDto){
         priorityService.updatePriority(priorityId, priorityDto);
         return "Updated priority with id - " +priorityId;
     }
     @DeleteMapping("/priority/{priorityId}")
-    public String deletePriority(@PathVariable int priorityId){
+    public String deletePriority(@PathVariable Long priorityId){
 
         PriorityDto priorityDto = priorityService.findById(priorityId);
         if(priorityDto == null)

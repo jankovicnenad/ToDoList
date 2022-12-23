@@ -4,7 +4,7 @@ import java.util.Date;
 
 public class TaskDto {
 
-    private int id;
+    private Long id;
     private String name;
 
     private Date start_date;
@@ -24,11 +24,11 @@ public class TaskDto {
         this.end_date = end_date;
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

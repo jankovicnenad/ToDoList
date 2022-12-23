@@ -1,7 +1,6 @@
 package com.example.ToDoList.service;
 
 import com.example.ToDoList.DTO.PriorityDto;
-import com.example.ToDoList.entity.Priority;
 
 import java.util.List;
 
@@ -9,13 +8,13 @@ public interface PriorityService {
 
     public List<PriorityDto> getAllPriority();
 
-    public PriorityDto findById(int id);
+    public PriorityDto findById(Long id);
 
     public void savePriority(PriorityDto priorityDto);
 
-    public void delete(int id);
+    public void delete(Long id);
 
-    public void updatePriority(int id, PriorityDto priorityDto);
+    public void updatePriority(Long id, PriorityDto priorityDto);
 
 
 }
