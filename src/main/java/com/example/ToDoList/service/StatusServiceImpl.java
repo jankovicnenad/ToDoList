@@ -33,7 +33,7 @@ public class StatusServiceImpl implements StatusService{
     }
 
     @Override
-    public StatusDto findById(int id) {
+    public StatusDto findById(Long id) {
         Optional<Status> status = Optional.ofNullable(statusRepository.findById(id).orElseThrow(() -> new NotFoundException("Status id not found - " + id)));
         StatusDto statusDto = mapperDto.convertStatusToStatusDto(status.get());
 
@@ -46,12 +46,12 @@ public class StatusServiceImpl implements StatusService{
     }
 
     @Override
-    public void delete(int id) {
+    public void delete(Long id) {
         Optional<Status> status = Optional.ofNullable(statusRepository.findById(id).orElseThrow(() -> new NotFoundException("Status id not found - " + id)));
         statusRepository.delete(status.get());
     }
     @Override
-    public void updateStatus(int id, StatusDto statusDto) {
+    public void updateStatus(Long id, StatusDto statusDto) {
         Status status = statusRepository.findById(id).orElseThrow(() -> new NotFoundException("Task id is not found - " + id));
         Status status1 = mapperDto.convertStatusDtoToStatus(statusDto);
         status1.setId(status.getId(1));
