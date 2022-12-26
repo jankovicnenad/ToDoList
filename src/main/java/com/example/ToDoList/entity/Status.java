@@ -10,7 +10,7 @@ public class Status {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="id")
-    private Integer id;
+    private Long id;
     @Column(name="status")
     private String status;
 
@@ -23,11 +23,11 @@ public class Status {
         this.status = status;
     }
 
-    public int getId(Integer i) {
+    public Long getId(Integer i) {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

@@ -12,9 +12,12 @@ import java.util.List;
 
 public interface TaskRepository extends JpaRepository<Task, Long> {
 
-    //neand komentarisao
+    
     @Query(value = "select t from Task t inner join fetch t.priority p where p.id = :priorityId")
-    List<Task>selectTasksByPriority(@Param("priorityId") Long priorityId);
+    List<Task> selectTasksByPriority(@Param("priorityId") Long priorityId);
 
- 
+
+    @Query(value = "select t from Task t inner join fetch t.status s where s.id = :statusId")
+    List<Task> selectTaskByStatus(@Param("statusId") Long statusId);
+
 }

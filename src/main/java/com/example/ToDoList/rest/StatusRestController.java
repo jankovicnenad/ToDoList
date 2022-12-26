@@ -1,7 +1,6 @@
 package com.example.ToDoList.rest;
 
 import com.example.ToDoList.DTO.StatusDto;
-import com.example.ToDoList.entity.Status;
 import com.example.ToDoList.service.StatusServiceImpl;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,7 +22,7 @@ public class StatusRestController {
         return statusService.getAllStatus();
     }
     @GetMapping("/status/{statusId}")
-    public StatusDto findById(@PathVariable int statusId){
+    public StatusDto findById(@PathVariable Long statusId){
 
         StatusDto statusDto = statusService.findById(statusId);
         if(statusDto == null)
@@ -36,12 +35,12 @@ public class StatusRestController {
         return theStatus;
     }
     @PutMapping("/status/{statusId}")
-    public String updateStatus(@PathVariable int statusId, @RequestBody StatusDto statusDto){
+    public String updateStatus(@PathVariable Long statusId, @RequestBody StatusDto statusDto){
         statusService.updateStatus(statusId, statusDto);
         return "Update status with id - " +statusId;
     }
     @DeleteMapping("/status/{statusId}")
-    public String deleteStatus(@PathVariable int statusId){
+    public String deleteStatus(@PathVariable Long statusId){
 
         StatusDto statusDto = statusService.findById(statusId);
         if(statusDto == null)
