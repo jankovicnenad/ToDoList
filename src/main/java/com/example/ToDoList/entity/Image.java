@@ -19,6 +19,9 @@ public class Image {
     @JoinColumn(name = "id_task")
     private Task task;
 
+    @Column(name = "original_name")
+    private String originalName;
+
     public Image (){}
 
     public Image(String description, String url) {
@@ -56,6 +59,14 @@ public class Image {
 
     public void setTask(Task task) {
         this.task = task;
+    }
+
+    public String getOriginalName() {
+        return originalName;
+    }
+
+    public void setOriginalName(String originalName) {
+        this.originalName = originalName;
     }
 
     @Override
