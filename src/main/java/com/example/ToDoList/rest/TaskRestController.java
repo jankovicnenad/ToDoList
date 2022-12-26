@@ -29,7 +29,7 @@ public class TaskRestController {
             return taskService.save(task);
         }
         @GetMapping("/tasks")
-        public List<TaskDto> getAllTasks(@RequestParam(required = false, name = "status") Long statusId, @RequestParam(required = false, name = "priority") Long priorityId){
+        public List<TaskDto> getAllTasks(@RequestParam(required = false, name = "priority") Long priorityId, @RequestParam(required = false, name = "status") Long statusId){
             return taskService.getAllTasks(priorityId, statusId);
         }
 
