@@ -9,6 +9,8 @@ public class ImageDTO {
 
     private TaskDto task_dto;
 
+    private String originalName;
+
     public int getId() {
         return id;
     }
