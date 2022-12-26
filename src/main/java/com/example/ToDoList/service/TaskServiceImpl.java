@@ -83,6 +83,9 @@ public class TaskServiceImpl implements TaskService{
         }else if (Objects.nonNull(statusId)){
             tasks = taskRepository.selectTaskByStatus(statusId);
         }
+        else if (Objects.nonNull(priorityId) && Objects.nonNull(statusId)){
+            tasks = taskRepository.selectTasksByPriorityAndStatus(priorityId, statusId);
+        }
         else {
             tasks = taskRepository.findAll();
         }
