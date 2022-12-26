@@ -78,9 +78,9 @@ public class TaskServiceImpl implements TaskService{
     @Override
     public List<TaskDto> getAllTasks(Long priorityId, Long statusId) {
         List<Task> tasks = new ArrayList<>();
-        if(Objects.nonNull(priorityId)){
+        if(Objects.nonNull(priorityId)&& Objects.isNull(statusId)){
             tasks = taskRepository.selectTasksByPriority(priorityId);
-        }else if (Objects.nonNull(statusId)){
+        }else if (Objects.nonNull(statusId)&& Objects.isNull(priorityId)){
             tasks = taskRepository.selectTaskByStatus(statusId);
         }
         else if (Objects.nonNull(priorityId) && Objects.nonNull(statusId)){
