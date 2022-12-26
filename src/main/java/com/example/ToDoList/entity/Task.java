@@ -128,4 +128,5 @@ public class Task {
             statusService.setTask(this);
         }*/
     }
+    //komentar
 
