@@ -6,6 +6,8 @@ import org.modelmapper.ModelMapper;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.util.ResourceUtils;
 
 
@@ -16,6 +18,8 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Objects;
 
+@Configuration
+@EnableJpaAuditing //allow JPA auditing
 @SpringBootApplication
 public class ToDoListApplication {
 
