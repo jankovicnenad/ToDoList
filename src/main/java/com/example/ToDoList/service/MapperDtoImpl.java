@@ -37,10 +37,14 @@ public class MapperDtoImpl implements MapperDto{
         taskDto.setName(task.getName());
         taskDto.setStart_date(task.getStart_date());
         taskDto.setEnd_date(task.getEndDate());
+
         PriorityDto priorityDto = new PriorityDto();
         priorityDto.setId(task.getPriority().getId());
         priorityDto.setPriority(task.getPriority().getPriority());
+        priorityDto.setModifiedDate(task.getPriority().getModifiedDate());
+        priorityDto.setCreatedDate(task.getPriority().getCreatedDate());
         taskDto.setPriority_dto(priorityDto);
+
         StatusDto statusDto = new StatusDto();
         statusDto.setId(task.getStatus().getId(1));
         statusDto.setStatus_name(task.getStatus().getStatus());
@@ -52,6 +56,7 @@ public class MapperDtoImpl implements MapperDto{
         Priority priority = new Priority();
         priority.setId(priorityDto.getId());
         priority.setPriority(priorityDto.getPriority());
+        priority.setPriority(priorityDto.getPriority());
         return priority;
     }
 
@@ -60,6 +65,8 @@ public class MapperDtoImpl implements MapperDto{
         PriorityDto priorityDto = new PriorityDto();
         priorityDto.setId(priority.getId());
         priorityDto.setPriority(priority.getPriority());
+        priorityDto.setCreatedDate(priority.getCreatedDate());
+        priorityDto.setModifiedDate(priority.getModifiedDate());
         return priorityDto;
     }
 
@@ -113,6 +120,8 @@ public class MapperDtoImpl implements MapperDto{
 
         priorityDto.setId(comment.getTask().getPriority().getId());
         priorityDto.setPriority(comment.getTask().getPriority().getPriority());
+        priorityDto.setCreatedDate(comment.getTask().getPriority().getCreatedDate());
+        priorityDto.setModifiedDate(comment.getTask().getPriority().getModifiedDate());
         taskDto.setPriority_dto(priorityDto);
 
         commentDto.setTask_dto(taskDto);
