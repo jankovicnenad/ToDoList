@@ -164,7 +164,7 @@ public class TaskServiceImpl implements TaskService{
         task1.setPriority(priority);
         if(status.getStatus()!=null){
         if(status.getStatus().equals("DONE")){
-            task1.setEndDate(Timestamp.valueOf(LocalDateTime.now()));
+            task1.setEndDate(LocalDateTime.now());
         }}
         taskRepository.save(task1);
 
