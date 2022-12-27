@@ -11,12 +11,13 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.util.ResourceUtils;
 
 
-
+import javax.annotation.PostConstruct;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Objects;
+import java.util.TimeZone;
 
 @Configuration
 @EnableJpaAuditing //allow JPA auditing
@@ -36,6 +37,9 @@ public class ToDoListApplication {
 				.setCredentials(GoogleCredentials.fromStream(serviceAccount))
 				.build();
 	}
+	@PostConstruct
+	public void init() {
+		TimeZone.setDefault(TimeZone.getTimeZone("UTC"));}
 	@Bean
 	public ModelMapper modelMapper() {
 		return new ModelMapper();
