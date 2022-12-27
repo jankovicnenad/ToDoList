@@ -3,6 +3,7 @@ package com.example.ToDoList.rest;
 import com.example.ToDoList.DTO.TaskDto;
 import com.example.ToDoList.service.ImageService;
 import com.example.ToDoList.service.TaskService;
+import org.apache.commons.io.FilenameUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
