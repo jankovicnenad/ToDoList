@@ -1,26 +1,30 @@
 package com.example.ToDoList.DTO;
 
-import java.util.Date;
+import com.fasterxml.jackson.annotation.JsonFormat;
+
+import javax.persistence.Column;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class TaskDto {
 
     private Long id;
     private String name;
-
-    private Date start_date;
-
-    private Date end_date;
+    @JsonFormat(pattern="yyyy-MM-dd")
+    private LocalDate start_date;
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
+    private LocalDateTime end_date;
 
     private StatusDto status_dto;
 
     private PriorityDto priority_dto;
 
 
-    public Date getEnd_date() {
+    public LocalDateTime getEnd_date() {
         return end_date;
     }
 
-    public void setEnd_date(Date end_date) {
+    public void setEnd_date(LocalDateTime end_date) {
         this.end_date = end_date;
     }
 
@@ -40,11 +44,11 @@ public class TaskDto {
         this.name = name;
     }
 
-    public Date getStart_date() {
+    public LocalDate getStart_date() {
         return start_date;
     }
 
-    public void setStart_date(Date start_date) {
+    public void setStart_date(LocalDate start_date) {
         this.start_date = start_date;
     }
 

@@ -1,10 +1,9 @@
 package com.example.ToDoList.entity;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-
 import javax.persistence.*;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -17,11 +16,10 @@ public class Task {
     @Column(name = "name")
     private String name;
     @Column(name = "start_date")
-    @JsonFormat(pattern="yyyy-MM-dd")
-    private Date startDate;
-    @Temporal(TemporalType.TIMESTAMP)
+    private LocalDate startDate;
+
     @Column(name = "end_date")
-    private Date endDate;
+    private LocalDateTime endDate;
 
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH})
     @JoinColumn(name="priority_id")
@@ -59,19 +57,19 @@ public class Task {
         this.name = name;
     }
 
-    public Date getStart_date() {
+    public LocalDate getStart_date() {
         return startDate;
     }
 
-    public void setStart_date(Date start_date) {
+    public void setStart_date(LocalDate start_date) {
         this.startDate = start_date;
     }
 
-    public Date getEndDate() {
+    public LocalDateTime getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(Date endDate) {
+    public void setEndDate(LocalDateTime endDate) {
         this.endDate = endDate;
     }
 

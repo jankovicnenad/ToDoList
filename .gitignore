@@ -4,6 +4,9 @@ target/
 !**/src/main/**/target/
 !**/src/test/**/target/
 
+src/main/resources/application.properties
+src/main/resources/serviceAccountKey.json
+
 ### STS ###
 .apt_generated
 .classpath
@@ -31,4 +34,4 @@ build/
 
 ### VS Code ###
 .vscode/
-!/src/main/resources/application.properties
+
