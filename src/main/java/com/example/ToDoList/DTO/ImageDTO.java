@@ -1,5 +1,9 @@
 package com.example.ToDoList.DTO;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
+import java.time.LocalDateTime;
+
 public class ImageDTO {
 
     private int id;
@@ -10,6 +14,12 @@ public class ImageDTO {
     private TaskDto task_dto;
 
     private String originalName;
+
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
+    private LocalDateTime createdDate;
+
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
+    private LocalDateTime modifiedDate;
 
     public int getId() {
         return id;

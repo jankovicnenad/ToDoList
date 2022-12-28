@@ -4,7 +4,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "image")
-public class Image {
+public class Image extends Auditable{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")

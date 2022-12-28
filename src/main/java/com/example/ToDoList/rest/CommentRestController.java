@@ -38,6 +38,11 @@ public class CommentRestController {
     public CommentDto addComment(@RequestBody CommentDto commDto)
     {
         commentService.save(commDto);
+        commDto.getComment();
+        commDto.getCreatedDate();
+        commDto.getModifiedDate();
+        commDto.getTask_dto().getCreatedDate();
+        commDto.getTask_dto().getModifiedDate();
         return commDto;
     }
     @DeleteMapping("/comments/{commentId}")
