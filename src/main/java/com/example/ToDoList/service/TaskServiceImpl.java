@@ -157,8 +157,9 @@ public class TaskServiceImpl implements TaskService{
     }
 
     @Override
-    public void updateTask(Long id, TaskDto taskDto) {
-       Task task = taskRepository.findById(id).orElseThrow(() -> new NotFoundException("Task id is not found - " + id));
+    public void updateTask(TaskDto taskDto) {
+        Long id = taskDto.getId();
+        Task task = taskRepository.findById(id).orElseThrow(() -> new NotFoundException("Task id is not found - " + id));
         Task task1 = convertTaskDtoToTask(taskDto);
         task1.setId(task.getId());
         Status status = statusRepository.findById(taskDto.getStatus_dto().getId()).orElseThrow(() -> new NotFoundException("Task id is not found - " + id));
