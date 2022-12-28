@@ -65,7 +65,8 @@ public class MapperDtoImpl implements MapperDto{
         Priority priority = new Priority();
         priority.setId(priorityDto.getId());
         priority.setPriority(priorityDto.getPriority());
-        priority.setPriority(priorityDto.getPriority());
+        priority.setModifiedDate(priorityDto.getModifiedDate());
+        priority.setCreatedDate(priority.getCreatedDate());
         return priority;
     }
 
