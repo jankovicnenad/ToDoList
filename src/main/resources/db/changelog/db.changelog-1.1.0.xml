@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+    <changeSet author="dev-220 (generated)" id="1672238047948-1">
+        <createTable tableName="comment">
+            <column autoIncrement="true" name="id" type="INT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="comment" type="VARCHAR(250)"/>
+            <column name="task_id" type="INT"/>
+            <column name="created_date" type="datetime(6)"/>
+            <column name="modified_date" type="datetime(6)"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="dev-220 (generated)" id="1672238047948-2">
+        <createTable tableName="image">
+            <column autoIncrement="true" name="id" type="INT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="description" type="VARCHAR(50)"/>
+            <column name="url" type="VARCHAR(300)"/>
+            <column name="id_task" type="INT"/>
+            <column name="original_name" type="VARCHAR(45)"/>
+            <column name="created_date" type="datetime(6)"/>
+            <column name="modified_date" type="datetime(6)"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="dev-220 (generated)" id="1672238047948-3">
+        <createTable tableName="priority">
+            <column autoIncrement="true" name="id" type="INT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="priority" type="VARCHAR(45)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_date" type="datetime(6)"/>
+            <column name="modified_date" type="datetime(6)"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="dev-220 (generated)" id="1672238047948-4">
+        <createTable tableName="priority_history">
+            <column autoIncrement="true" name="id" type="INT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="priority_id" type="INT"/>
+            <column name="priority" type="VARCHAR(45)"/>
+            <column name="created_date" type="datetime(6)"/>
+            <column name="modified_date" type="datetime(6)"/>
+            <column name="function_name" type="VARCHAR(45)"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="dev-220 (generated)" id="1672238047948-5">
+        <createTable tableName="status">
+            <column autoIncrement="true" name="id" type="INT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="status" type="VARCHAR(80)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_date" type="datetime(6)"/>
+            <column name="modified_date" type="datetime(6)"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="dev-220 (generated)" id="1672238047948-6">
+        <createTable tableName="task">
+            <column autoIncrement="true" name="id" type="INT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="name" type="VARCHAR(250)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="start_date" type="date"/>
+            <column name="end_date" type="TIMESTAMP(19)"/>
+            <column name="status_id" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="priority_id" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_date" type="datetime(6)"/>
+            <column name="modified_date" type="datetime(6)"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="dev-220 (generated)" id="1672238047948-7">
+        <createIndex indexName="FK_PRIORITY_idx" tableName="task">
+            <column name="priority_id"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="dev-220 (generated)" id="1672238047948-8">
+        <createIndex indexName="FK_STATUS_idx" tableName="task">
+            <column name="status_id"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="dev-220 (generated)" id="1672238047948-9">
+        <createIndex indexName="FK_TASK_idx" tableName="comment">
+            <column name="task_id"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="dev-220 (generated)" id="1672238047948-10">
+        <createIndex indexName="FK_TASK_idx" tableName="image">
+            <column name="id_task"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="dev-220 (generated)" id="1672238047948-11">
+        <addForeignKeyConstraint baseColumnNames="priority_id" baseTableName="task" constraintName="FK_PRIORITY" deferrable="false" initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT" referencedColumnNames="id" referencedTableName="priority"/>
+    </changeSet>
+    <changeSet author="dev-220 (generated)" id="1672238047948-12">
+        <addForeignKeyConstraint baseColumnNames="status_id" baseTableName="task" constraintName="FK_STATUS" deferrable="false" initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT" referencedColumnNames="id" referencedTableName="status"/>
+    </changeSet>
+    <changeSet author="dev-220 (generated)" id="1672238047948-13">
+        <addForeignKeyConstraint baseColumnNames="task_id" baseTableName="comment" constraintName="FK_TASK" deferrable="false" initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT" referencedColumnNames="id" referencedTableName="task"/>
+    </changeSet>
+    <changeSet author="dev-220 (generated)" id="1672238047948-14">
+        <addForeignKeyConstraint baseColumnNames="id_task" baseTableName="image" constraintName="Fk_image" deferrable="false" initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT" referencedColumnNames="id" referencedTableName="task"/>
+    </changeSet>
+</databaseChangeLog>
