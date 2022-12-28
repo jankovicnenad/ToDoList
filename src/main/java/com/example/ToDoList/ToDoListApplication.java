@@ -2,7 +2,7 @@ package com.example.ToDoList;
 
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.cloud.storage.StorageOptions;
-import liquibase.integration.spring.SpringLiquibase;
+import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import org.modelmapper.ModelMapper;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -20,11 +20,13 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.Date;
 import java.util.Objects;
 import java.util.TimeZone;
 
 @Configuration
 @EnableJpaAuditing //allow JPA auditing
+@OpenAPIDefinition
 @SpringBootApplication
 public class ToDoListApplication {
 
@@ -43,7 +45,9 @@ public class ToDoListApplication {
 	}
 	@PostConstruct
 	public void init() {
-		TimeZone.setDefault(TimeZone.getTimeZone("UTC"));}
+		TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
+		System.out.println("Spring boot application running in UTC timezone :"+new Date());
+	}
 	@Bean
 	public ModelMapper modelMapper() {
 		return new ModelMapper();

@@ -17,7 +17,7 @@ public interface TaskService {
 
     public void deleteById(Long id);
 
-    public void updateTask(Long id, TaskDto taskDto);
+    public void updateTask(TaskDto taskDto);
 
 
 }
