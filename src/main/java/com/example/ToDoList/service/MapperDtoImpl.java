@@ -15,18 +15,23 @@ public class MapperDtoImpl implements MapperDto{
 
     @Override
     public Task convertTaskDtoToTask(TaskDto taskDto) {
-        Task t = new Task();
-        t.setId(taskDto.getId());
-        t.setName(taskDto.getName());
-        t.setStart_date(taskDto.getStart_date());
-        t.setEndDate(taskDto.getEnd_date());
+        Task task = new Task();
+        task.setId(taskDto.getId());
+        task.setName(taskDto.getName());
+        task.setStart_date(taskDto.getStart_date());
+        task.setEndDate(taskDto.getEnd_date());
+        task.setCreatedDate(taskDto.getCreatedDate());
+        task.setModifiedDate(taskDto.getModifiedDate());
+
         Status status = new Status();
         status.setId(taskDto.getStatus_dto().getId());
+
         Priority priority = new Priority();
         priority.setId(taskDto.getPriority_dto().getId());
-        t.setStatus(status);
-        t.setPriority(priority);
-        return t;
+
+        task.setStatus(status);
+        task.setPriority(priority);
+        return task;
     }
 
     @Override
@@ -37,6 +42,8 @@ public class MapperDtoImpl implements MapperDto{
         taskDto.setName(task.getName());
         taskDto.setStart_date(task.getStart_date());
         taskDto.setEnd_date(task.getEndDate());
+        taskDto.setCreatedDate(task.getCreatedDate());
+        taskDto.setModifiedDate(task.getModifiedDate());
 
         PriorityDto priorityDto = new PriorityDto();
         priorityDto.setId(task.getPriority().getId());
@@ -48,6 +55,8 @@ public class MapperDtoImpl implements MapperDto{
         StatusDto statusDto = new StatusDto();
         statusDto.setId(task.getStatus().getId(1));
         statusDto.setStatus_name(task.getStatus().getStatus());
+        statusDto.setModifiedDate(task.getStatus().getModifiedDate());
+        statusDto.setCreatedDate(task.getStatus().getCreatedDate());
         taskDto.setStatus_dto(statusDto);
         return taskDto;    }
 
@@ -75,6 +84,8 @@ public class MapperDtoImpl implements MapperDto{
         Status status = new Status();
         status.setId(statusD.getId());
         status.setStatus(statusD.getStatus_name());
+        status.setCreatedDate(statusD.getCreatedDate());
+        status.setModifiedDate(statusD.getModifiedDate());
         return status;
     }
 
@@ -83,6 +94,8 @@ public class MapperDtoImpl implements MapperDto{
         StatusDto statustDto = new StatusDto();
         statustDto.setId(status.getId(1));
         statustDto.setStatus_name(status.getStatus());
+        statustDto.setCreatedDate(status.getCreatedDate());
+        statustDto.setModifiedDate(status.getModifiedDate());
         return statustDto;
     }
 
@@ -91,6 +104,8 @@ public class MapperDtoImpl implements MapperDto{
         Comment comment = new Comment();
         comment.setId(commentDto.getId());
         comment.setComment(commentDto.getComment());
+        comment.setCreatedDate(commentDto.getCreatedDate());
+        comment.setModifiedDate(commentDto.getModifiedDate());
 
 
         return comment;
@@ -102,6 +117,8 @@ public class MapperDtoImpl implements MapperDto{
 
         commentDto.setId(comment.getId());
         commentDto.setComment(comment.getComment());
+        commentDto.setCreatedDate(comment.getCreatedDate());
+        commentDto.setModifiedDate(comment.getModifiedDate());
 
         TaskDto taskDto = new TaskDto();
 
@@ -109,11 +126,15 @@ public class MapperDtoImpl implements MapperDto{
         taskDto.setName(comment.getTask().getName());
         taskDto.setStart_date(comment.getTask().getStart_date());
         taskDto.setEnd_date(comment.getTask().getEndDate());
+        taskDto.setModifiedDate(comment.getTask().getModifiedDate());
+        taskDto.setCreatedDate(comment.getTask().getCreatedDate());
 
         StatusDto statusDto = new StatusDto();
 
         statusDto.setId(comment.getTask().getStatus().getId(1));
         statusDto.setStatus_name(comment.getTask().getStatus().getStatus());
+        statusDto.setCreatedDate(comment.getTask().getStatus().getCreatedDate());
+        statusDto.setModifiedDate(comment.getTask().getStatus().getModifiedDate());
         taskDto.setStatus_dto(statusDto);
 
         PriorityDto priorityDto = new PriorityDto();

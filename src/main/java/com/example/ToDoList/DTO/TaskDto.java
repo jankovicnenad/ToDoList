@@ -15,10 +15,32 @@ public class TaskDto {
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private LocalDateTime end_date;
 
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
+    private LocalDateTime createdDate;
+
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
+    private LocalDateTime modifiedDate;
+
     private StatusDto status_dto;
 
     private PriorityDto priority_dto;
 
+
+    public LocalDateTime getCreatedDate() {
+        return createdDate;
+    }
+
+    public void setCreatedDate(LocalDateTime createdDate) {
+        this.createdDate = createdDate;
+    }
+
+    public LocalDateTime getModifiedDate() {
+        return modifiedDate;
+    }
+
+    public void setModifiedDate(LocalDateTime modifiedDate) {
+        this.modifiedDate = modifiedDate;
+    }
 
     public LocalDateTime getEnd_date() {
         return end_date;

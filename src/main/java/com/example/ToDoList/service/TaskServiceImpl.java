@@ -120,6 +120,9 @@ public class TaskServiceImpl implements TaskService{
             String imageUrl = imageService.uploadFile(multipartFile);
             image.setUrl(imageUrl);
             image.setOriginalName(multipartFile.getOriginalFilename());
+            image.setModifiedDate(LocalDateTime.now());
+            image.setCreatedDate(LocalDateTime.now());
+
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
