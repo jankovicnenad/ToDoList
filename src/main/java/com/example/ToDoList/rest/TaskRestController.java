@@ -1,7 +1,10 @@
 package com.example.ToDoList.rest;
 
+import com.example.ToDoList.DAO.ImageRepository;
 import com.example.ToDoList.DAO.TaskRepository;
 import com.example.ToDoList.DTO.TaskDto;
+import com.example.ToDoList.DTO.TaskDtoRequest;
+import com.example.ToDoList.service.ImageService;
 import com.example.ToDoList.service.TaskServiceImpl;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -21,22 +24,27 @@ public class TaskRestController {
 
         private final TaskRepository taskRepository;
 
-        public TaskRestController(TaskServiceImpl TheTask, TaskRepository theRepo)
+        private final ImageService imageService;
+
+        public TaskRestController(TaskServiceImpl TheTask, TaskRepository theRepo, ImageService imageService)
         {
             taskService = TheTask;
             taskRepository = theRepo;
+            this.imageService = imageService;
         }
-        @Operation(summary = "This is to post tasks in database")
-        @ApiResponses(value = {
-            @ApiResponse(responseCode = "200",
-                    description = "Posted tasks into database",
-                    content = {@Content(mediaType = "application/json")})
-            })
         @PostMapping("/tasks")
-        public TaskDto addTasks(@RequestBody TaskDto task){
-
-            return taskService.save(task);
+        public String uploadFile(@RequestPart("files") MultipartFile multipartFile, @RequestPart TaskDto taskDto) throws Exception {
+            if(multipartFile.isEmpty())
+                taskService.save(taskDto);
+            else {
+                if (!multipartFile.getOriginalFilename().endsWith(".jpg") && !multipartFile.getOriginalFilename().endsWith(".png")) {
+                    // Ako nije, vratite gresku
+                    return "Invalid file extension";
         }
+        System.out.println(imageService.uploadFile(multipartFile));
+        taskService.saveImage(taskDto, multipartFile);}
+    return "Uspesno odradjena metoda!";
+}
         @Operation(summary = "This is to fetch all tasks from database")
         @ApiResponses(value = {
                 @ApiResponse(responseCode = "200",
@@ -54,7 +62,7 @@ public class TaskRestController {
                     content = {@Content(mediaType = "application/json")})
             })
         @PutMapping("/tasks")
-        public String updateTask(@RequestBody TaskDto taskDto) throws IOException {
+        public String updateTask(@RequestBody TaskDtoRequest taskDto) throws IOException {
             taskService.updateTask(taskDto);
             return "Updated task";
         }

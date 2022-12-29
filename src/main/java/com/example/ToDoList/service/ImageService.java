@@ -11,7 +11,7 @@ public interface ImageService {
 
     public List<ImageDTO> getAllImage();
 
-    public ImageDTO findById(int id);
+//    public ImageDTO findById(int id);
 
     public void save(ImageDTO imageDTO);
 

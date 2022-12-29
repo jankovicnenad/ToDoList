@@ -5,11 +5,9 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import java.time.LocalDateTime;
 
 public class CommentDto {
-    private int id;
+    private Long id;
     private String comment;
-
     private TaskDto task_dto;
-
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private LocalDateTime createdDate;
 
@@ -32,11 +30,11 @@ public class CommentDto {
         this.modifiedDate = modifiedDate;
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

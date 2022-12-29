@@ -6,7 +6,7 @@ import java.time.LocalDateTime;
 
 public class ImageDTO {
 
-    private int id;
+    private Long id;
     private String description;
 
     private String url;
@@ -21,11 +21,11 @@ public class ImageDTO {
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private LocalDateTime modifiedDate;
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -51,5 +51,13 @@ public class ImageDTO {
 
     public void setTask_dto(TaskDto task_dto) {
         this.task_dto = task_dto;
+    }
+
+    public String getOriginalName() {
+        return originalName;
+    }
+
+    public void setOriginalName(String originalName) {
+        this.originalName = originalName;
     }
 }
