@@ -23,7 +23,7 @@ public class Status extends Auditable{
         this.status = status;
     }
 
-    public Long getId(Integer i) {
+    public Long getId() {
         return id;
     }
 

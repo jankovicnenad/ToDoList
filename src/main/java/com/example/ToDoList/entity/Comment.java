@@ -8,7 +8,7 @@ public class Comment  extends  Auditable{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-        private int id;
+        private Long id;
     @Column(name = "comment")
         private String comment;
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH,CascadeType.REFRESH})
@@ -21,7 +21,7 @@ public class Comment  extends  Auditable{
         this.comment = comment;
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
@@ -29,7 +29,7 @@ public class Comment  extends  Auditable{
         return comment;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

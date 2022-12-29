@@ -54,7 +54,7 @@ public class StatusServiceImpl implements StatusService{
     public void updateStatus(Long id, StatusDto statusDto) {
         Status status = statusRepository.findById(id).orElseThrow(() -> new NotFoundException("Task id is not found - " + id));
         Status status1 = mapperDto.convertStatusDtoToStatus(statusDto);
-        status1.setId(status.getId(1));
+        status1.setId(status.getId());
         statusRepository.save(status1);
     }
 }

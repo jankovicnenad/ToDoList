@@ -1,6 +1,7 @@
 package com.example.ToDoList.service;
 
 import com.example.ToDoList.DTO.TaskDto;
+import com.example.ToDoList.DTO.TaskDtoRequest;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
@@ -17,7 +18,7 @@ public interface TaskService {
 
     public void deleteById(Long id);
 
-    public void updateTask(TaskDto taskDto);
+    public void updateTask(TaskDtoRequest taskDto);
 
 
 }

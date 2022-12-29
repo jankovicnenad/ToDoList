@@ -1,13 +1,7 @@
 package com.example.ToDoList.service;
 
-import com.example.ToDoList.DTO.CommentDto;
-import com.example.ToDoList.DTO.PriorityDto;
-import com.example.ToDoList.DTO.StatusDto;
-import com.example.ToDoList.DTO.TaskDto;
-import com.example.ToDoList.entity.Comment;
-import com.example.ToDoList.entity.Priority;
-import com.example.ToDoList.entity.Status;
-import com.example.ToDoList.entity.Task;
+import com.example.ToDoList.DTO.*;
+import com.example.ToDoList.entity.*;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -53,7 +47,7 @@ public class MapperDtoImpl implements MapperDto{
         taskDto.setPriority_dto(priorityDto);
 
         StatusDto statusDto = new StatusDto();
-        statusDto.setId(task.getStatus().getId(1));
+        statusDto.setId(task.getStatus().getId());
         statusDto.setStatus_name(task.getStatus().getStatus());
         statusDto.setModifiedDate(task.getStatus().getModifiedDate());
         statusDto.setCreatedDate(task.getStatus().getCreatedDate());
@@ -93,7 +87,7 @@ public class MapperDtoImpl implements MapperDto{
     @Override
     public StatusDto convertStatusToStatusDto(Status status) {
         StatusDto statustDto = new StatusDto();
-        statustDto.setId(status.getId(1));
+        statustDto.setId(status.getId());
         statustDto.setStatus_name(status.getStatus());
         statustDto.setCreatedDate(status.getCreatedDate());
         statustDto.setModifiedDate(status.getModifiedDate());
@@ -132,7 +126,7 @@ public class MapperDtoImpl implements MapperDto{
 
         StatusDto statusDto = new StatusDto();
 
-        statusDto.setId(comment.getTask().getStatus().getId(1));
+        statusDto.setId(comment.getTask().getStatus().getId());
         statusDto.setStatus_name(comment.getTask().getStatus().getStatus());
         statusDto.setCreatedDate(comment.getTask().getStatus().getCreatedDate());
         statusDto.setModifiedDate(comment.getTask().getStatus().getModifiedDate());
@@ -148,5 +142,61 @@ public class MapperDtoImpl implements MapperDto{
 
         commentDto.setTask_dto(taskDto);
         return commentDto;
+    }
+
+    @Override
+    public Task convertTaskDtoRequestToTask(TaskDtoRequest taskDtoRequest) {
+        Task task = new Task();
+        task.setId(taskDtoRequest.getId());
+        task.setName(taskDtoRequest.getName());
+        task.setStart_date(taskDtoRequest.getStart_date());
+        Status status = new Status();
+        status.setId(taskDtoRequest.getStatus_dto().getId());
+        Priority priority = new Priority();
+        priority.setId(taskDtoRequest.getPriority_dto().getId());
+        task.setStatus(status);
+        task.setPriority(priority);
+        return task;
+    }
+
+    @Override
+    public TaskDtoRequest convertTaskToTaskDtoRequest(Task task) {
+        TaskDtoRequest taskDtoRequest = new TaskDtoRequest();
+        taskDtoRequest.setId(task.getId());
+        taskDtoRequest.setName(task.getName());
+        taskDtoRequest.setStart_date(task.getStart_date());
+        StatusDto statusDto = new StatusDto();
+        statusDto.setId(task.getStatus().getId());
+        PriorityDto priorityDto = new PriorityDto();
+        priorityDto.setId(task.getPriority().getId());
+        taskDtoRequest.setStatus_dto(statusDto);
+        taskDtoRequest.setPriority_dto(priorityDto);
+        return taskDtoRequest;
+    }
+    public ImageDTO convertImageToImageDto(Image image){
+        ImageDTO imageDTO = new ImageDTO();
+        imageDTO.setId(image.getId());
+        imageDTO.setUrl(image.getUrl());
+        imageDTO.setOriginalName(image.getOriginalName());
+        TaskDto taskDto = new TaskDto();
+        taskDto.setId(image.getTask().getId());
+        taskDto.setName(image.getTask().getName());
+        taskDto.setStart_date(image.getTask().getStart_date());
+        taskDto.setEnd_date(image.getTask().getEndDate());
+        imageDTO.setTask_dto(taskDto);
+        return imageDTO;
+    }
+    public Image convertImageDtoToImage(ImageDTO imageDTO){
+        Image image = new Image();
+        image.setId(imageDTO.getId());
+        image.setUrl(imageDTO.getUrl());
+        image.setOriginalName(imageDTO.getOriginalName());
+        Task task = new Task();
+        task.setId(imageDTO.getTask_dto().getId());
+        task.setName(imageDTO.getTask_dto().getName());
+        task.setStart_date(imageDTO.getTask_dto().getStart_date());
+        task.setEndDate(imageDTO.getTask_dto().getEnd_date());
+        image.setTask(task);
+        return image;
     }
 }
