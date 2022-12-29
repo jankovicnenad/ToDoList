@@ -11,4 +11,9 @@
         </addColumn>
     </changeSet>
 
+    <changeSet id="add-testnumbertwo-column" author="Nenad">
+        <addColumn tableName="priority">
+            <column name="testKolonadruga" type="varchar(45)" />
+        </addColumn>
+    </changeSet>
 </databaseChangeLog>
