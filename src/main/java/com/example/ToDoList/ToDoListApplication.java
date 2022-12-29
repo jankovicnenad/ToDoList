@@ -53,9 +53,27 @@ public class ToDoListApplication {
 		return new ModelMapper();
 
 	}
+//alternative for liquibase
+/*
+	@Bean
+	public DataSource dataSource() {
+		DriverManagerDataSource dataSource = new DriverManagerDataSource();
+		dataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
+		dataSource.setUrl("jdbc:mysql://192.168.0.39:3306/ToDoList?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC");
+		dataSource.setUsername("root");
+		dataSource.setPassword("my-secret-password");
+		return dataSource;
+	}
 
 
+	@Bean
+	public SpringLiquibase liquibase() {
+		SpringLiquibase liquibase = new SpringLiquibase();
+		liquibase.setChangeLog("classpath:/db/changelog/db.changelog-master.xml");
+		liquibase.setDataSource(dataSource());
+		return liquibase;
+	}
 
-
+*/
 
 }
