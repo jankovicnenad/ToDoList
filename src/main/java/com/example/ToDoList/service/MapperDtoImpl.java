@@ -2,6 +2,7 @@ package com.example.ToDoList.service;
 
 import com.example.ToDoList.DTO.*;
 import com.example.ToDoList.entity.*;
+import liquibase.pro.packaged.T;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -39,43 +40,43 @@ public class MapperDtoImpl implements MapperDto{
         taskDto.setCreatedDate(task.getCreatedDate());
         taskDto.setModifiedDate(task.getModifiedDate());
 
-        PriorityDto priorityDto = new PriorityDto();
-        priorityDto.setId(task.getPriority().getId());
-        priorityDto.setPriority(task.getPriority().getPriority());
-        priorityDto.setModifiedDate(task.getPriority().getModifiedDate());
-        priorityDto.setCreatedDate(task.getPriority().getCreatedDate());
-        taskDto.setPriority_dto(priorityDto);
+        PriorityDtoResponse priorityDtoResponse = new PriorityDtoResponse();
+        priorityDtoResponse.setId(task.getPriority().getId());
+        priorityDtoResponse.setPriority(task.getPriority().getPriority());
+        priorityDtoResponse.setModifiedDate(task.getPriority().getModifiedDate());
+        priorityDtoResponse.setCreatedDate(task.getPriority().getCreatedDate());
+        taskDto.setPriority_dto(priorityDtoResponse);
 
-        StatusDto statusDto = new StatusDto();
-        statusDto.setId(task.getStatus().getId());
-        statusDto.setStatus_name(task.getStatus().getStatus());
-        statusDto.setModifiedDate(task.getStatus().getModifiedDate());
-        statusDto.setCreatedDate(task.getStatus().getCreatedDate());
-        taskDto.setStatus_dto(statusDto);
+        StatusDtoResponse statusDtoResponse = new StatusDtoResponse();
+        statusDtoResponse.setId(task.getStatus().getId());
+        statusDtoResponse.setStatus_name(task.getStatus().getStatus());
+        statusDtoResponse.setModifiedDate(task.getStatus().getModifiedDate());
+        statusDtoResponse.setCreatedDate(task.getStatus().getCreatedDate());
+        taskDto.setStatus_dto(statusDtoResponse);
         return taskDto;    }
 
     @Override
-    public Priority convertPriorityDtoToPriority(PriorityDto priorityDto) {
+    public Priority convertPriorityDtoResponseToPriority(PriorityDtoResponse priorityDtoResponse) {
         Priority priority = new Priority();
-        priority.setId(priorityDto.getId());
-        priority.setPriority(priorityDto.getPriority());
-        priority.setModifiedDate(priorityDto.getModifiedDate());
+        priority.setId(priorityDtoResponse.getId());
+        priority.setPriority(priorityDtoResponse.getPriority());
+        priority.setModifiedDate(priorityDtoResponse.getModifiedDate());
         priority.setCreatedDate(priority.getCreatedDate());
         return priority;
     }
 
     @Override
-    public PriorityDto convertPriorityToPriorityDto(Priority priority) {
-        PriorityDto priorityDto = new PriorityDto();
-        priorityDto.setId(priority.getId());
-        priorityDto.setPriority(priority.getPriority());
-        priorityDto.setCreatedDate(priority.getCreatedDate());
-        priorityDto.setModifiedDate(priority.getModifiedDate());
-        return priorityDto;
+    public PriorityDtoResponse convertPriorityToPriorityDtoResponse(Priority priority) {
+        PriorityDtoResponse priorityDtoResponse = new PriorityDtoResponse();
+        priorityDtoResponse.setId(priority.getId());
+        priorityDtoResponse.setPriority(priority.getPriority());
+        priorityDtoResponse.setCreatedDate(priority.getCreatedDate());
+        priorityDtoResponse.setModifiedDate(priority.getModifiedDate());
+        return priorityDtoResponse;
     }
 
     @Override
-    public Status convertStatusDtoToStatus(StatusDto statusD) {
+    public Status convertStatusDtoResponseToStatus(StatusDtoResponse statusD) {
         Status status = new Status();
         status.setId(statusD.getId());
         status.setStatus(statusD.getStatus_name());
@@ -85,13 +86,29 @@ public class MapperDtoImpl implements MapperDto{
     }
 
     @Override
-    public StatusDto convertStatusToStatusDto(Status status) {
-        StatusDto statustDto = new StatusDto();
+    public StatusDtoResponse convertStatusToStatusDtoResponse(Status status) {
+        StatusDtoResponse statustDto = new StatusDtoResponse();
         statustDto.setId(status.getId());
         statustDto.setStatus_name(status.getStatus());
         statustDto.setCreatedDate(status.getCreatedDate());
         statustDto.setModifiedDate(status.getModifiedDate());
         return statustDto;
+    }
+
+    @Override
+    public Status convertStatusDtoRequestToStatus(StatusDtoRequest statusDtoRequest) {
+        Status status = new Status();
+        status.setId(statusDtoRequest.getId());
+        status.setStatus(statusDtoRequest.getStatus());
+        return status;
+    }
+
+    @Override
+    public StatusDtoRequest convertStatusToStatusDtoRequest(Status status) {
+        StatusDtoRequest statusDtoRequest = new StatusDtoRequest();
+        statusDtoRequest.setId(status.getId());
+        statusDtoRequest.setStatus(status.getStatus());
+        return statusDtoRequest;
     }
 
     @Override
@@ -124,24 +141,44 @@ public class MapperDtoImpl implements MapperDto{
         taskDto.setModifiedDate(comment.getTask().getModifiedDate());
         taskDto.setCreatedDate(comment.getTask().getCreatedDate());
 
-        StatusDto statusDto = new StatusDto();
+        StatusDtoResponse statusDtoResponse = new StatusDtoResponse();
 
-        statusDto.setId(comment.getTask().getStatus().getId());
-        statusDto.setStatus_name(comment.getTask().getStatus().getStatus());
-        statusDto.setCreatedDate(comment.getTask().getStatus().getCreatedDate());
-        statusDto.setModifiedDate(comment.getTask().getStatus().getModifiedDate());
-        taskDto.setStatus_dto(statusDto);
+        statusDtoResponse.setId(comment.getTask().getStatus().getId());
+        statusDtoResponse.setStatus_name(comment.getTask().getStatus().getStatus());
+        statusDtoResponse.setCreatedDate(comment.getTask().getStatus().getCreatedDate());
+        statusDtoResponse.setModifiedDate(comment.getTask().getStatus().getModifiedDate());
+        taskDto.setStatus_dto(statusDtoResponse);
 
-        PriorityDto priorityDto = new PriorityDto();
+        PriorityDtoResponse priorityDtoResponse = new PriorityDtoResponse();
 
-        priorityDto.setId(comment.getTask().getPriority().getId());
-        priorityDto.setPriority(comment.getTask().getPriority().getPriority());
-        priorityDto.setCreatedDate(comment.getTask().getPriority().getCreatedDate());
-        priorityDto.setModifiedDate(comment.getTask().getPriority().getModifiedDate());
-        taskDto.setPriority_dto(priorityDto);
+        priorityDtoResponse.setId(comment.getTask().getPriority().getId());
+        priorityDtoResponse.setPriority(comment.getTask().getPriority().getPriority());
+        priorityDtoResponse.setCreatedDate(comment.getTask().getPriority().getCreatedDate());
+        priorityDtoResponse.setModifiedDate(comment.getTask().getPriority().getModifiedDate());
+        taskDto.setPriority_dto(priorityDtoResponse);
 
         commentDto.setTask_dto(taskDto);
         return commentDto;
+    }
+
+    @Override
+    public Comment convertCommentDtoRequestToComment(CommentDtoRequest commentDtoRequest) {
+        Comment comment = new Comment();
+        comment.setId(commentDtoRequest.getId());
+        comment.setComment(commentDtoRequest.getComment());
+        Task task = new Task();
+        task.setId(commentDtoRequest.getTaskID());
+        comment.setTask(task);
+        return comment;
+    }
+
+    @Override
+    public CommentDtoRequest convertCommentToCommentDtoRequest(Comment comment) {
+        CommentDtoRequest commentDtoRequest = new CommentDtoRequest();
+        commentDtoRequest.setId(comment.getId());
+        commentDtoRequest.setComment(comment.getComment());
+        commentDtoRequest.setTaskID(comment.getTask().getId());
+        return commentDtoRequest;
     }
 
     @Override
@@ -165,12 +202,12 @@ public class MapperDtoImpl implements MapperDto{
         taskDtoRequest.setId(task.getId());
         taskDtoRequest.setName(task.getName());
         taskDtoRequest.setStart_date(task.getStart_date());
-        StatusDto statusDto = new StatusDto();
-        statusDto.setId(task.getStatus().getId());
-        PriorityDto priorityDto = new PriorityDto();
-        priorityDto.setId(task.getPriority().getId());
-        taskDtoRequest.setStatus_dto(statusDto);
-        taskDtoRequest.setPriority_dto(priorityDto);
+        StatusDtoResponse statusDtoResponse = new StatusDtoResponse();
+        statusDtoResponse.setId(task.getStatus().getId());
+        PriorityDtoResponse priorityDtoResponse = new PriorityDtoResponse();
+        priorityDtoResponse.setId(task.getPriority().getId());
+        taskDtoRequest.setStatus_dto(statusDtoResponse);
+        taskDtoRequest.setPriority_dto(priorityDtoResponse);
         return taskDtoRequest;
     }
     public ImageDTO convertImageToImageDto(Image image){
@@ -199,4 +236,23 @@ public class MapperDtoImpl implements MapperDto{
         image.setTask(task);
         return image;
     }
+
+    @Override
+    public Priority convertPriorityDtoRequestToPriority(PriorityDtoRequest priorityDto) {
+        Priority priority = new Priority();
+        priority.setPriority(priorityDto.getPriority());
+        priority.setId(priorityDto.getId());
+        return priority;
+    }
+
+    @Override
+    public PriorityDtoRequest convertPriorityToPriorityDtoRequest(Priority priority) {
+    PriorityDtoRequest priorityDtoRequest = new PriorityDtoRequest();
+
+    priorityDtoRequest.setPriority(priority.getPriority());
+    priorityDtoRequest.setId(priority.getId());
+    return priorityDtoRequest;
+
+    }
+
 }

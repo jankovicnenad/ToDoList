@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 
 import java.time.LocalDateTime;
 
-public class PriorityDto {
+public class PriorityDtoResponse {
 
     private Long id;
     private String priority;

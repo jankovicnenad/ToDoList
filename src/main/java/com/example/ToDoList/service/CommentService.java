@@ -1,6 +1,7 @@
 package com.example.ToDoList.service;
 
 import com.example.ToDoList.DTO.CommentDto;
+import com.example.ToDoList.DTO.CommentDtoRequest;
 import com.example.ToDoList.entity.Comment;
 
 import java.util.List;
@@ -10,11 +11,11 @@ public interface CommentService {
 
     public List<CommentDto> getAllComments();
 
-    public CommentDto findById(int id);
+    public CommentDto findById(Long id);
 
-    public CommentDto save(CommentDto commentDto);
+    public CommentDto save(CommentDtoRequest commentDto);
 
-    public void delete(int id);
+    public void delete(Long id);
 
-    public void updateComment(int id, CommentDto commentDto);
+    public void updateComment(Long id, CommentDtoRequest commentDto);
 }

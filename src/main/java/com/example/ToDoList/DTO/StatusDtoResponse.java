@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 
 import java.time.LocalDateTime;
 
-public class StatusDto {
+public class StatusDtoResponse {
 
     private Long id;
     private String status_name;

@@ -3,6 +3,7 @@ package com.example.ToDoList.service;
 import com.example.ToDoList.DAO.CommentRepository;
 import com.example.ToDoList.DAO.TaskRepository;
 import com.example.ToDoList.DTO.CommentDto;
+import com.example.ToDoList.DTO.CommentDtoRequest;
 import com.example.ToDoList.entity.Comment;
 import com.example.ToDoList.entity.Task;
 import com.example.ToDoList.rest.NotFoundException;
@@ -38,7 +39,7 @@ public class CommentServiceImpl implements CommentService{
         }
 
     @Override
-    public CommentDto findById(int id) {
+    public CommentDto findById(Long id) {
 
         Optional<Comment> comment = Optional.ofNullable(commentRepository.findById(id).orElseThrow(() -> new NotFoundException("Comment id is not found - " + id)));
         CommentDto commentDto = mapperDto.convertCommentToCommentDto(comment.get());
@@ -46,26 +47,26 @@ public class CommentServiceImpl implements CommentService{
     }
 
     @Override
-    public CommentDto save(CommentDto commentDto) {
-        Comment c = mapperDto.convertCommentDtoToComment(commentDto);
-        Optional<Task> task = taskRepository.findById(commentDto.getTask_dto().getId());
+    public CommentDto save(CommentDtoRequest commentDto) {
+        Comment c = mapperDto.convertCommentDtoRequestToComment(commentDto);
+        Optional<Task> task = taskRepository.findById(commentDto.getTaskID());
         c.setTask(task.get());
         commentRepository.save(c);
         return mapperDto.convertCommentToCommentDto(c);
     }
 
     @Override
-    public void delete(int id) {
+    public void delete(Long id) {
         Optional<Comment> comment = Optional.ofNullable(commentRepository.findById(id).orElseThrow(() -> new NotFoundException("Priority id not found - " + id)));
         commentRepository.delete(comment.get());
     }
 
     @Override
-    public void updateComment(int id, CommentDto commentDto) {
+    public void updateComment(Long id, CommentDtoRequest commentDto) {
         Comment comment = commentRepository.findById(id).orElseThrow(() -> new NotFoundException("Task id is not found - " + id));
-        Comment comment1 = mapperDto.convertCommentDtoToComment(commentDto);
+        Comment comment1 = mapperDto.convertCommentDtoRequestToComment(commentDto);
         comment1.setId(comment.getId());
-        Task task = taskRepository.findById(commentDto.getTask_dto().getId()).orElseThrow(() -> new NotFoundException("Task id is not found - " + id));
+        Task task = taskRepository.findById(commentDto.getTaskID()).orElseThrow(() -> new NotFoundException("Task id is not found - " + id));
         comment1.setTask(task);
         commentRepository.save(comment1);
     }

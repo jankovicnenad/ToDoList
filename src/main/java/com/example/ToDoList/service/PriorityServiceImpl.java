@@ -1,12 +1,12 @@
 package com.example.ToDoList.service;
 
 import com.example.ToDoList.DAO.PriorityRepository;
-import com.example.ToDoList.DTO.PriorityDto;
+import com.example.ToDoList.DTO.PriorityDtoResponse;
+import com.example.ToDoList.DTO.PriorityDtoRequest;
 import com.example.ToDoList.entity.Priority;
 import com.example.ToDoList.rest.NotFoundException;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -27,13 +27,13 @@ public class PriorityServiceImpl implements PriorityService{
     }
 
     @Override
-    public List<PriorityDto> getAllPriority() {
+    public List<PriorityDtoResponse> getAllPriority() {
         List<Priority> priorities = priorityRepository.findAll();
-        List<PriorityDto> pDto = new ArrayList<>();
+        List<PriorityDtoResponse> pDto = new ArrayList<>();
         for(Priority p : priorities)
         {
-            PriorityDto priorityDto = mapperDto.convertPriorityToPriorityDto(p);
-            pDto.add(priorityDto);
+            PriorityDtoResponse priorityDtoResponse = mapperDto.convertPriorityToPriorityDtoResponse(p);
+            pDto.add(priorityDtoResponse);
         }
 
 
@@ -41,17 +41,18 @@ public class PriorityServiceImpl implements PriorityService{
     }
 
     @Override
-    public PriorityDto findById(Long id) {
+    public PriorityDtoResponse findById(Long id) {
         Optional<Priority> priority = Optional.ofNullable(priorityRepository.findById(id).orElseThrow(() -> new NotFoundException("Priority id not found - " + id)));
-       PriorityDto priorityDto = mapperDto.convertPriorityToPriorityDto(priority.get());
-       return priorityDto;
+       PriorityDtoResponse priorityDtoResponse = mapperDto.convertPriorityToPriorityDtoResponse(priority.get());
+       return priorityDtoResponse;
     }
 
     @Override
-    public void savePriority(PriorityDto priorityDto) {
-        Priority p = mapperDto.convertPriorityDtoToPriority(priorityDto);
-        priorityRepository.save(p);
-        priorityDto.setId(p.getId());
+    public PriorityDtoResponse savePriority(PriorityDtoRequest priorityDto) {
+        Priority priority = mapperDto.convertPriorityDtoRequestToPriority(priorityDto);
+        priorityRepository.save(priority);
+        return mapperDto.convertPriorityToPriorityDtoResponse(priority);
+
     }
 
     @Override
@@ -61,9 +62,9 @@ public class PriorityServiceImpl implements PriorityService{
     }
 
     @Override
-    public void updatePriority(Long id, PriorityDto priorityDto) {
+    public void updatePriority(Long id, PriorityDtoRequest priorityDtoRequest) {
         Priority priority = priorityRepository.findById(id).orElseThrow(() -> new NotFoundException("Task id is not found - " + id));
-        Priority priority1 = mapperDto.convertPriorityDtoToPriority(priorityDto);
+        Priority priority1 = mapperDto.convertPriorityDtoRequestToPriority(priorityDtoRequest);
         priority1.setId(priority.getId());
         priorityRepository.save(priority1);
     }
