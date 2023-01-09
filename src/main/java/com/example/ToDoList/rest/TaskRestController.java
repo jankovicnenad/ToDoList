@@ -6,10 +6,13 @@ import com.example.ToDoList.DTO.TaskDtoRequest;
 import com.example.ToDoList.service.ImageService;
 import com.example.ToDoList.service.TaskServiceImpl;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -40,18 +43,19 @@ public class TaskRestController {
                     content = {@Content(mediaType = "application/json")}
             )
     })
-        @PostMapping(value = "/tasks", consumes = "multipart/form-data")
-        public ResponseEntity<?> uploadFile(@RequestPart("file") MultipartFile multipartFile, @RequestPart TaskDtoRequest taskDtoRequest) throws Exception {
+        @PostMapping(value = "/tasks", consumes = MediaType.MULTIPART_FORM_DATA_VALUE ,headers = "Content-Type= multipart/form-data")
+        public ResponseEntity<?> uploadFile(@RequestPart("file") MultipartFile multipartFile, @RequestPart @Parameter(schema =@Schema(type = "string", format = "binary")) TaskDtoRequest taskDtoRequest) throws Exception {
             if(multipartFile.isEmpty())
-                taskService.save(taskDtoRequest);
+                return new ResponseEntity<>(taskService.save(taskDtoRequest), HttpStatus.OK);
             else {
                 if (!multipartFile.getOriginalFilename().endsWith(".jpg") && !multipartFile.getOriginalFilename().endsWith(".png")) {
                     // Ako nije, vratite gresku
 //                    return "Invalid file extension";
         }
         System.out.println(imageService.uploadFile(multipartFile));
-        taskService.saveImage(taskDtoRequest, multipartFile);}
-        return new ResponseEntity<>("Task and file successfully saved.", HttpStatus.OK);
+
+            }
+        return new ResponseEntity<>(taskService.saveImage(taskDtoRequest, multipartFile), HttpStatus.OK);
 }
         @Operation(summary = "This is to fetch all tasks from database")
         @ApiResponses(value = {
