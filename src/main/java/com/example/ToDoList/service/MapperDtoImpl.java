@@ -2,7 +2,6 @@ package com.example.ToDoList.service;
 
 import com.example.ToDoList.DTO.*;
 import com.example.ToDoList.entity.*;
-import liquibase.pro.packaged.T;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -112,25 +111,25 @@ public class MapperDtoImpl implements MapperDto{
     }
 
     @Override
-    public Comment convertCommentDtoToComment(CommentDto commentDto) {
+    public Comment convertCommentDtoResponseToComment(CommentDtoResponse commentDtoResponse) {
         Comment comment = new Comment();
-        comment.setId(commentDto.getId());
-        comment.setComment(commentDto.getComment());
-        comment.setCreatedDate(commentDto.getCreatedDate());
-        comment.setModifiedDate(commentDto.getModifiedDate());
+        comment.setId(commentDtoResponse.getId());
+        comment.setComment(commentDtoResponse.getComment());
+        comment.setCreatedDate(commentDtoResponse.getCreatedDate());
+        comment.setModifiedDate(commentDtoResponse.getModifiedDate());
 
 
         return comment;
     }
 
     @Override
-    public CommentDto convertCommentToCommentDto(Comment comment) {
-        CommentDto commentDto = new CommentDto();
+    public CommentDtoResponse convertCommentToCommentDtoResponse(Comment comment) {
+        CommentDtoResponse commentDtoResponse = new CommentDtoResponse();
 
-        commentDto.setId(comment.getId());
-        commentDto.setComment(comment.getComment());
-        commentDto.setCreatedDate(comment.getCreatedDate());
-        commentDto.setModifiedDate(comment.getModifiedDate());
+        commentDtoResponse.setId(comment.getId());
+        commentDtoResponse.setComment(comment.getComment());
+        commentDtoResponse.setCreatedDate(comment.getCreatedDate());
+        commentDtoResponse.setModifiedDate(comment.getModifiedDate());
 
         TaskDto taskDto = new TaskDto();
 
@@ -157,8 +156,8 @@ public class MapperDtoImpl implements MapperDto{
         priorityDtoResponse.setModifiedDate(comment.getTask().getPriority().getModifiedDate());
         taskDto.setPriority_dto(priorityDtoResponse);
 
-        commentDto.setTask_dto(taskDto);
-        return commentDto;
+        commentDtoResponse.setTask_dto(taskDto);
+        return commentDtoResponse;
     }
 
     @Override

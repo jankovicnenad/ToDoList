@@ -20,9 +20,9 @@ public interface MapperDto {
 
     public StatusDtoRequest convertStatusToStatusDtoRequest(Status status);
 
-    public Comment convertCommentDtoToComment(CommentDto commentDto);
+    public Comment convertCommentDtoResponseToComment(CommentDtoResponse commentDtoResponse);
 
-    public CommentDto convertCommentToCommentDto(Comment comment);
+    public CommentDtoResponse convertCommentToCommentDtoResponse(Comment comment);
 
     public Comment convertCommentDtoRequestToComment(CommentDtoRequest commentDto);
 

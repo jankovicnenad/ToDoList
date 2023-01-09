@@ -2,7 +2,7 @@ package com.example.ToDoList.service;
 
 import com.example.ToDoList.DAO.CommentRepository;
 import com.example.ToDoList.DAO.TaskRepository;
-import com.example.ToDoList.DTO.CommentDto;
+import com.example.ToDoList.DTO.CommentDtoResponse;
 import com.example.ToDoList.DTO.CommentDtoRequest;
 import com.example.ToDoList.entity.Comment;
 import com.example.ToDoList.entity.Task;
@@ -29,30 +29,30 @@ public class CommentServiceImpl implements CommentService{
     }
 
     @Override
-    public List<CommentDto> getAllComments() {
+    public List<CommentDtoResponse> getAllComments() {
         List<Comment> commentList = commentRepository.findAll();
-        List <CommentDto> cDto = new ArrayList<>();
+        List <CommentDtoResponse> cDto = new ArrayList<>();
         for (Comment c : commentList){
-            CommentDto commDto = mapperDto.convertCommentToCommentDto(c);
+            CommentDtoResponse commDto = mapperDto.convertCommentToCommentDtoResponse(c);
             cDto.add(commDto);
         }  return cDto;
         }
 
     @Override
-    public CommentDto findById(Long id) {
+    public CommentDtoResponse findById(Long id) {
 
         Optional<Comment> comment = Optional.ofNullable(commentRepository.findById(id).orElseThrow(() -> new NotFoundException("Comment id is not found - " + id)));
-        CommentDto commentDto = mapperDto.convertCommentToCommentDto(comment.get());
-        return commentDto;
+        CommentDtoResponse commentDtoResponse = mapperDto.convertCommentToCommentDtoResponse(comment.get());
+        return commentDtoResponse;
     }
 
     @Override
-    public CommentDto save(CommentDtoRequest commentDto) {
+    public CommentDtoResponse save(CommentDtoRequest commentDto) {
         Comment c = mapperDto.convertCommentDtoRequestToComment(commentDto);
         Optional<Task> task = taskRepository.findById(commentDto.getTaskID());
         c.setTask(task.get());
         commentRepository.save(c);
-        return mapperDto.convertCommentToCommentDto(c);
+        return mapperDto.convertCommentToCommentDtoResponse(c);
     }
 
     @Override

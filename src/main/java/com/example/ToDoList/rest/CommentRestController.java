@@ -1,10 +1,8 @@
 package com.example.ToDoList.rest;
 
-import com.example.ToDoList.DTO.CommentDto;
+import com.example.ToDoList.DTO.CommentDtoResponse;
 import com.example.ToDoList.DTO.CommentDtoRequest;
-import com.example.ToDoList.entity.Comment;
 import com.example.ToDoList.service.CommentServiceImpl;
-import org.springframework.data.repository.cdi.Eager;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,16 +17,16 @@ public class CommentRestController {
     {commentService = theComm;}
 
     @GetMapping("/comments")
-    public List<CommentDto> getAllComments(){
+    public List<CommentDtoResponse> getAllComments(){
      return commentService.getAllComments();
     }
 
     @GetMapping("/comments/{commentId}")
-    public CommentDto findByid(@PathVariable Long commentId){
-        CommentDto commentDto = commentService.findById(commentId);
-        if(commentDto == null)
+    public CommentDtoResponse findByid(@PathVariable Long commentId){
+        CommentDtoResponse commentDtoResponse = commentService.findById(commentId);
+        if(commentDtoResponse == null)
             throw new NotFoundException("Comment id not found - " +commentId);
-        return commentDto;
+        return commentDtoResponse;
     }
     @PutMapping("/comments")
     public String updateComment(@RequestBody CommentDtoRequest commentDto){
@@ -44,8 +42,8 @@ public class CommentRestController {
     @DeleteMapping("/comments/{commentId}")
     public String deleteComment(@PathVariable Long commentId){
 
-        CommentDto commentDto = commentService.findById(commentId);
-        if(commentDto == null)
+        CommentDtoResponse commentDtoResponse = commentService.findById(commentId);
+        if(commentDtoResponse == null)
             throw new NotFoundException("Comment id not found - " +commentId);
         commentService.delete(commentId);
         return "Deleted comment with id - " +commentId;

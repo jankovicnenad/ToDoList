@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 
 import java.time.LocalDateTime;
 
-public class CommentDto {
+public class CommentDtoResponse {
     private Long id;
     private String comment;
     private TaskDto task_dto;
