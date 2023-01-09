@@ -1,20 +1,20 @@
 package com.example.ToDoList.DTO;
 
-
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import java.time.LocalDateTime;
 
-public class StatusDto {
+public class PriorityDtoResponse {
 
     private Long id;
-    private String status_name;
+    private String priority;
 
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private LocalDateTime createdDate;
 
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private LocalDateTime modifiedDate;
+
 
     public LocalDateTime getCreatedDate() {
         return createdDate;
@@ -26,10 +26,19 @@ public class StatusDto {
 
     public LocalDateTime getModifiedDate() {
         return modifiedDate;
+
     }
 
     public void setModifiedDate(LocalDateTime modifiedDate) {
         this.modifiedDate = modifiedDate;
+    }
+
+    public String getPriority() {
+        return priority;
+    }
+
+    public void setPriority(String priority) {
+        this.priority = priority;
     }
 
     public Long getId() {
@@ -38,13 +47,5 @@ public class StatusDto {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getStatus_name() {
-        return status_name;
-    }
-
-    public void setStatus_name(String status_name) {
-        this.status_name = status_name;
     }
 }

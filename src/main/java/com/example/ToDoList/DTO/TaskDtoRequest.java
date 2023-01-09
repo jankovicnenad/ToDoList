@@ -13,9 +13,9 @@ public class TaskDtoRequest {
     @JsonFormat(pattern="yyyy-MM-dd")
     private LocalDate start_date;
 
-    private StatusDto status_dto;
+    private StatusDtoResponse status_dto;
 
-    private PriorityDto priority_dto;
+    private PriorityDtoResponse priority_dto;
 
     public Long getId() {
         return id;
@@ -41,19 +41,19 @@ public class TaskDtoRequest {
         this.start_date = start_date;
     }
 
-    public StatusDto getStatus_dto() {
+    public StatusDtoResponse getStatus_dto() {
         return status_dto;
     }
 
-    public void setStatus_dto(StatusDto status_dto) {
+    public void setStatus_dto(StatusDtoResponse status_dto) {
         this.status_dto = status_dto;
     }
 
-    public PriorityDto getPriority_dto() {
+    public PriorityDtoResponse getPriority_dto() {
         return priority_dto;
     }
 
-    public void setPriority_dto(PriorityDto priority_dto) {
+    public void setPriority_dto(PriorityDtoResponse priority_dto) {
         this.priority_dto = priority_dto;
     }
 }

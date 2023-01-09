@@ -1,10 +1,10 @@
 package com.example.ToDoList.rest;
 
-import com.example.ToDoList.DTO.PriorityDto;
+import com.example.ToDoList.DTO.PriorityDtoResponse;
+import com.example.ToDoList.DTO.PriorityDtoRequest;
 import com.example.ToDoList.service.PriorityServiceImpl;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
 import java.util.List;
 @CrossOrigin(origins = "192.168.0.105")
 @RestController
@@ -18,32 +18,33 @@ public class PriorityRestController {
             priorityService = theService;
         }
     @GetMapping("/priority")
-    public List<PriorityDto> getAllPriority(){return priorityService.getAllPriority();}
+    public List<PriorityDtoResponse> getAllPriority(){return priorityService.getAllPriority();}
 
     @GetMapping("/priority/{priorityId}")
-    public PriorityDto findById(@PathVariable Long priorityId){
+    public PriorityDtoResponse findById(@PathVariable Long priorityId){
 
-        PriorityDto priorityDto = priorityService.findById(priorityId);
-        if(priorityDto == null)
+        PriorityDtoResponse priorityDtoResponse = priorityService.findById(priorityId);
+        if(priorityDtoResponse == null)
             throw new NotFoundException("Priority id not found - " +priorityId);
-        return priorityDto;
+        return priorityDtoResponse;
     }
 
     @PostMapping("/priority")
-    public PriorityDto addPriority(@RequestBody PriorityDto thePriority){
-        priorityService.savePriority(thePriority);
-        return thePriority;
+    public PriorityDtoResponse addPriority(@RequestBody PriorityDtoRequest thePriority){
+        return priorityService.savePriority(thePriority);
+
     }
-    @PutMapping("/priority/{priorityId}")
-    public String updatePriority(@PathVariable Long priorityId, @RequestBody PriorityDto priorityDto){
-        priorityService.updatePriority(priorityId, priorityDto);
+    @PutMapping("/priority")
+    public String updatePriority(@RequestBody PriorityDtoRequest priorityDtoRequest){
+        Long priorityId = priorityDtoRequest.getId();
+        priorityService.updatePriority(priorityId, priorityDtoRequest);
         return "Updated priority with id - " +priorityId;
     }
     @DeleteMapping("/priority/{priorityId}")
     public String deletePriority(@PathVariable Long priorityId){
 
-        PriorityDto priorityDto = priorityService.findById(priorityId);
-        if(priorityDto == null)
+        PriorityDtoResponse priorityDtoResponse = priorityService.findById(priorityId);
+        if(priorityDtoResponse == null)
             throw new NotFoundException("Priority id not found - " +priorityId);
         priorityService.delete(priorityId);
         return "Deleted priority with id - " +priorityId;
