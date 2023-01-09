@@ -9,6 +9,8 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -31,18 +33,25 @@ public class TaskRestController {
             taskRepository = theRepo;
             this.imageService = imageService;
         }
-        @PostMapping("/tasks")
-        public String uploadFile(@RequestPart("files") MultipartFile multipartFile, @RequestPart TaskDtoResponse taskDtoResponse) throws Exception {
+    @Operation(summary = "This is to fetch all tasks from database")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200",
+                    description = "Fetched all tasks from database",
+                    content = {@Content(mediaType = "application/json")}
+            )
+    })
+        @PostMapping(value = "/tasks", consumes = "multipart/form-data")
+        public ResponseEntity<?> uploadFile(@RequestPart("file") MultipartFile multipartFile, @RequestPart TaskDtoRequest taskDtoRequest) throws Exception {
             if(multipartFile.isEmpty())
-                taskService.save(taskDtoResponse);
+                taskService.save(taskDtoRequest);
             else {
                 if (!multipartFile.getOriginalFilename().endsWith(".jpg") && !multipartFile.getOriginalFilename().endsWith(".png")) {
                     // Ako nije, vratite gresku
-                    return "Invalid file extension";
+//                    return "Invalid file extension";
         }
         System.out.println(imageService.uploadFile(multipartFile));
-        taskService.saveImage(taskDtoResponse, multipartFile);}
-    return "Uspesno odradjena metoda!";
+        taskService.saveImage(taskDtoRequest, multipartFile);}
+        return new ResponseEntity<>("Task and file successfully saved.", HttpStatus.OK);
 }
         @Operation(summary = "This is to fetch all tasks from database")
         @ApiResponses(value = {
