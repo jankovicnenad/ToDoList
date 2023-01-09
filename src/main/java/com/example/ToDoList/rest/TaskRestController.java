@@ -1,8 +1,7 @@
 package com.example.ToDoList.rest;
 
-import com.example.ToDoList.DAO.ImageRepository;
 import com.example.ToDoList.DAO.TaskRepository;
-import com.example.ToDoList.DTO.TaskDto;
+import com.example.ToDoList.DTO.TaskDtoResponse;
 import com.example.ToDoList.DTO.TaskDtoRequest;
 import com.example.ToDoList.service.ImageService;
 import com.example.ToDoList.service.TaskServiceImpl;
@@ -33,16 +32,16 @@ public class TaskRestController {
             this.imageService = imageService;
         }
         @PostMapping("/tasks")
-        public String uploadFile(@RequestPart("files") MultipartFile multipartFile, @RequestPart TaskDto taskDto) throws Exception {
+        public String uploadFile(@RequestPart("files") MultipartFile multipartFile, @RequestPart TaskDtoResponse taskDtoResponse) throws Exception {
             if(multipartFile.isEmpty())
-                taskService.save(taskDto);
+                taskService.save(taskDtoResponse);
             else {
                 if (!multipartFile.getOriginalFilename().endsWith(".jpg") && !multipartFile.getOriginalFilename().endsWith(".png")) {
                     // Ako nije, vratite gresku
                     return "Invalid file extension";
         }
         System.out.println(imageService.uploadFile(multipartFile));
-        taskService.saveImage(taskDto, multipartFile);}
+        taskService.saveImage(taskDtoResponse, multipartFile);}
     return "Uspesno odradjena metoda!";
 }
         @Operation(summary = "This is to fetch all tasks from database")
@@ -52,7 +51,7 @@ public class TaskRestController {
                     content = {@Content(mediaType = "application/json")})
             })
         @GetMapping("/tasks")
-        public List<TaskDto> getAllTasks(@RequestParam(required = false, name = "priority") Long priorityId, @RequestParam(required = false, name = "status") Long statusId){
+        public List<TaskDtoResponse> getAllTasks(@RequestParam(required = false, name = "priority") Long priorityId, @RequestParam(required = false, name = "status") Long statusId){
             return taskService.getAllTasks(priorityId, statusId);
         }
         @Operation(summary = "This is to update task from database")
@@ -73,12 +72,12 @@ public class TaskRestController {
                     content = {@Content(mediaType = "application/json")})
                 })
         @GetMapping("/tasks/{taskId}")
-        public TaskDto getTasks(@PathVariable Long taskId){
-            TaskDto taskDto = taskService.findById(taskId);
-            if (taskDto == null){
+        public TaskDtoResponse getTasks(@PathVariable Long taskId){
+            TaskDtoResponse taskDtoResponse = taskService.findById(taskId);
+            if (taskDtoResponse == null){
                 throw new NotFoundException("Task id not found - " +taskId);
             }
-            return taskDto;
+            return taskDtoResponse;
         }
         @Operation(summary = "This is to delete tasks in database")
         @ApiResponses(value = {
@@ -88,8 +87,8 @@ public class TaskRestController {
                 })
         @DeleteMapping("/tasks/{taskId}")
         public String deleteTasks(@PathVariable Long taskId) {
-            TaskDto taskDto = taskService.findById(taskId);
-            if (taskDto == null)
+            TaskDtoResponse taskDtoResponse = taskService.findById(taskId);
+            if (taskDtoResponse == null)
                 throw new NotFoundException("Task id not found - " + taskId);
             taskService.deleteById(taskId);
             return "Deleted task with id - " + taskId;

@@ -1,6 +1,6 @@
 package com.example.ToDoList.service;
 
-import com.example.ToDoList.DTO.TaskDto;
+import com.example.ToDoList.DTO.TaskDtoResponse;
 import com.example.ToDoList.DTO.TaskDtoRequest;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -8,13 +8,13 @@ import java.util.List;
 
 public interface TaskService {
 
-    public List<TaskDto> getAllTasks(Long priorityId, Long statusId);
+    public List<TaskDtoResponse> getAllTasks(Long priorityId, Long statusId);
 
-    public TaskDto findById(Long id);
+    public TaskDtoResponse findById(Long id);
 
-    public TaskDto saveImage(TaskDto taskDto, MultipartFile multipartFile);
+    public TaskDtoResponse saveImage(TaskDtoResponse taskDtoResponse, MultipartFile multipartFile);
 
-    public TaskDto save(TaskDto taskDto);
+    public TaskDtoResponse save(TaskDtoResponse taskDtoResponse);
 
     public void deleteById(Long id);
 

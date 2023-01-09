@@ -4,9 +4,9 @@ import com.example.ToDoList.DTO.*;
 import com.example.ToDoList.entity.*;
 
 public interface MapperDto {
-    public Task convertTaskDtoToTask(TaskDto taskDto);
+    public Task convertTaskDtoResponseToTask(TaskDtoResponse taskDtoResponse);
 
-    public TaskDto convertTaskToTaskDto(Task task);
+    public TaskDtoResponse convertTaskToTaskDtoResponse(Task task);
 
     public Task convertTaskDtoRequestToTask(TaskDtoRequest taskDtoRequest);
 

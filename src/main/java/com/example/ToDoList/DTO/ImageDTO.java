@@ -11,7 +11,7 @@ public class ImageDTO {
 
     private String url;
 
-    private TaskDto task_dto;
+    private TaskDtoResponse task_dto;
 
     private String originalName;
 
@@ -45,11 +45,11 @@ public class ImageDTO {
         this.url = url;
     }
 
-    public TaskDto getTask_dto() {
+    public TaskDtoResponse getTask_dto() {
         return task_dto;
     }
 
-    public void setTask_dto(TaskDto task_dto) {
+    public void setTask_dto(TaskDtoResponse task_dto) {
         this.task_dto = task_dto;
     }
 

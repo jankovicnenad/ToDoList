@@ -4,7 +4,7 @@ public class CommentDtoRequest {
 
     private Long id;
     private String comment;
-   // private TaskDto taskDto;
+   // private TaskDtoResponse taskDto;
 
     private Long taskID;
 
