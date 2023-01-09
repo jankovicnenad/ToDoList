@@ -12,9 +12,9 @@ public interface TaskService {
 
     public TaskDtoResponse findById(Long id);
 
-    public TaskDtoResponse saveImage(TaskDtoResponse taskDtoResponse, MultipartFile multipartFile);
+    public TaskDtoResponse saveImage(TaskDtoRequest taskDtoRequest, MultipartFile multipartFile);
 
-    public TaskDtoResponse save(TaskDtoResponse taskDtoResponse);
+    public TaskDtoRequest save(TaskDtoRequest taskDtoRequest);
 
     public void deleteById(Long id);
 

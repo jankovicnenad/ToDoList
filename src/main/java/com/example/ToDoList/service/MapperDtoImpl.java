@@ -61,8 +61,13 @@ public class MapperDtoImpl implements MapperDto{
         task.setId(taskDtoRequest.getId());
         task.setName(taskDtoRequest.getName());
         task.setStart_date(taskDtoRequest.getStart_date());
-        task.getPriority().setId(taskDtoRequest.getPriorityID());
-        task.getStatus().setId(taskDtoRequest.getStatusID());
+        Priority priority = new Priority();
+        priority.setId(taskDtoRequest.getPriorityID());
+        task.setPriority(priority);
+
+        Status status = new Status();
+        status.setId(taskDtoRequest.getStatusID());
+        task.setStatus(status);
         
         return task;
     }

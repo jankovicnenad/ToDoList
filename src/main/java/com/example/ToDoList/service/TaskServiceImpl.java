@@ -71,10 +71,10 @@ public class TaskServiceImpl implements TaskService{
         return tDto;
     }
 
-    public TaskDtoResponse saveImage(TaskDtoResponse taskDtoResponse, MultipartFile multipartFile) {
-            Task task = mapperDto.convertTaskDtoResponseToTask(taskDtoResponse);
-            Optional<Status> status = statusRepository.findById(taskDtoResponse.getStatus_dto().getId());
-            Optional<Priority> priority = priorityRepository.findById(taskDtoResponse.getPriority_dto().getId());
+    public TaskDtoResponse saveImage(TaskDtoRequest taskDtoRequest, MultipartFile multipartFile) {
+            Task task = mapperDto.convertTaskDtoRequestToTask(taskDtoRequest);
+            Optional<Status> status = statusRepository.findById(taskDtoRequest.getStatusID());
+            Optional<Priority> priority = priorityRepository.findById(taskDtoRequest.getPriorityID());
 
             task.setPriority(priority.get());
 
@@ -102,17 +102,17 @@ public class TaskServiceImpl implements TaskService{
     }
 
     @Override
-    public TaskDtoResponse save(TaskDtoResponse taskDtoResponse) {
-        Task task = mapperDto.convertTaskDtoResponseToTask(taskDtoResponse);
-        Optional<Status> status = statusRepository.findById(taskDtoResponse.getStatus_dto().getId());
-        Optional<Priority> priority = priorityRepository.findById(taskDtoResponse.getPriority_dto().getId());
+    public TaskDtoRequest save(TaskDtoRequest taskDtoRequest) {
+        Task task = mapperDto.convertTaskDtoRequestToTask(taskDtoRequest);
+        Optional<Status> status = statusRepository.findById(taskDtoRequest.getStatusID());
+        Optional<Priority> priority = priorityRepository.findById(taskDtoRequest.getPriorityID());
 
         task.setPriority(priority.get());
 
         task.setStatus(status.get());
 
         taskRepository.save(task);
-        return  mapperDto.convertTaskToTaskDtoResponse(task);
+        return  mapperDto.convertTaskToTaskDtoRequest(task);
     }
 
     @Override
