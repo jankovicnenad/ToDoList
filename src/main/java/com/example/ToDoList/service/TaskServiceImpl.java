@@ -102,8 +102,8 @@ public class TaskServiceImpl implements TaskService{
     }
 
     @Override
-    public TaskDto save(TaskDto taskDto) {
-        Task task = mapperDto.convertTaskDtoToTask(taskDto);
+    public TaskDtoRequest save(TaskDto taskDto) {
+        Task task = mapperDto.convertTaskDtoRequestToTask(taskDto);
         Optional<Status> status = statusRepository.findById(taskDto.getStatus_dto().getId());
         Optional<Priority> priority = priorityRepository.findById(taskDto.getPriority_dto().getId());
 
@@ -112,7 +112,7 @@ public class TaskServiceImpl implements TaskService{
         task.setStatus(status.get());
 
         taskRepository.save(task);
-        return  mapperDto.convertTaskToTaskDto(task);
+        return  mapperDto.convertTaskToTaskDtoRequest(task);
     }
 
     @Override
@@ -122,7 +122,7 @@ public class TaskServiceImpl implements TaskService{
     }
 
     @Override
-    public void updateTask(TaskDtoRequest taskDto) {
+    public void updateTask(TaskDto taskDto) {
         Long id = taskDto.getId();
         Task task = taskRepository.findById(id).orElseThrow(() -> new NotFoundException("Task id is not found - " + id));
         Task task1 = mapperDto.convertTaskDtoRequestToTask(taskDto);

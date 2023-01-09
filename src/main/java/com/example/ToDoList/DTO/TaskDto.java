@@ -25,6 +25,8 @@ public class TaskDto {
 
     private PriorityDto priority_dto;
 
+    public TaskDto() {
+    }
 
     public LocalDateTime getCreatedDate() {
         return createdDate;

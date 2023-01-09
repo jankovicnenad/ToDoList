@@ -1,18 +1,19 @@
 package com.example.ToDoList.rest;
 
-import com.example.ToDoList.DAO.ImageRepository;
 import com.example.ToDoList.DAO.TaskRepository;
 import com.example.ToDoList.DTO.TaskDto;
-import com.example.ToDoList.DTO.TaskDtoRequest;
 import com.example.ToDoList.service.ImageService;
 import com.example.ToDoList.service.TaskServiceImpl;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.swing.text.html.parser.Entity;
 import java.io.IOException;
 import java.util.List;
 
@@ -32,19 +33,29 @@ public class TaskRestController {
             taskRepository = theRepo;
             this.imageService = imageService;
         }
-        @PostMapping("/tasks")
-        public String uploadFile(@RequestPart("files") MultipartFile multipartFile, @RequestPart TaskDto taskDto) throws Exception {
+        @Operation(summary = "This is to fetch all tasks from database")
+        @ApiResponses(value = {
+                @ApiResponse(responseCode = "200",
+                        description = "Fetched all tasks from database",
+                        content = {@Content(mediaType = "application/json")}
+                         )
+        })
+        @PostMapping(value = "/tasks", consumes = "multipart/form-data")
+        public ResponseEntity<?> uploadFile(@RequestPart("files") MultipartFile multipartFile, @RequestPart TaskDto taskDto) throws Exception {
             if(multipartFile.isEmpty())
-                taskService.save(taskDto);
+               taskService.save(taskDto);
             else {
+
                 if (!multipartFile.getOriginalFilename().endsWith(".jpg") && !multipartFile.getOriginalFilename().endsWith(".png")) {
-                    // Ako nije, vratite gresku
-                    return "Invalid file extension";
-        }
-        System.out.println(imageService.uploadFile(multipartFile));
-        taskService.saveImage(taskDto, multipartFile);}
-    return "Uspesno odradjena metoda!";
-}
+
+//                            return "Invalid file extension";
+                  }
+                    System.out.println(imageService.uploadFile(multipartFile));
+                    taskService.saveImage(taskDto, multipartFile);
+                 }
+            return new ResponseEntity<>("Task and file successfully saved.", HttpStatus.OK);
+        };
+
         @Operation(summary = "This is to fetch all tasks from database")
         @ApiResponses(value = {
                 @ApiResponse(responseCode = "200",
@@ -62,7 +73,7 @@ public class TaskRestController {
                     content = {@Content(mediaType = "application/json")})
             })
         @PutMapping("/tasks")
-        public String updateTask(@RequestBody TaskDtoRequest taskDto) throws IOException {
+        public String updateTask(@RequestBody TaskDto taskDto) throws IOException {
             taskService.updateTask(taskDto);
             return "Updated task";
         }

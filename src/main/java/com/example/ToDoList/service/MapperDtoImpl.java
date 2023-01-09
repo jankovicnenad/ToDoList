@@ -145,7 +145,7 @@ public class MapperDtoImpl implements MapperDto{
     }
 
     @Override
-    public Task convertTaskDtoRequestToTask(TaskDtoRequest taskDtoRequest) {
+    public Task convertTaskDtoRequestToTask(TaskDto taskDtoRequest) {
         Task task = new Task();
         task.setId(taskDtoRequest.getId());
         task.setName(taskDtoRequest.getName());

@@ -14,11 +14,11 @@ public interface TaskService {
 
     public TaskDto saveImage(TaskDto taskDto, MultipartFile multipartFile);
 
-    public TaskDto save(TaskDto taskDto);
+    public TaskDtoRequest save(TaskDto taskDto);
 
     public void deleteById(Long id);
 
-    public void updateTask(TaskDtoRequest taskDto);
+    public void updateTask(TaskDto taskDto);
 
 
 }

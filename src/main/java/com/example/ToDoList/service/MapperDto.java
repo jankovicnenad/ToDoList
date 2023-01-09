@@ -20,7 +20,7 @@ public interface MapperDto {
 
     public CommentDto convertCommentToCommentDto(Comment comment);
 
-    public Task convertTaskDtoRequestToTask(TaskDtoRequest taskDtoRequest);
+    public Task convertTaskDtoRequestToTask(TaskDto taskDtoRequest);
 
     TaskDtoRequest convertTaskToTaskDtoRequest(Task task);
 

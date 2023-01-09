@@ -34,7 +34,7 @@ public class StatusRestController {
         statusService.save(theStatus);
         return theStatus;
     }
-    @PutMapping("/status/{statusId}")
+    @PutMapping("/status")
     public String updateStatus(@PathVariable Long statusId, @RequestBody StatusDto statusDto){
         statusService.updateStatus(statusId, statusDto);
         return "Update status with id - " +statusId;
