@@ -55,6 +55,32 @@ public class MapperDtoImpl implements MapperDto{
         return taskDto;    }
 
     @Override
+    public Task convertTaskDtoRequestToTask(TaskDtoRequest taskDtoRequest) {
+        Task task = new Task();
+        
+        task.setId(taskDtoRequest.getId());
+        task.setName(taskDtoRequest.getName());
+        task.setStart_date(taskDtoRequest.getStart_date());
+        task.getPriority().setId(taskDtoRequest.getPriorityID());
+        task.getStatus().setId(taskDtoRequest.getStatusID());
+        
+        return task;
+    }
+
+    @Override
+    public TaskDtoRequest convertTaskToTaskDtoRequest(Task task) {
+
+        TaskDtoRequest taskDtoRequest = new TaskDtoRequest();
+
+        taskDtoRequest.setId(task.getId());
+        taskDtoRequest.setName(task.getName());
+        taskDtoRequest.setStart_date(task.getStart_date());
+        taskDtoRequest.setPriorityID(task.getPriority().getId());
+        taskDtoRequest.setStatusID(task.getStatus().getId());
+        return taskDtoRequest;
+    }
+
+    @Override
     public Priority convertPriorityDtoResponseToPriority(PriorityDtoResponse priorityDtoResponse) {
         Priority priority = new Priority();
         priority.setId(priorityDtoResponse.getId());
@@ -180,35 +206,7 @@ public class MapperDtoImpl implements MapperDto{
         return commentDtoRequest;
     }
 
-    @Override
-    public Task convertTaskDtoRequestToTask(TaskDtoRequest taskDtoRequest) {
-        Task task = new Task();
-        task.setId(taskDtoRequest.getId());
-        task.setName(taskDtoRequest.getName());
-        task.setStart_date(taskDtoRequest.getStart_date());
-        Status status = new Status();
-        status.setId(taskDtoRequest.getStatus_dto().getId());
-        Priority priority = new Priority();
-        priority.setId(taskDtoRequest.getPriority_dto().getId());
-        task.setStatus(status);
-        task.setPriority(priority);
-        return task;
-    }
-
-    @Override
-    public TaskDtoRequest convertTaskToTaskDtoRequest(Task task) {
-        TaskDtoRequest taskDtoRequest = new TaskDtoRequest();
-        taskDtoRequest.setId(task.getId());
-        taskDtoRequest.setName(task.getName());
-        taskDtoRequest.setStart_date(task.getStart_date());
-        StatusDtoResponse statusDtoResponse = new StatusDtoResponse();
-        statusDtoResponse.setId(task.getStatus().getId());
-        PriorityDtoResponse priorityDtoResponse = new PriorityDtoResponse();
-        priorityDtoResponse.setId(task.getPriority().getId());
-        taskDtoRequest.setStatus_dto(statusDtoResponse);
-        taskDtoRequest.setPriority_dto(priorityDtoResponse);
-        return taskDtoRequest;
-    }
+  
     public ImageDTO convertImageToImageDto(Image image){
         ImageDTO imageDTO = new ImageDTO();
         imageDTO.setId(image.getId());

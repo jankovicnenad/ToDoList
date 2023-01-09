@@ -8,6 +8,10 @@ public interface MapperDto {
 
     public TaskDto convertTaskToTaskDto(Task task);
 
+    public Task convertTaskDtoRequestToTask(TaskDtoRequest taskDtoRequest);
+
+    public TaskDtoRequest convertTaskToTaskDtoRequest(Task task);
+
     public Priority convertPriorityDtoResponseToPriority(PriorityDtoResponse priorityDtoResponse);
 
     public PriorityDtoResponse convertPriorityToPriorityDtoResponse(Priority priority);
@@ -28,9 +32,6 @@ public interface MapperDto {
 
     public CommentDtoRequest convertCommentToCommentDtoRequest(Comment comment);
 
-    public Task convertTaskDtoRequestToTask(TaskDtoRequest taskDtoRequest);
-
-    TaskDtoRequest convertTaskToTaskDtoRequest(Task task);
 
     public ImageDTO convertImageToImageDto(Image image);
 
