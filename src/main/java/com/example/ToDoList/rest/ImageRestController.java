@@ -1,12 +1,9 @@
 package com.example.ToDoList.rest;
 
 import com.example.ToDoList.DTO.ImageDTO;
-import com.example.ToDoList.DTO.TaskDto;
 import com.example.ToDoList.service.ImageService;
 import com.example.ToDoList.service.TaskService;
-import org.apache.commons.io.FilenameUtils;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -28,7 +25,7 @@ public class ImageRestController {
 }
 
 //    @PostMapping("/tasks")
-//    public String uploadFile(@RequestPart("files") MultipartFile multipartFile, @RequestPart TaskDto taskDto) throws Exception {
+//    public String uploadFile(@RequestPart("files") MultipartFile multipartFile, @RequestPart TaskDtoResponse taskDto) throws Exception {
 //        if(multipartFile.isEmpty())
 //         taskService.save(taskDto);
 //       else {

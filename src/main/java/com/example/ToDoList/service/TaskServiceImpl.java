@@ -3,7 +3,7 @@ package com.example.ToDoList.service;
 import com.example.ToDoList.DAO.PriorityRepository;
 import com.example.ToDoList.DAO.StatusRepository;
 import com.example.ToDoList.DAO.TaskRepository;
-import com.example.ToDoList.DTO.TaskDto;
+import com.example.ToDoList.DTO.TaskDtoResponse;
 import com.example.ToDoList.DTO.TaskDtoRequest;
 import com.example.ToDoList.entity.Image;
 import com.example.ToDoList.entity.Priority;
@@ -43,7 +43,7 @@ public class TaskServiceImpl implements TaskService{
         this.mapperDto = mapperDto;
     }
     @Override
-    public List<TaskDto> getAllTasks(Long priorityId, Long statusId) {
+    public List<TaskDtoResponse> getAllTasks(Long priorityId, Long statusId) {
         List<Task> tasks = new ArrayList<>();
         if(Objects.nonNull(priorityId)&& Objects.isNull(statusId)){
             tasks = taskRepository.selectTasksByPriority(priorityId);
@@ -56,25 +56,25 @@ public class TaskServiceImpl implements TaskService{
         else {
             tasks = taskRepository.findAll();
         }
-        List <TaskDto> tDto = new ArrayList<>();
+        List <TaskDtoResponse> tDto = new ArrayList<>();
         for (Task t : tasks){
-            TaskDto taskDto = mapperDto.convertTaskToTaskDto(t);
-            tDto.add(taskDto);
+            TaskDtoResponse taskDtoResponse = mapperDto.convertTaskToTaskDtoResponse(t);
+            tDto.add(taskDtoResponse);
         }
         return tDto;
     }
 
     @Override
-    public TaskDto findById(Long id) {
+    public TaskDtoResponse findById(Long id) {
        Task task = taskRepository.findById(id).orElseThrow(()-> new NotFoundException("Task id not found - " +id));
-       TaskDto tDto = mapperDto.convertTaskToTaskDto(task);
+       TaskDtoResponse tDto = mapperDto.convertTaskToTaskDtoResponse(task);
         return tDto;
     }
 
-    public TaskDto saveImage(TaskDto taskDto, MultipartFile multipartFile) {
-            Task task = mapperDto.convertTaskDtoToTask(taskDto);
-            Optional<Status> status = statusRepository.findById(taskDto.getStatus_dto().getId());
-            Optional<Priority> priority = priorityRepository.findById(taskDto.getPriority_dto().getId());
+    public TaskDtoResponse saveImage(TaskDtoResponse taskDtoResponse, MultipartFile multipartFile) {
+            Task task = mapperDto.convertTaskDtoResponseToTask(taskDtoResponse);
+            Optional<Status> status = statusRepository.findById(taskDtoResponse.getStatus_dto().getId());
+            Optional<Priority> priority = priorityRepository.findById(taskDtoResponse.getPriority_dto().getId());
 
             task.setPriority(priority.get());
 
@@ -96,23 +96,23 @@ public class TaskServiceImpl implements TaskService{
             }
 
             taskRepository.save(task);
-            return mapperDto.convertTaskToTaskDto(task);
+            return mapperDto.convertTaskToTaskDtoResponse(task);
 
 
     }
 
     @Override
-    public TaskDto save(TaskDto taskDto) {
-        Task task = mapperDto.convertTaskDtoToTask(taskDto);
-        Optional<Status> status = statusRepository.findById(taskDto.getStatus_dto().getId());
-        Optional<Priority> priority = priorityRepository.findById(taskDto.getPriority_dto().getId());
+    public TaskDtoResponse save(TaskDtoResponse taskDtoResponse) {
+        Task task = mapperDto.convertTaskDtoResponseToTask(taskDtoResponse);
+        Optional<Status> status = statusRepository.findById(taskDtoResponse.getStatus_dto().getId());
+        Optional<Priority> priority = priorityRepository.findById(taskDtoResponse.getPriority_dto().getId());
 
         task.setPriority(priority.get());
 
         task.setStatus(status.get());
 
         taskRepository.save(task);
-        return  mapperDto.convertTaskToTaskDto(task);
+        return  mapperDto.convertTaskToTaskDtoResponse(task);
     }
 
     @Override
@@ -127,8 +127,8 @@ public class TaskServiceImpl implements TaskService{
         Task task = taskRepository.findById(id).orElseThrow(() -> new NotFoundException("Task id is not found - " + id));
         Task task1 = mapperDto.convertTaskDtoRequestToTask(taskDto);
         task1.setId(task.getId());
-        Status status = statusRepository.findById(taskDto.getStatus_dto().getId()).orElseThrow(() -> new NotFoundException("Task id is not found - " + id));
-        Priority priority = priorityRepository.findById(taskDto.getPriority_dto().getId()).orElseThrow(() -> new NotFoundException("Task id is not found - " + id));
+        Status status = statusRepository.findById(taskDto.getStatusID()).orElseThrow(() -> new NotFoundException("Task id is not found - " + id));
+        Priority priority = priorityRepository.findById(taskDto.getPriorityID()).orElseThrow(() -> new NotFoundException("Task id is not found - " + id));
         task1.setStatus(status);
         task1.setPriority(priority);
         if(status.getStatus()!=null){

@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-public class TaskDto {
+public class TaskDtoResponse {
 
     private Long id;
     private String name;

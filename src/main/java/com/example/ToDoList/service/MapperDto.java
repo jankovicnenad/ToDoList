@@ -4,9 +4,13 @@ import com.example.ToDoList.DTO.*;
 import com.example.ToDoList.entity.*;
 
 public interface MapperDto {
-    public Task convertTaskDtoToTask(TaskDto taskDto);
+    public Task convertTaskDtoResponseToTask(TaskDtoResponse taskDtoResponse);
 
-    public TaskDto convertTaskToTaskDto(Task task);
+    public TaskDtoResponse convertTaskToTaskDtoResponse(Task task);
+
+    public Task convertTaskDtoRequestToTask(TaskDtoRequest taskDtoRequest);
+
+    public TaskDtoRequest convertTaskToTaskDtoRequest(Task task);
 
     public Priority convertPriorityDtoResponseToPriority(PriorityDtoResponse priorityDtoResponse);
 
@@ -28,9 +32,6 @@ public interface MapperDto {
 
     public CommentDtoRequest convertCommentToCommentDtoRequest(Comment comment);
 
-    public Task convertTaskDtoRequestToTask(TaskDtoRequest taskDtoRequest);
-
-    TaskDtoRequest convertTaskToTaskDtoRequest(Task task);
 
     public ImageDTO convertImageToImageDto(Image image);
 

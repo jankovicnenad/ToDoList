@@ -10,12 +10,12 @@ public class TaskDtoRequest {
 
     private String name;
 
-    @JsonFormat(pattern="yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate start_date;
 
-    private StatusDtoResponse status_dto;
+    private Long statusID;
 
-    private PriorityDtoResponse priority_dto;
+    private Long priorityID;
 
     public Long getId() {
         return id;
@@ -41,19 +41,19 @@ public class TaskDtoRequest {
         this.start_date = start_date;
     }
 
-    public StatusDtoResponse getStatus_dto() {
-        return status_dto;
+    public Long getStatusID() {
+        return statusID;
     }
 
-    public void setStatus_dto(StatusDtoResponse status_dto) {
-        this.status_dto = status_dto;
+    public void setStatusID(Long statusID) {
+        this.statusID = statusID;
     }
 
-    public PriorityDtoResponse getPriority_dto() {
-        return priority_dto;
+    public Long getPriorityID() {
+        return priorityID;
     }
 
-    public void setPriority_dto(PriorityDtoResponse priority_dto) {
-        this.priority_dto = priority_dto;
+    public void setPriorityID(Long priorityID) {
+        this.priorityID = priorityID;
     }
 }
