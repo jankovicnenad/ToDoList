@@ -61,7 +61,8 @@ public class Image extends Auditable{
         this.task = task;
     }
 
-    public String getOriginalName() {
+    public String getOriginalName()
+    {
         return originalName;
     }
 

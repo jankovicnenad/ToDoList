@@ -62,11 +62,11 @@ public class MapperDtoImpl implements MapperDto{
         task.setName(taskDtoRequest.getName());
         task.setStart_date(taskDtoRequest.getStart_date());
         Priority priority = new Priority();
-        priority.setId(taskDtoRequest.getPriorityID());
+        priority.setId(taskDtoRequest.getPriority_id());
         task.setPriority(priority);
 
         Status status = new Status();
-        status.setId(taskDtoRequest.getStatusID());
+        status.setId(taskDtoRequest.getStatud_id());
         task.setStatus(status);
         
         return task;
@@ -80,8 +80,8 @@ public class MapperDtoImpl implements MapperDto{
         taskDtoRequest.setId(task.getId());
         taskDtoRequest.setName(task.getName());
         taskDtoRequest.setStart_date(task.getStart_date());
-        taskDtoRequest.setPriorityID(task.getPriority().getId());
-        taskDtoRequest.setStatusID(task.getStatus().getId());
+        taskDtoRequest.setPriority_id(task.getPriority().getId());
+        taskDtoRequest.setStatud_id(task.getStatus().getId());
         return taskDtoRequest;
     }
 
@@ -197,7 +197,7 @@ public class MapperDtoImpl implements MapperDto{
         comment.setId(commentDtoRequest.getId());
         comment.setComment(commentDtoRequest.getComment());
         Task task = new Task();
-        task.setId(commentDtoRequest.getTaskID());
+        task.setId(commentDtoRequest.getTask_id());
         comment.setTask(task);
         return comment;
     }
@@ -207,7 +207,7 @@ public class MapperDtoImpl implements MapperDto{
         CommentDtoRequest commentDtoRequest = new CommentDtoRequest();
         commentDtoRequest.setId(comment.getId());
         commentDtoRequest.setComment(comment.getComment());
-        commentDtoRequest.setTaskID(comment.getTask().getId());
+        commentDtoRequest.setTask_id(comment.getTask().getId());
         return commentDtoRequest;
     }
 

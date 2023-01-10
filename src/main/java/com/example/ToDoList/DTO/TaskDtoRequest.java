@@ -13,9 +13,9 @@ public class TaskDtoRequest {
     @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate start_date;
 
-    private Long statusID;
+    private Long statud_id;
 
-    private Long priorityID;
+    private Long priority_id;
 
     public Long getId() {
         return id;
@@ -41,19 +41,19 @@ public class TaskDtoRequest {
         this.start_date = start_date;
     }
 
-    public Long getStatusID() {
-        return statusID;
+    public Long getStatud_id() {
+        return statud_id;
     }
 
-    public void setStatusID(Long statusID) {
-        this.statusID = statusID;
+    public void setStatud_id(Long statud_id) {
+        this.statud_id = statud_id;
     }
 
-    public Long getPriorityID() {
-        return priorityID;
+    public Long getPriority_id() {
+        return priority_id;
     }
 
-    public void setPriorityID(Long priorityID) {
-        this.priorityID = priorityID;
+    public void setPriority_id(Long priority_id) {
+        this.priority_id = priority_id;
     }
 }

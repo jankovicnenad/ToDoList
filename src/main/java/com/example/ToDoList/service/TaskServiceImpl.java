@@ -73,8 +73,8 @@ public class TaskServiceImpl implements TaskService{
 
     public TaskDtoResponse saveImage(TaskDtoRequest taskDtoRequest, MultipartFile multipartFile) {
             Task task = mapperDto.convertTaskDtoRequestToTask(taskDtoRequest);
-            Optional<Status> status = statusRepository.findById(taskDtoRequest.getStatusID());
-            Optional<Priority> priority = priorityRepository.findById(taskDtoRequest.getPriorityID());
+            Optional<Status> status = statusRepository.findById(taskDtoRequest.getStatud_id());
+            Optional<Priority> priority = priorityRepository.findById(taskDtoRequest.getPriority_id());
 
             task.setPriority(priority.get());
 
@@ -104,8 +104,8 @@ public class TaskServiceImpl implements TaskService{
     @Override
     public TaskDtoRequest save(TaskDtoRequest taskDtoRequest) {
         Task task = mapperDto.convertTaskDtoRequestToTask(taskDtoRequest);
-        Optional<Status> status = statusRepository.findById(taskDtoRequest.getStatusID());
-        Optional<Priority> priority = priorityRepository.findById(taskDtoRequest.getPriorityID());
+        Optional<Status> status = statusRepository.findById(taskDtoRequest.getStatud_id());
+        Optional<Priority> priority = priorityRepository.findById(taskDtoRequest.getPriority_id());
 
         task.setPriority(priority.get());
 
@@ -127,8 +127,8 @@ public class TaskServiceImpl implements TaskService{
         Task task = taskRepository.findById(id).orElseThrow(() -> new NotFoundException("Task id is not found - " + id));
         Task task1 = mapperDto.convertTaskDtoRequestToTask(taskDto);
         task1.setId(task.getId());
-        Status status = statusRepository.findById(taskDto.getStatusID()).orElseThrow(() -> new NotFoundException("Task id is not found - " + id));
-        Priority priority = priorityRepository.findById(taskDto.getPriorityID()).orElseThrow(() -> new NotFoundException("Task id is not found - " + id));
+        Status status = statusRepository.findById(taskDto.getStatud_id()).orElseThrow(() -> new NotFoundException("Task id is not found - " + id));
+        Priority priority = priorityRepository.findById(taskDto.getPriority_id()).orElseThrow(() -> new NotFoundException("Task id is not found - " + id));
         task1.setStatus(status);
         task1.setPriority(priority);
         if(status.getStatus()!=null){
