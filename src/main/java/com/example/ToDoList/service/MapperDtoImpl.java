@@ -5,7 +5,7 @@ import com.example.ToDoList.entity.*;
 import org.springframework.stereotype.Service;
 
 @Service
-public class MapperDtoImpl implements MapperDto{
+public class MapperDtoImpl implements MapperDto {
 
     @Override
     public Task convertTaskDtoResponseToTask(TaskDtoResponse taskDtoResponse) {
@@ -52,12 +52,13 @@ public class MapperDtoImpl implements MapperDto{
         statusDtoResponse.setModifiedDate(task.getStatus().getModifiedDate());
         statusDtoResponse.setCreatedDate(task.getStatus().getCreatedDate());
         taskDtoResponse.setStatus_dto(statusDtoResponse);
-        return taskDtoResponse;    }
+        return taskDtoResponse;
+    }
 
     @Override
     public Task convertTaskDtoRequestToTask(TaskDtoRequest taskDtoRequest) {
         Task task = new Task();
-        
+
         task.setId(taskDtoRequest.getId());
         task.setName(taskDtoRequest.getName());
         task.setStart_date(taskDtoRequest.getStart_date());
@@ -68,7 +69,7 @@ public class MapperDtoImpl implements MapperDto{
         Status status = new Status();
         status.setId(taskDtoRequest.getStatud_id());
         task.setStatus(status);
-        
+
         return task;
     }
 
@@ -211,8 +212,8 @@ public class MapperDtoImpl implements MapperDto{
         return commentDtoRequest;
     }
 
-  
-    public ImageDTO convertImageToImageDto(Image image){
+
+    public ImageDTO convertImageToImageDto(Image image) {
         ImageDTO imageDTO = new ImageDTO();
         imageDTO.setId(image.getId());
         imageDTO.setUrl(image.getUrl());
@@ -225,7 +226,8 @@ public class MapperDtoImpl implements MapperDto{
         imageDTO.setTask_dto(taskDtoResponse);
         return imageDTO;
     }
-    public Image convertImageDtoToImage(ImageDTO imageDTO){
+
+    public Image convertImageDtoToImage(ImageDTO imageDTO) {
         Image image = new Image();
         image.setId(imageDTO.getId());
         image.setUrl(imageDTO.getUrl());
@@ -249,11 +251,11 @@ public class MapperDtoImpl implements MapperDto{
 
     @Override
     public PriorityDtoRequest convertPriorityToPriorityDtoRequest(Priority priority) {
-    PriorityDtoRequest priorityDtoRequest = new PriorityDtoRequest();
+        PriorityDtoRequest priorityDtoRequest = new PriorityDtoRequest();
 
-    priorityDtoRequest.setPriority(priority.getPriority());
-    priorityDtoRequest.setId(priority.getId());
-    return priorityDtoRequest;
+        priorityDtoRequest.setPriority(priority.getPriority());
+        priorityDtoRequest.setId(priority.getId());
+        return priorityDtoRequest;
 
     }
 

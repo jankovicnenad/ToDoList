@@ -26,7 +26,7 @@ import java.nio.file.Path;
 import java.util.*;
 
 @Service
-public class ImageServiceImpl implements ImageService{
+public class ImageServiceImpl implements ImageService {
 
     private final Logger log = LoggerFactory.getLogger(ImageServiceImpl.class);
     private final Environment environment;
@@ -38,8 +38,8 @@ public class ImageServiceImpl implements ImageService{
     private final MapperDto mapperDto;
 
     private final String storageBaseUrl = "storage.cloud.google.com/tasksimage.appspot.com/";
-    public ImageServiceImpl (ImageRepository imgRepo, Environment environment, MapperDto mapperDto)
-    {
+
+    public ImageServiceImpl(ImageRepository imgRepo, Environment environment, MapperDto mapperDto) {
         imageRepository = imgRepo;
         this.environment = environment;
         this.mapperDto = mapperDto;
@@ -50,16 +50,15 @@ public class ImageServiceImpl implements ImageService{
     public List<ImageDTO> getAllImage() {
         List<Image> images = imageRepository.findAll();
         List<ImageDTO> iDTO = new ArrayList<>();
-        for(Image i : images)
-        {
-           ImageDTO imageDTOS = mapperDto.convertImageToImageDto(i);
-           iDTO.add(imageDTOS);
+        for (Image i : images) {
+            ImageDTO imageDTOS = mapperDto.convertImageToImageDto(i);
+            iDTO.add(imageDTOS);
         }
-       return iDTO;
+        return iDTO;
 
     }
 
-//    @Override
+    //    @Override
 //    public ImageDTO findById(int id) {
 //        Optional<Image> image = Optional.ofNullable(imageRepository.findById(id).orElseThrow(() -> new NotFoundException("Comment id is not found - " + id)));
 //        ImageDTO imageDTO = mapperDto.convertImageToImageDto(image);
@@ -76,6 +75,7 @@ public class ImageServiceImpl implements ImageService{
                 .setCredentials(GoogleCredentials.fromStream(firebaseCredential)).build();
 
     }
+
     public String uploadFile(MultipartFile multipartFile) throws IOException {
         log.debug("bucket name====" + bucketName);
         File file = convertMultiPartToFile(multipartFile);
@@ -89,8 +89,9 @@ public class ImageServiceImpl implements ImageService{
         Blob blob = storage.create(blobInfo, Files.readAllBytes(filePath));
         file.delete();
         log.info("File " + filePath + " uploaded to bucket " + bucketName + " as " + objectName);
-        return storageBaseUrl+objectName;
+        return storageBaseUrl + objectName;
     }
+
     private InputStream createFirebaseCredential() throws JsonProcessingException {
         String privateKeyTemp = "-----BEGIN PRIVATE KEY-----\nMIIEuwIBADANBgkqhkiG9w0BAQEFAASCBKUwggShAgEAAoIBAQDxE6M/BU9MlNSW\nRHyobkn+qN9fgsbvcw/wQzaZmRCKIB4pDCMBO6Xw7hvBT6EscFwh+CaZTMyADgYy\nSj1TQJ5O6nvH5L6pjZkuOVFbhhoQr4tDqbYm00RO32RPRxlmDi2lKRteAgj/0YCk\n7ubcgXaiTZaXKFb+0MmAlzJIrTDjNuL5D6P7T/BKphmJRE4hYOfFOv6LXYv6zviZ\n5ipke2H8OO7VaFoPR1y8qJUvMmuC2pa4OfyEi5PVReVgazLArSfKzrTB/882YE3y\nsoCYwHfJ32RFHA4N9RUub9AfO5MNltmns6xWNtOPTDz77mUH/Hhscn3PnlBh1vwk\nF8hFMKyTAgMBAAECggEAX/EyzMfuMUoh+NO00Mtjw2etzjMbvPwL4dC+EA7smCwE\nFM3xuHHmrqX0gdCREkB9Sj+aDPSVhnkOWkFVeqaC2mFTddBBWPUze0Pwbv5FrVJP\nmFQYXAdEbidVon9nSkhmPg7IB3fD4RudmQZC9orHjfxW7D1vseWh6/1AU9ApXqMZ\noKTLY/o7wDupZMU0UUs3Kz9zDYDzo8QiyS6TaNwFhCjWj3B6ULb98AykiJ7EAYux\nJ7T7cK2Ci+B1je4hvg8nnXn0zfmZGEk1vDDCDkUcKinc88jpWe0dR/CH14kKZB6s\nfdJoopux4ywpoZLR8UujuaD9UMhTKtjUDVmgUBl7wQKBgQD5Bzc0LllnOpjenNDU\nI7FQXKviQGsq6INKFjnau4NdRI0X3q+j1pdVmGX3nGArUmqWltq/cErgNvKHJkTf\nSbXIXFrsfAn9iDxuKUH+GK6AIi4XSoSb5bZbtqd17qt5WX6RvTAE0g+6//CFsKiZ\nxCgPGxvd1dCZ5wJKEqCt/S0T8QKBgQD3028Pd3nxphy44z0R7OMJxURu/HvrC+X4\noDPLW1EJ4ORAGfewQwAYCH9EiYsBgZy2MEUofXtibuOFCFm4vG3xjc5kumxlUlNm\nLrU2t4O9rIqABXfZdrkHlicXOtIoTBAb0kML1lKDdWgJNtpDcOzDQHMATexgQGkr\ny2hTBA48wwJ/S9/m8f8tPkacTTd6aSh23gVeWZFHFcvCNNCQ0BRR8hjw5FT1LvYz\nJeFJMCh1JL33u+o6vBl6ttYHDyaZ1W6f9GwvR96DLLxVrTrk4IakpGXFpVMPFHDp\nHwiH/Wa62D5sUftSpiVapZ9VqWYp+K/LhM69rtl2tW2tRORoEJsTIQKBgQDQbzPp\nfkNBysQ9fGHQwbvya8ey0QgoGEnDYnotfxAZjtxqTWzVAoUBsaPYsRYInkp/sPl5\npJAxqbISIYPUrCaMEwiUD3c7gJJETuR6sL5MuOGD6xVyATh9+PvHveEjo1WpEJ7z\nRb8Aca6ekVPhhQic74fJqcA08/eArgOATtjqoQKBgDU1L7wPV7ECSivczYIsvAum\ns2cw6PwsOp/xQSbQP4atEnAtNpyEuusfODi5k6V79noILzmJjVaoUmfCANn3fUI4\na+h226qjmoYsOSSCeImS/DyMu9IhxbADshebjO5fo2sQ00dKMTPde90M5AD7c60R\ndWqdRBKPGJg51Usb5bb2\n-----END PRIVATE KEY-----\n";
 
@@ -115,6 +116,7 @@ public class ImageServiceImpl implements ImageService{
         //convert jsonString string to InputStream using Apache Commons
         return IOUtils.toInputStream(jsonString);
     }
+
     private File convertMultiPartToFile(MultipartFile file) throws IOException {
         File convertedFile = new File(Objects.requireNonNull(file.getOriginalFilename()));
         FileOutputStream fos = new FileOutputStream(convertedFile);
@@ -122,6 +124,7 @@ public class ImageServiceImpl implements ImageService{
         fos.close();
         return convertedFile;
     }
+
     private String generateFileName(MultipartFile multiPart) {
         return new Date().getTime() + "-" + Objects.requireNonNull(multiPart.getOriginalFilename()).replace(" ", "_");
     }

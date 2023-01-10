@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class CommentServiceImpl implements CommentService{
+public class CommentServiceImpl implements CommentService {
 
     private CommentRepository commentRepository;
 
@@ -22,7 +22,7 @@ public class CommentServiceImpl implements CommentService{
 
     private final MapperDto mapperDto;
 
-    public CommentServiceImpl(CommentRepository theComm, TaskRepository theTask, MapperDto mapperDto){
+    public CommentServiceImpl(CommentRepository theComm, TaskRepository theTask, MapperDto mapperDto) {
         commentRepository = theComm;
         taskRepository = theTask;
         this.mapperDto = mapperDto;
@@ -31,12 +31,13 @@ public class CommentServiceImpl implements CommentService{
     @Override
     public List<CommentDtoResponse> getAllComments() {
         List<Comment> commentList = commentRepository.findAll();
-        List <CommentDtoResponse> cDto = new ArrayList<>();
-        for (Comment c : commentList){
+        List<CommentDtoResponse> cDto = new ArrayList<>();
+        for (Comment c : commentList) {
             CommentDtoResponse commDto = mapperDto.convertCommentToCommentDtoResponse(c);
             cDto.add(commDto);
-        }  return cDto;
         }
+        return cDto;
+    }
 
     @Override
     public CommentDtoResponse findById(Long id) {
