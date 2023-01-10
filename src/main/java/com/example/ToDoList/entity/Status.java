@@ -35,7 +35,8 @@ public class Status extends Auditable{
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(String status)
+    {
         this.status = status;
     }
 

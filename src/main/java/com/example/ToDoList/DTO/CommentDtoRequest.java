@@ -4,9 +4,9 @@ public class CommentDtoRequest {
 
     private Long id;
     private String comment;
-   // private TaskDtoResponse taskDto;
+    // private TaskDtoResponse taskDto;
 
-    private Long taskID;
+    private Long task_id;
 
 
     public Long getId() {
@@ -25,11 +25,11 @@ public class CommentDtoRequest {
         this.comment = comment;
     }
 
-    public Long getTaskID() {
-        return taskID;
+    public Long getTask_id() {
+        return task_id;
     }
 
-    public void setTaskID(Long taskID) {
-        this.taskID = taskID;
+    public void setTask_id(Long task_id) {
+        this.task_id = task_id;
     }
 }

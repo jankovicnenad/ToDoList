@@ -49,7 +49,7 @@ public class CommentServiceImpl implements CommentService{
     @Override
     public CommentDtoResponse save(CommentDtoRequest commentDto) {
         Comment c = mapperDto.convertCommentDtoRequestToComment(commentDto);
-        Optional<Task> task = taskRepository.findById(commentDto.getTaskID());
+        Optional<Task> task = taskRepository.findById(commentDto.getTask_id());
         c.setTask(task.get());
         commentRepository.save(c);
         return mapperDto.convertCommentToCommentDtoResponse(c);
@@ -66,7 +66,7 @@ public class CommentServiceImpl implements CommentService{
         Comment comment = commentRepository.findById(id).orElseThrow(() -> new NotFoundException("Task id is not found - " + id));
         Comment comment1 = mapperDto.convertCommentDtoRequestToComment(commentDto);
         comment1.setId(comment.getId());
-        Task task = taskRepository.findById(commentDto.getTaskID()).orElseThrow(() -> new NotFoundException("Task id is not found - " + id));
+        Task task = taskRepository.findById(commentDto.getTask_id()).orElseThrow(() -> new NotFoundException("Task id is not found - " + id));
         comment1.setTask(task);
         commentRepository.save(comment1);
     }

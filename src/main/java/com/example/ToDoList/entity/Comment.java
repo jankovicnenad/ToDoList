@@ -3,19 +3,20 @@ package com.example.ToDoList.entity;
 import javax.persistence.*;
 
 @Entity
-@Table(name="comment")
-public class Comment  extends  Auditable{
+@Table(name = "comment")
+public class Comment extends Auditable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-        private Long id;
+    private Long id;
     @Column(name = "comment")
-        private String comment;
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH,CascadeType.REFRESH})
-    @JoinColumn(name="task_id")
+    private String comment;
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
+    @JoinColumn(name = "task_id")
     private Task task;
 
-    public Comment(){}
+    public Comment() {
+    }
 
     public Comment(String comment) {
         this.comment = comment;
@@ -47,9 +48,6 @@ public class Comment  extends  Auditable{
 
     @Override
     public String toString() {
-        return "Task{" +
-                "id=" + id +
-                ", comment='" + comment + '\'' +
-                '}';
+        return "Task{" + "id=" + id + ", comment='" + comment + '\'' + '}';
     }
 }

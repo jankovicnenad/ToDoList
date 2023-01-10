@@ -8,10 +8,10 @@ public class CommentDtoResponse {
     private Long id;
     private String comment;
     private TaskDtoResponse task_dto;
-    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime createdDate;
 
-    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime modifiedDate;
 
     public LocalDateTime getCreatedDate() {
@@ -41,6 +41,7 @@ public class CommentDtoResponse {
     public String getComment() {
         return comment;
     }
+
     public void setComment(String comment) {
         this.comment = comment;
     }

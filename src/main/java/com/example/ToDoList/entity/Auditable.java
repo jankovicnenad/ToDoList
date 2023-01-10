@@ -31,10 +31,12 @@ public abstract class Auditable {
     }
 
     public LocalDateTime getModifiedDate() {
+
         return modifiedDate;
     }
 
     public void setModifiedDate(LocalDateTime modifiedDate) {
+
         this.modifiedDate = modifiedDate;
     }
 }

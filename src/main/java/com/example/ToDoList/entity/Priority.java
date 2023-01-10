@@ -42,7 +42,8 @@ public class Priority  extends  Auditable{
         return tasks;
     }
 
-    public void setTasks(List<Task> tasks) {
+    public void setTasks(List<Task> tasks)
+    {
         this.tasks = tasks;
     }
 
