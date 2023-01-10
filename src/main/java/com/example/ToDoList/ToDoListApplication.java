@@ -11,8 +11,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.util.ResourceUtils;
-import javax.sql.DataSource;
 
+import javax.sql.DataSource;
 
 
 import javax.annotation.PostConstruct;
@@ -30,29 +30,31 @@ import java.util.TimeZone;
 @SpringBootApplication
 public class ToDoListApplication {
 
-	public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException {
 
-		SpringApplication.run(ToDoListApplication.class, args);
-		File file = ResourceUtils.getFile("classpath:serviceAccountKey.json");
+        SpringApplication.run(ToDoListApplication.class, args);
+        File file = ResourceUtils.getFile("classpath:serviceAccountKey.json");
 
-		FileInputStream serviceAccount =
-				new FileInputStream(file);
+        FileInputStream serviceAccount =
+                new FileInputStream(file);
 
-		StorageOptions.newBuilder()
-				.setProjectId("tasksimage")
-				.setCredentials(GoogleCredentials.fromStream(serviceAccount))
-				.build();
-	}
-	@PostConstruct
-	public void init() {
-		TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
-		System.out.println("Spring boot application running in UTC timezone :"+new Date());
-	}
-	@Bean
-	public ModelMapper modelMapper() {
-		return new ModelMapper();
+        StorageOptions.newBuilder()
+                .setProjectId("tasksimage")
+                .setCredentials(GoogleCredentials.fromStream(serviceAccount))
+                .build();
+    }
 
-	}
+    @PostConstruct
+    public void init() {
+        TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
+        System.out.println("Spring boot application running in UTC timezone :" + new Date());
+    }
+
+    @Bean
+    public ModelMapper modelMapper() {
+        return new ModelMapper();
+
+    }
 //alternative for liquibase
 /*
 	@Bean

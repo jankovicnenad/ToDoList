@@ -13,15 +13,14 @@ import java.util.Optional;
 
 
 @Service
-public class PriorityServiceImpl implements PriorityService{
+public class PriorityServiceImpl implements PriorityService {
 
     private final PriorityRepository priorityRepository;
 
     private final MapperDto mapperDto;
 
 
-    public PriorityServiceImpl(PriorityRepository thePriority, MapperDto mapperDto)
-    {
+    public PriorityServiceImpl(PriorityRepository thePriority, MapperDto mapperDto) {
         priorityRepository = thePriority;
         this.mapperDto = mapperDto;
     }
@@ -30,8 +29,7 @@ public class PriorityServiceImpl implements PriorityService{
     public List<PriorityDtoResponse> getAllPriority() {
         List<Priority> priorities = priorityRepository.findAll();
         List<PriorityDtoResponse> pDto = new ArrayList<>();
-        for(Priority p : priorities)
-        {
+        for (Priority p : priorities) {
             PriorityDtoResponse priorityDtoResponse = mapperDto.convertPriorityToPriorityDtoResponse(p);
             pDto.add(priorityDtoResponse);
         }
@@ -43,8 +41,8 @@ public class PriorityServiceImpl implements PriorityService{
     @Override
     public PriorityDtoResponse findById(Long id) {
         Optional<Priority> priority = Optional.ofNullable(priorityRepository.findById(id).orElseThrow(() -> new NotFoundException("Priority id not found - " + id)));
-       PriorityDtoResponse priorityDtoResponse = mapperDto.convertPriorityToPriorityDtoResponse(priority.get());
-       return priorityDtoResponse;
+        PriorityDtoResponse priorityDtoResponse = mapperDto.convertPriorityToPriorityDtoResponse(priority.get());
+        return priorityDtoResponse;
     }
 
     @Override

@@ -21,7 +21,7 @@ import java.util.Objects;
 import java.util.Optional;
 
 @Service
-public class TaskServiceImpl implements TaskService{
+public class TaskServiceImpl implements TaskService {
 
     private final TaskRepository taskRepository;
 
@@ -35,29 +35,28 @@ public class TaskServiceImpl implements TaskService{
     private final MapperDto mapperDto;
 
 
-    public TaskServiceImpl(TaskRepository task, StatusRepository status, PriorityRepository priority, ImageService imageService, MapperDto mapperDto)
-    {taskRepository = task;
-     statusRepository = status;
-     priorityRepository = priority;
-     this.imageService = imageService;
+    public TaskServiceImpl(TaskRepository task, StatusRepository status, PriorityRepository priority, ImageService imageService, MapperDto mapperDto) {
+        taskRepository = task;
+        statusRepository = status;
+        priorityRepository = priority;
+        this.imageService = imageService;
         this.mapperDto = mapperDto;
     }
+
     @Override
     public List<TaskDtoResponse> getAllTasks(Long priorityId, Long statusId) {
         List<Task> tasks = new ArrayList<>();
-        if(Objects.nonNull(priorityId)&& Objects.isNull(statusId)){
+        if (Objects.nonNull(priorityId) && Objects.isNull(statusId)) {
             tasks = taskRepository.selectTasksByPriority(priorityId);
-        }else if (Objects.nonNull(statusId)&& Objects.isNull(priorityId)){
+        } else if (Objects.nonNull(statusId) && Objects.isNull(priorityId)) {
             tasks = taskRepository.selectTaskByStatus(statusId);
-        }
-        else if (Objects.nonNull(priorityId) && Objects.nonNull(statusId)){
+        } else if (Objects.nonNull(priorityId) && Objects.nonNull(statusId)) {
             tasks = taskRepository.selectTasksByPriorityAndStatus(priorityId, statusId);
-        }
-        else {
+        } else {
             tasks = taskRepository.findAll();
         }
-        List <TaskDtoResponse> tDto = new ArrayList<>();
-        for (Task t : tasks){
+        List<TaskDtoResponse> tDto = new ArrayList<>();
+        for (Task t : tasks) {
             TaskDtoResponse taskDtoResponse = mapperDto.convertTaskToTaskDtoResponse(t);
             tDto.add(taskDtoResponse);
         }
@@ -66,37 +65,37 @@ public class TaskServiceImpl implements TaskService{
 
     @Override
     public TaskDtoResponse findById(Long id) {
-       Task task = taskRepository.findById(id).orElseThrow(()-> new NotFoundException("Task id not found - " +id));
-       TaskDtoResponse tDto = mapperDto.convertTaskToTaskDtoResponse(task);
+        Task task = taskRepository.findById(id).orElseThrow(() -> new NotFoundException("Task id not found - " + id));
+        TaskDtoResponse tDto = mapperDto.convertTaskToTaskDtoResponse(task);
         return tDto;
     }
 
     public TaskDtoResponse saveImage(TaskDtoRequest taskDtoRequest, MultipartFile multipartFile) {
-            Task task = mapperDto.convertTaskDtoRequestToTask(taskDtoRequest);
-            Optional<Status> status = statusRepository.findById(taskDtoRequest.getStatud_id());
-            Optional<Priority> priority = priorityRepository.findById(taskDtoRequest.getPriority_id());
+        Task task = mapperDto.convertTaskDtoRequestToTask(taskDtoRequest);
+        Optional<Status> status = statusRepository.findById(taskDtoRequest.getStatud_id());
+        Optional<Priority> priority = priorityRepository.findById(taskDtoRequest.getPriority_id());
 
-            task.setPriority(priority.get());
+        task.setPriority(priority.get());
 
-            task.setStatus(status.get());
-            if (Objects.nonNull(multipartFile)) {
-                Image image = new Image();
-                try {
-                    String imageUrl = imageService.uploadFile(multipartFile);
-                    image.setUrl(imageUrl);
-                    image.setOriginalName(multipartFile.getOriginalFilename());
-                    image.setModifiedDate(LocalDateTime.now());
-                    image.setCreatedDate(LocalDateTime.now());
+        task.setStatus(status.get());
+        if (Objects.nonNull(multipartFile)) {
+            Image image = new Image();
+            try {
+                String imageUrl = imageService.uploadFile(multipartFile);
+                image.setUrl(imageUrl);
+                image.setOriginalName(multipartFile.getOriginalFilename());
+                image.setModifiedDate(LocalDateTime.now());
+                image.setCreatedDate(LocalDateTime.now());
 
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-                image.setTask(task);
-                task.getImages().add(image);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
             }
+            image.setTask(task);
+            task.getImages().add(image);
+        }
 
-            taskRepository.save(task);
-            return mapperDto.convertTaskToTaskDtoResponse(task);
+        taskRepository.save(task);
+        return mapperDto.convertTaskToTaskDtoResponse(task);
 
 
     }
@@ -112,7 +111,7 @@ public class TaskServiceImpl implements TaskService{
         task.setStatus(status.get());
 
         taskRepository.save(task);
-        return  mapperDto.convertTaskToTaskDtoRequest(task);
+        return mapperDto.convertTaskToTaskDtoRequest(task);
     }
 
     @Override
@@ -131,10 +130,11 @@ public class TaskServiceImpl implements TaskService{
         Priority priority = priorityRepository.findById(taskDto.getPriority_id()).orElseThrow(() -> new NotFoundException("Task id is not found - " + id));
         task1.setStatus(status);
         task1.setPriority(priority);
-        if(status.getStatus()!=null){
-        if(status.getStatus().equals("DONE")){
-            task1.setEndDate(LocalDateTime.now());
-        }}
+        if (status.getStatus() != null) {
+            if (status.getStatus().equals("DONE")) {
+                task1.setEndDate(LocalDateTime.now());
+            }
+        }
         taskRepository.save(task1);
 
 

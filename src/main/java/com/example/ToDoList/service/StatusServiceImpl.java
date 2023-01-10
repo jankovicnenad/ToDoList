@@ -12,11 +12,12 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class StatusServiceImpl implements StatusService{
+public class StatusServiceImpl implements StatusService {
 
     private StatusRepository statusRepository;
 
     private final MapperDto mapperDto;
+
     public StatusServiceImpl(StatusRepository theStatus, MapperDto mapperDto) {
         this.statusRepository = theStatus;
         this.mapperDto = mapperDto;
@@ -25,8 +26,8 @@ public class StatusServiceImpl implements StatusService{
     @Override
     public List<StatusDtoResponse> getAllStatus() {
         List<Status> statusList = statusRepository.findAll();
-        List <StatusDtoResponse> sDto = new ArrayList<>();
-        for (Status s : statusList){
+        List<StatusDtoResponse> sDto = new ArrayList<>();
+        for (Status s : statusList) {
             StatusDtoResponse statDto = mapperDto.convertStatusToStatusDtoResponse(s);
             sDto.add(statDto);
         }
@@ -40,11 +41,12 @@ public class StatusServiceImpl implements StatusService{
 
         return statusDtoResponse;
     }
+
     @Override
     public StatusDtoResponse save(StatusDtoRequest statusDto) {
-    Status s = mapperDto.convertStatusDtoRequestToStatus(statusDto);
-    statusRepository.save(s);
-    return mapperDto.convertStatusToStatusDtoResponse(s);
+        Status s = mapperDto.convertStatusDtoRequestToStatus(statusDto);
+        statusRepository.save(s);
+        return mapperDto.convertStatusToStatusDtoResponse(s);
     }
 
     @Override
@@ -52,6 +54,7 @@ public class StatusServiceImpl implements StatusService{
         Optional<Status> status = Optional.ofNullable(statusRepository.findById(id).orElseThrow(() -> new NotFoundException("Status id not found - " + id)));
         statusRepository.delete(status.get());
     }
+
     @Override
     public void updateStatus(Long id, StatusDtoRequest statusDto) {
         Status status = statusRepository.findById(id).orElseThrow(() -> new NotFoundException("Task id is not found - " + id));

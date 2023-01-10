@@ -29,8 +29,7 @@ public class TaskDtoResponse {
         return createdDate;
     }
 
-    public void setCreatedDate(LocalDateTime createdDate)
-    {
+    public void setCreatedDate(LocalDateTime createdDate) {
         this.createdDate = createdDate;
     }
 
