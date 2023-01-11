@@ -1,5 +1,6 @@
 package com.example.ToDoList.service;
 
+import com.example.ToDoList.DAO.ImageRepository;
 import com.example.ToDoList.DAO.PriorityRepository;
 import com.example.ToDoList.DAO.StatusRepository;
 import com.example.ToDoList.DAO.TaskRepository;
@@ -33,14 +34,16 @@ public class TaskServiceImpl implements TaskService {
     private final ImageService imageService;
 
     private final MapperDto mapperDto;
+    private final ImageRepository imageRepository;
 
 
-    public TaskServiceImpl(TaskRepository task, StatusRepository status, PriorityRepository priority, ImageService imageService, MapperDto mapperDto) {
+    public TaskServiceImpl(TaskRepository task, StatusRepository status, PriorityRepository priority, ImageService imageService, MapperDto mapperDto, ImageRepository imageRepository) {
         taskRepository = task;
         statusRepository = status;
         priorityRepository = priority;
         this.imageService = imageService;
         this.mapperDto = mapperDto;
+        this.imageRepository = imageRepository;
     }
 
     @Override
@@ -70,7 +73,7 @@ public class TaskServiceImpl implements TaskService {
         return tDto;
     }
 
-    public TaskDtoResponse saveImage(TaskDtoRequest taskDtoRequest, MultipartFile multipartFile) {
+    public TaskDtoResponse saveTask(TaskDtoRequest taskDtoRequest, MultipartFile multipartFile) {
         Task task = mapperDto.convertTaskDtoRequestToTask(taskDtoRequest);
         Optional<Status> status = statusRepository.findById(taskDtoRequest.getStatus_id());
         Optional<Priority> priority = priorityRepository.findById(taskDtoRequest.getPriority_id());
@@ -122,13 +125,13 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public void updateTask(TaskDtoRequest taskDto) {
-        Long id = taskDto.getId();
+    public TaskDtoResponse updateTask(TaskDtoRequest taskDtoRequest, MultipartFile multipartFile) throws IOException {
+        Long id = taskDtoRequest.getId();
         Task task = taskRepository.findById(id).orElseThrow(() -> new NotFoundException("Task id is not found - " + id));
-        Task task1 = mapperDto.convertTaskDtoRequestToTask(taskDto);
+        Task task1 = mapperDto.convertTaskDtoRequestToTask(taskDtoRequest);
         task1.setId(task.getId());
-        Status status = statusRepository.findById(taskDto.getStatus_id()).orElseThrow(() -> new NotFoundException("Task id is not found - " + id));
-        Priority priority = priorityRepository.findById(taskDto.getPriority_id()).orElseThrow(() -> new NotFoundException("Task id is not found - " + id));
+        Status status = statusRepository.findById(taskDtoRequest.getStatus_id()).orElseThrow(() -> new NotFoundException("Task id is not found - " + id));
+        Priority priority = priorityRepository.findById(taskDtoRequest.getPriority_id()).orElseThrow(() -> new NotFoundException("Task id is not found - " + id));
         task1.setStatus(status);
         task1.setPriority(priority);
         if (status.getStatus() != null) {
@@ -136,10 +139,24 @@ public class TaskServiceImpl implements TaskService {
                 task1.setEndDate(LocalDateTime.now());
             }
         }
+        if (Objects.nonNull(multipartFile)) {
+            Image image = new Image();
+            try {
+                String imageUrl = imageService.uploadFile(multipartFile);
+                image.setUrl(imageUrl);
+                image.setOriginalName(multipartFile.getOriginalFilename());
+                image.setModifiedDate(LocalDateTime.now());
+                image.setCreatedDate(LocalDateTime.now());
+
+
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            image.setTask(task);
+            task.getImages().add(image);
+        }
+
         taskRepository.save(task1);
+        return mapperDto.convertTaskToTaskDtoResponse(task1);
 
-
-    }
-
-
-}
+    }}
