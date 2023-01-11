@@ -35,7 +35,7 @@ public class TaskRestController {
     }
 
     @Operation(summary = "Insert task with multipart file (not required)")
-    @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Fetched all tasks from database", content = {@Content(mediaType = "application/json")})})
+    @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Inserted tasks", content = {@Content(mediaType = "application/json")})})
     @PostMapping(value = "/tasks", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
     public ResponseEntity<?> saveTask(@RequestPart(value = "file", required = false) MultipartFile multipartFile, @RequestPart TaskDtoRequest taskDtoRequest) throws Exception {
         if (multipartFile.isEmpty()) {
@@ -56,7 +56,7 @@ public class TaskRestController {
     }
 
     @Operation(summary = "Update task with multipart file (not required)")
-    @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Fetched all tasks from database", content = {@Content(mediaType = "application/json")})})
+    @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Updated task in database", content = {@Content(mediaType = "application/json")})})
     @PutMapping(value = "/tasks", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
     public ResponseEntity<?> updateTask(@RequestPart(value = "file") MultipartFile multipartFile, @RequestPart TaskDtoRequest taskDtoRequest) throws IOException {
         if (multipartFile.isEmpty()) {
@@ -69,7 +69,7 @@ public class TaskRestController {
     }
 
     @Operation(summary = "Get task from database with specific ID")
-    @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Fetched task from database", content = {@Content(mediaType = "application/json")})})
+    @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Fetched task from database with specific ID", content = {@Content(mediaType = "application/json")})})
     @GetMapping("/tasks/{taskId}")
     public TaskDtoResponse getTasks(@PathVariable Long taskId) {
         TaskDtoResponse taskDtoResponse = taskService.findById(taskId);

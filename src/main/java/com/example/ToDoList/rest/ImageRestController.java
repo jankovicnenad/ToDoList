@@ -18,10 +18,10 @@ public class ImageRestController {
         this.taskService = taskService;
     }
 
-    @GetMapping("/image")
-    public List<ImageDTO> getImages(){
-        return imageService.getAllImage();
-    }
+//    @GetMapping("/image")
+//    public List<ImageDTO> getImages(){
+//        return imageService.getAllImage();
+//    }
 }
 
 
