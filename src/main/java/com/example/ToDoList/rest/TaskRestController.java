@@ -43,7 +43,7 @@ public class TaskRestController {
         if (multipartFile.isEmpty()) {
             return new ResponseEntity<>(taskService.save(taskDtoRequest), HttpStatus.OK);
         } else if (!multipartFile.getOriginalFilename().endsWith(".jpg") && !multipartFile.getOriginalFilename().endsWith(".png")) {
-            throw new RuntimeException("Runtime exception");
+            throw new BadRequestException("Invalid image type!");
         }
 //            System.out.println(imageService.uploadFile(multipartFile));
         return new ResponseEntity<>(taskService.saveImage(taskDtoRequest, multipartFile), HttpStatus.OK);
