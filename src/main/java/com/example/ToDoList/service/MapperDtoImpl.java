@@ -67,7 +67,7 @@ public class MapperDtoImpl implements MapperDto {
         task.setPriority(priority);
 
         Status status = new Status();
-        status.setId(taskDtoRequest.getStatud_id());
+        status.setId(taskDtoRequest.getStatus_id());
         task.setStatus(status);
 
         return task;
@@ -82,7 +82,7 @@ public class MapperDtoImpl implements MapperDto {
         taskDtoRequest.setName(task.getName());
         taskDtoRequest.setStart_date(task.getStart_date());
         taskDtoRequest.setPriority_id(task.getPriority().getId());
-        taskDtoRequest.setStatud_id(task.getStatus().getId());
+        taskDtoRequest.setStatus_id(task.getStatus().getId());
         return taskDtoRequest;
     }
 
@@ -242,10 +242,10 @@ public class MapperDtoImpl implements MapperDto {
     }
 
     @Override
-    public Priority convertPriorityDtoRequestToPriority(PriorityDtoRequest priorityDto) {
+    public Priority convertPriorityDtoRequestToPriority(PriorityDtoRequest priorityDtoRequest) {
         Priority priority = new Priority();
-        priority.setPriority(priorityDto.getPriority());
-        priority.setId(priorityDto.getId());
+        priority.setPriority(priorityDtoRequest.getPriority());
+        priority.setId(priorityDtoRequest.getId());
         return priority;
     }
 

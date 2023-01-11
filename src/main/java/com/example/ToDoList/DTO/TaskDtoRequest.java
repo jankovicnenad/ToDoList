@@ -13,7 +13,7 @@ public class TaskDtoRequest {
     @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate start_date;
 
-    private Long statud_id;
+    private Long status_id;
 
     private Long priority_id;
 
@@ -41,12 +41,12 @@ public class TaskDtoRequest {
         this.start_date = start_date;
     }
 
-    public Long getStatud_id() {
-        return statud_id;
+    public Long getStatus_id() {
+        return status_id;
     }
 
-    public void setStatud_id(Long statud_id) {
-        this.statud_id = statud_id;
+    public void setStatus_id(Long status_id) {
+        this.status_id = status_id;
     }
 
     public Long getPriority_id() {

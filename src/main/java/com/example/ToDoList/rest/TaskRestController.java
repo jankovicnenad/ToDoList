@@ -39,18 +39,17 @@ public class TaskRestController {
     @Operation(summary = "This is to fetch all tasks from database")
     @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Fetched all tasks from database", content = {@Content(mediaType = "application/json")})})
     @PostMapping(value = "/tasks", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
-    public ResponseEntity<?> uploadFile(@RequestPart("file") MultipartFile multipartFile, @RequestPart TaskDtoRequest taskDtoRequest) throws Exception {
-        if (multipartFile.isEmpty()) return new ResponseEntity<>(taskService.save(taskDtoRequest), HttpStatus.OK);
-        else {
-            if (!multipartFile.getOriginalFilename().endsWith(".jpg") && !multipartFile.getOriginalFilename().endsWith(".png")) {
-                // Ako nije, vratite gresku
-//                    return "Invalid file extension";
-            }
-            System.out.println(imageService.uploadFile(multipartFile));
-
+    public ResponseEntity<?> uploadFile(@RequestPart(value = "file", required = false) MultipartFile multipartFile, @RequestPart TaskDtoRequest taskDtoRequest) throws Exception {
+        if (multipartFile.isEmpty()) {
+            return new ResponseEntity<>(taskService.save(taskDtoRequest), HttpStatus.OK);
+        } else if (!multipartFile.getOriginalFilename().endsWith(".jpg") && !multipartFile.getOriginalFilename().endsWith(".png")) {
+            throw new RuntimeException("Runtime exception");
         }
+//            System.out.println(imageService.uploadFile(multipartFile));
         return new ResponseEntity<>(taskService.saveImage(taskDtoRequest, multipartFile), HttpStatus.OK);
     }
+
+
 
     @Operation(summary = "This is to fetch all tasks from database")
     @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Fetched all tasks from database", content = {@Content(mediaType = "application/json")})})
