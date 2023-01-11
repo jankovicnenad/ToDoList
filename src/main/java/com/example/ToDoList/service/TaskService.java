@@ -4,6 +4,7 @@ import com.example.ToDoList.DTO.TaskDtoResponse;
 import com.example.ToDoList.DTO.TaskDtoRequest;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 public interface TaskService {
@@ -12,13 +13,13 @@ public interface TaskService {
 
     public TaskDtoResponse findById(Long id);
 
-    public TaskDtoResponse saveImage(TaskDtoRequest taskDtoRequest, MultipartFile multipartFile);
+    public TaskDtoResponse saveTask(TaskDtoRequest taskDtoRequest, MultipartFile multipartFile);
 
     public TaskDtoRequest save(TaskDtoRequest taskDtoRequest);
 
     public void deleteById(Long id);
 
-    public void updateTask(TaskDtoRequest taskDto);
+    public TaskDtoResponse updateTask(TaskDtoRequest taskDto, MultipartFile multipartFile) throws IOException;
 
 
 }
