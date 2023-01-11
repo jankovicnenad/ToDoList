@@ -3,6 +3,10 @@ package com.example.ToDoList.rest;
 import com.example.ToDoList.DTO.CommentDtoResponse;
 import com.example.ToDoList.DTO.CommentDtoRequest;
 import com.example.ToDoList.service.CommentServiceImpl;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,11 +20,15 @@ public class CommentRestController {
     public CommentRestController(CommentServiceImpl theComm)
     {commentService = theComm;}
 
+    @Operation(summary = "Get all comments from database")
+    @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "All tasks are extracted from the database", content = {@Content(mediaType = "application/json")})})
     @GetMapping("/comments")
     public List<CommentDtoResponse> getAllComments(){
      return commentService.getAllComments();
     }
 
+    @Operation(summary = "Get comment from database by specific ID")
+    @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Got comment from database by specific ID", content = {@Content(mediaType = "application/json")})})
     @GetMapping("/comments/{commentId}")
     public CommentDtoResponse findByid(@PathVariable Long commentId){
         CommentDtoResponse commentDtoResponse = commentService.findById(commentId);
@@ -28,18 +36,27 @@ public class CommentRestController {
             throw new NotFoundException("Comment id not found - " +commentId);
         return commentDtoResponse;
     }
+
+
+    @Operation(summary = "Update comment in database")
+    @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Updated comment in database", content = {@Content(mediaType = "application/json")})})
     @PutMapping("/comments")
     public String updateComment(@RequestBody CommentDtoRequest commentDto){
         Long commentId = commentDto.getId();
         commentService.updateComment(commentId, commentDto);
         return "Updated comment with id - " +commentId;
     }
+
+    @Operation(summary = "Save comment in database")
+    @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Saved comment in database", content = {@Content(mediaType = "application/json")})})
     @PostMapping("/comments")
     public CommentDtoResponse saveComment(@RequestBody CommentDtoRequest commDto)
     {
         return commentService.save(commDto);
 
     }
+    @Operation(summary = "Delete comment in database")
+    @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Deleted comment in database", content = {@Content(mediaType = "application/json")})})
     @DeleteMapping("/comments/{commentId}")
     public String deleteComment(@PathVariable Long commentId){
 
