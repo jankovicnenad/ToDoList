@@ -24,16 +24,4 @@ public class ImageRestController {
     }
 }
 
-//    @PostMapping("/tasks")
-//    public String uploadFile(@RequestPart("files") MultipartFile multipartFile, @RequestPart TaskDtoResponse taskDto) throws Exception {
-//        if(multipartFile.isEmpty())
-//         taskService.save(taskDto);
-//       else {
-//            if (!multipartFile.getOriginalFilename().endsWith(".jpg") && !multipartFile.getOriginalFilename().endsWith(".png")) {
-//                // Ako nije, vratite gresku
-//                return "Invalid file extension";
-//            }
-//           System.out.println(imageService.uploadFile(multipartFile));
-//        taskService.saveImage(taskDto, multipartFile);}
-//        return "Uspesno odradjena metoda!";
-//}}
+

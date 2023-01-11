@@ -36,7 +36,7 @@ public class TaskRestController {
         this.imageService = imageService;
     }
 
-    @Operation(summary = "This is to fetch all tasks from database")
+    @Operation(summary = "Insert task with multipart file (not required)")
     @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Fetched all tasks from database", content = {@Content(mediaType = "application/json")})})
     @PostMapping(value = "/tasks", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
     public ResponseEntity<?> uploadFile(@RequestPart(value = "file", required = false) MultipartFile multipartFile, @RequestPart TaskDtoRequest taskDtoRequest) throws Exception {
@@ -50,15 +50,14 @@ public class TaskRestController {
     }
 
 
-
-    @Operation(summary = "This is to fetch all tasks from database")
+    @Operation(summary = " Fetch all tasks from database")
     @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Fetched all tasks from database", content = {@Content(mediaType = "application/json")})})
     @GetMapping("/tasks")
     public List<TaskDtoResponse> getAllTasks(@RequestParam(required = false, name = "priority") Long priorityId, @RequestParam(required = false, name = "status") Long statusId) {
         return taskService.getAllTasks(priorityId, statusId);
     }
 
-    @Operation(summary = "This is to update task from database")
+    @Operation(summary = "Update task in database")
     @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Updated task from database", content = {@Content(mediaType = "application/json")})})
     @PutMapping("/tasks")
     public String updateTask(@RequestBody TaskDtoRequest taskDto) throws IOException {
@@ -66,7 +65,7 @@ public class TaskRestController {
         return "Updated task";
     }
 
-    @Operation(summary = "This is to fetch task from database")
+    @Operation(summary = "Get task from database with specific ID")
     @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Fetched task from database", content = {@Content(mediaType = "application/json")})})
     @GetMapping("/tasks/{taskId}")
     public TaskDtoResponse getTasks(@PathVariable Long taskId) {
@@ -77,7 +76,7 @@ public class TaskRestController {
         return taskDtoResponse;
     }
 
-    @Operation(summary = "This is to delete tasks in database")
+    @Operation(summary = "Delete task in database")
     @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Deleted task from database", content = {@Content(mediaType = "application/json")})})
     @DeleteMapping("/tasks/{taskId}")
     public String deleteTasks(@PathVariable Long taskId) {
