@@ -32,9 +32,9 @@ public class StatusRestController {
     }
 
     @PostMapping("/status")
-    public StatusDtoRequest addStatus(@RequestBody StatusDtoRequest theStatus) {
-        statusService.save(theStatus);
-        return theStatus;
+    public StatusDtoResponse saveStatus(@RequestBody StatusDtoRequest theStatus) {
+        return statusService.save(theStatus);
+
     }
 
     @PutMapping("/status")

@@ -35,9 +35,10 @@ public class CommentRestController {
         return "Updated comment with id - " +commentId;
     }
     @PostMapping("/comments")
-    public void addComment(@RequestBody CommentDtoRequest commDto)
+    public CommentDtoResponse saveComment(@RequestBody CommentDtoRequest commDto)
     {
-        commentService.save(commDto);
+        return commentService.save(commDto);
+
     }
     @DeleteMapping("/comments/{commentId}")
     public String deleteComment(@PathVariable Long commentId){

@@ -46,8 +46,8 @@ public class PriorityServiceImpl implements PriorityService {
     }
 
     @Override
-    public PriorityDtoResponse savePriority(PriorityDtoRequest priorityDto) {
-        Priority priority = mapperDto.convertPriorityDtoRequestToPriority(priorityDto);
+    public PriorityDtoResponse savePriority(PriorityDtoRequest priorityDtoRequest) {
+        Priority priority = mapperDto.convertPriorityDtoRequestToPriority(priorityDtoRequest);
         priorityRepository.save(priority);
         return mapperDto.convertPriorityToPriorityDtoResponse(priority);
 

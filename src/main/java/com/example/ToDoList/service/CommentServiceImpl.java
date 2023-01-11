@@ -48,9 +48,9 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public CommentDtoResponse save(CommentDtoRequest commentDto) {
-        Comment c = mapperDto.convertCommentDtoRequestToComment(commentDto);
-        Optional<Task> task = taskRepository.findById(commentDto.getTask_id());
+    public CommentDtoResponse save(CommentDtoRequest commentDtoRequest) {
+        Comment c = mapperDto.convertCommentDtoRequestToComment(commentDtoRequest);
+        Optional<Task> task = taskRepository.findById(commentDtoRequest.getTask_id());
         c.setTask(task.get());
         commentRepository.save(c);
         return mapperDto.convertCommentToCommentDtoResponse(c);

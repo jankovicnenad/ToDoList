@@ -43,10 +43,10 @@ public class StatusServiceImpl implements StatusService {
     }
 
     @Override
-    public StatusDtoResponse save(StatusDtoRequest statusDto) {
-        Status s = mapperDto.convertStatusDtoRequestToStatus(statusDto);
-        statusRepository.save(s);
-        return mapperDto.convertStatusToStatusDtoResponse(s);
+    public StatusDtoResponse save(StatusDtoRequest statusDtoRequest) {
+        Status status = mapperDto.convertStatusDtoRequestToStatus(statusDtoRequest);
+        statusRepository.save(status);
+        return mapperDto.convertStatusToStatusDtoResponse(status);
     }
 
     @Override
