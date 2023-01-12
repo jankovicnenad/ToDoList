@@ -4,7 +4,7 @@ public class PriorityDtoRequest {
 
     private Long id;
 
-    private String priority;
+    private String priority_name;
 
     public Long getId() {
         return id;
@@ -14,11 +14,11 @@ public class PriorityDtoRequest {
         this.id = id;
     }
 
-    public String getPriority() {
-        return priority;
+    public String getPriority_name() {
+        return priority_name;
     }
 
-    public void setPriority(String priority) {
-        this.priority = priority;
+    public void setPriority_name(String priority_name) {
+        this.priority_name = priority_name;
     }
 }

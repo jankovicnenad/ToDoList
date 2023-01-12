@@ -14,7 +14,7 @@ public class Task extends Auditable{
     @Column(name = "id")
     private Long id;
     @Column(name = "name")
-    private String name;
+    private String task_name;
     @Column(name = "start_date")
     private LocalDate startDate;
 
@@ -35,8 +35,8 @@ public class Task extends Auditable{
 
     public Task(){}
 
-    public Task(String name, Priority priority, Status status) {
-        this.name = name;
+    public Task(String task_name, Priority priority, Status status) {
+        this.task_name = task_name;
         this.priority = priority;
         this.status = status;
     }
@@ -49,12 +49,12 @@ public class Task extends Auditable{
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getTask_name() {
+        return task_name;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setTask_name(String task_name) {
+        this.task_name = task_name;
     }
 
     public LocalDate getStart_date() {
@@ -105,11 +105,12 @@ public class Task extends Auditable{
         this.images = images;
     }
 
+
     @Override
     public String toString() {
         return "Task{" +
                 "id=" + id +
-                ", name='" + name + '\'' +
+                ", name='" + task_name + '\'' +
                 ", starDate=" + startDate +
                 ", endDate=" + endDate +
                 '}';

@@ -15,7 +15,7 @@ public interface PriorityService {
 
     public void delete(Long id);
 
-    public void updatePriority(Long id, PriorityDtoRequest priorityDtoResponse);
+    public PriorityDtoResponse updatePriority(PriorityDtoRequest priorityDtoResponse);
 
 
 }

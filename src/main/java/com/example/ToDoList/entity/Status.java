@@ -12,15 +12,15 @@ public class Status extends Auditable{
     @Column(name="id")
     private Long id;
     @Column(name="status")
-    private String status;
+    private String status_name;
 
     @OneToMany(mappedBy = "status")
     private List<Task> tasks = new ArrayList<>();
 
     public Status(){}
 
-    public Status(String status) {
-        this.status = status;
+    public Status(String status_name) {
+        this.status_name = status_name;
     }
 
     public Long getId() {
@@ -31,13 +31,13 @@ public class Status extends Auditable{
         this.id = id;
     }
 
-    public String getStatus() {
-        return status;
+    public String getStatus_name() {
+        return status_name;
     }
 
-    public void setStatus(String status)
+    public void setStatus_name(String status_name)
     {
-        this.status = status;
+        this.status_name = status_name;
     }
 
     public List<Task> getTasks() {
@@ -52,7 +52,7 @@ public class Status extends Auditable{
     public String toString() {
         return "Status{" +
                 "id=" + id +
-                ", status='" + status + '\'' +
+                ", status='" + status_name + '\'' +
                 '}';
     }
 }

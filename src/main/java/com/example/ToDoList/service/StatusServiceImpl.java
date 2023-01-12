@@ -56,10 +56,9 @@ public class StatusServiceImpl implements StatusService {
     }
 
     @Override
-    public void updateStatus(Long id, StatusDtoRequest statusDto) {
-        Status status = statusRepository.findById(id).orElseThrow(() -> new NotFoundException("Task id is not found - " + id));
-        Status status1 = mapperDto.convertStatusDtoRequestToStatus(statusDto);
-        status1.setId(status.getId());
-        statusRepository.save(status1);
+    public StatusDtoResponse updateStatus(StatusDtoRequest statusDtoRequest) {
+        Status status = statusRepository.findById(statusDtoRequest.getId()).orElseThrow(() -> new NotFoundException("Task id is not found - " + statusDtoRequest.getStatus_name()));
+        status.setStatus_name(statusDtoRequest.getStatus_name());
+         return mapperDto.convertStatusToStatusDtoResponse(statusRepository.save(status));
     }
 }
