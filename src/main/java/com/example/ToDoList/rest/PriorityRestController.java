@@ -7,8 +7,11 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collections;
 import java.util.List;
 @RestController
 @RequestMapping("/api")
@@ -48,21 +51,20 @@ public class PriorityRestController {
     @Operation(summary = "Update priority in database")
     @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Updated priority in database")})
     @PutMapping("/priority")
-    public String updatePriority(@RequestBody PriorityDtoRequest priorityDtoRequest){
-        Long priorityId = priorityDtoRequest.getId();
-        priorityService.updatePriority(priorityId, priorityDtoRequest);
-        return "Updated priority with id - " +priorityId;
+    public ResponseEntity<?> updatePriority(@RequestBody PriorityDtoRequest priorityDtoRequest){
+        return new ResponseEntity<>(priorityService.updatePriority(priorityDtoRequest), HttpStatus.OK) ;
+
     }
 
     @Operation(summary = "Delete priority from database")
     @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Deleted priority from database")})
     @DeleteMapping("/priority/{priorityId}")
-    public String deletePriority(@PathVariable Long priorityId){
+    public ResponseEntity<?> deletePriority(@PathVariable Long priorityId){
 
         PriorityDtoResponse priorityDtoResponse = priorityService.findById(priorityId);
         if(priorityDtoResponse == null)
             throw new NotFoundException("Priority id not found - " +priorityId);
         priorityService.delete(priorityId);
-        return "Deleted priority with id - " +priorityId;
+        return new ResponseEntity<>(Collections.singletonMap("message", "Deleted priority with id: " + priorityId), HttpStatus.OK);
     }
 }

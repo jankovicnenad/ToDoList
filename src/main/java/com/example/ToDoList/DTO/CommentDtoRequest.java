@@ -3,7 +3,7 @@ package com.example.ToDoList.DTO;
 public class CommentDtoRequest {
 
     private Long id;
-    private String comment;
+    private String comment_name;
     // private TaskDtoResponse taskDto;
 
     private Long task_id;
@@ -17,12 +17,12 @@ public class CommentDtoRequest {
         this.id = id;
     }
 
-    public String getComment() {
-        return comment;
+    public String getComment_name() {
+        return comment_name;
     }
 
-    public void setComment(String comment) {
-        this.comment = comment;
+    public void setComment_name(String comment_name) {
+        this.comment_name = comment_name;
     }
 
     public Long getTask_id() {

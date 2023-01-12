@@ -13,13 +13,13 @@ public class Priority  extends  Auditable{
     @Column(name="id")
     private Long id;
     @Column(name="priority")
-    private String priority;
+    private String priority_name;
     @OneToMany(mappedBy = "priority")
     private List<Task> tasks = new ArrayList<>();
     public Priority(){}
 
-    public Priority(String priority) {
-        this.priority = priority;
+    public Priority(String priority_name) {
+        this.priority_name = priority_name;
     }
 
     public Long getId() {
@@ -30,12 +30,12 @@ public class Priority  extends  Auditable{
         this.id = id;
     }
 
-    public String getPriority() {
-        return priority;
+    public String getPriority_name() {
+        return priority_name;
     }
 
-    public void setPriority(String priority) {
-        this.priority = priority;
+    public void setPriority_name(String priority_name) {
+        this.priority_name = priority_name;
     }
 
     public List<Task> getTasks() {
@@ -51,7 +51,7 @@ public class Priority  extends  Auditable{
     public String toString() {
         return "Priority{" +
                 "id=" + id +
-                ", priority='" + priority + '\'' +
+                ", priority='" + priority_name + '\'' +
                 '}';
     }
 }

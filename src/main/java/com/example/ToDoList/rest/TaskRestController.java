@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.util.List;
+import java.util.*;
 
 @RestController
 @RequestMapping("/api")
@@ -38,7 +38,7 @@ public class TaskRestController {
     @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Inserted tasks", content = {@Content(mediaType = "application/json")})})
     @PostMapping(value = "/tasks", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
     public ResponseEntity<?> saveTask(@RequestPart(value = "file", required = false) MultipartFile multipartFile, @RequestPart TaskDtoRequest taskDtoRequest) throws Exception {
-        if (multipartFile.isEmpty()) {
+        if (Objects.isNull(multipartFile) || multipartFile.isEmpty()) {
             return new ResponseEntity<>(taskService.save(taskDtoRequest), HttpStatus.OK);
         } else if (!multipartFile.getOriginalFilename().endsWith(".jpg") && !multipartFile.getOriginalFilename().endsWith(".png")) {
             throw new BadRequestException("Invalid image type!");
@@ -59,7 +59,7 @@ public class TaskRestController {
     @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Updated task in database", content = {@Content(mediaType = "application/json")})})
     @PutMapping(value = "/tasks", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
     public ResponseEntity<?> updateTask(@RequestPart(value = "file", required = false) MultipartFile multipartFile, @RequestPart TaskDtoRequest taskDtoRequest) throws IOException {
-        if (multipartFile.isEmpty()) {
+        if (Objects.isNull(multipartFile) || multipartFile.isEmpty()) {
             return new ResponseEntity<>(taskService.save(taskDtoRequest), HttpStatus.OK);
         } else if (!multipartFile.getOriginalFilename().endsWith(".jpg") && !multipartFile.getOriginalFilename().endsWith(".png")) {
             throw new BadRequestException("Invalid image type!");
@@ -82,11 +82,11 @@ public class TaskRestController {
     @Operation(summary = "Delete task in database")
     @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Deleted task from database")})
     @DeleteMapping("/tasks/{taskId}")
-    public String deleteTasks(@PathVariable Long taskId) {
+    public ResponseEntity<?> deleteTasks(@PathVariable Long taskId) {
         TaskDtoResponse taskDtoResponse = taskService.findById(taskId);
         if (taskDtoResponse == null) throw new NotFoundException("Task id not found - " + taskId);
         taskService.deleteById(taskId);
-        return "Deleted task with id - " + taskId;
+        return new ResponseEntity<>(Collections.singletonMap("message", "deleted task with id: " + taskId), HttpStatus.OK);
     }
 
 

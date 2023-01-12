@@ -63,13 +63,12 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public void updateComment(Long id, CommentDtoRequest commentDto) {
-        Comment comment = commentRepository.findById(id).orElseThrow(() -> new NotFoundException("Task id is not found - " + id));
-        Comment comment1 = mapperDto.convertCommentDtoRequestToComment(commentDto);
-        comment1.setId(comment.getId());
-        Task task = taskRepository.findById(commentDto.getTask_id()).orElseThrow(() -> new NotFoundException("Task id is not found - " + id));
-        comment1.setTask(task);
-        commentRepository.save(comment1);
+    public CommentDtoResponse updateComment(CommentDtoRequest commentDtoRequest) {
+        Comment comment = commentRepository.findById(commentDtoRequest.getId()).orElseThrow(() -> new NotFoundException("Comment id is not found - " + commentDtoRequest.getId()));
+        Task task = taskRepository.findById(commentDtoRequest.getTask_id()).orElseThrow(() -> new NotFoundException("Task id is not found - " + commentDtoRequest.getId()));
+        comment.setComment_name(commentDtoRequest.getComment_name());
+        comment.setTask(task);
+        return mapperDto.convertCommentToCommentDtoResponse(commentRepository.save(comment));
     }
 
 }
