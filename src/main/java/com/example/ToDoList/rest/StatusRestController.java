@@ -22,14 +22,14 @@ public class StatusRestController {
     }
 
     @Operation(summary = "Get all statuses from database")
-    @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "All statuses are extracted from database", content = {@Content(mediaType = "application/json")})})
+    @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "All statuses are extracted from database")})
     @GetMapping("/status")
     public List<StatusDtoResponse> getAllStatus() {
         return statusService.getAllStatus();
     }
 
     @Operation(summary = "Get status from database with specific ID")
-    @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Fetched status with specific ID", content = {@Content(mediaType = "application/json")})})
+    @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Fetched status with specific ID")})
     @GetMapping("/status/{statusId}")
     public StatusDtoResponse findById(@PathVariable Long statusId) {
 
@@ -40,7 +40,7 @@ public class StatusRestController {
     }
 
     @Operation(summary = "Save status in database")
-    @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Saved status in the database", content = {@Content(mediaType = "application/json")})})
+    @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Saved status in the database")})
     @PostMapping("/status")
     public StatusDtoResponse saveStatus(@RequestBody StatusDtoRequest theStatus) {
         return statusService.save(theStatus);
@@ -48,7 +48,7 @@ public class StatusRestController {
     }
 
     @Operation(summary = "Update status in database")
-    @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Fetched status with specific ID", content = {@Content(mediaType = "application/json")})})
+    @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Fetched status with specific ID")})
     @PutMapping("/status")
     public String updateStatus(@RequestBody StatusDtoRequest statusDto) {
         Long statusId = statusDto.getId();
@@ -57,7 +57,7 @@ public class StatusRestController {
     }
 
     @Operation(summary = "Delete status from database")
-    @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Deleted status from database", content = {@Content(mediaType = "application/json")})})
+    @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Deleted status from database")})
     @DeleteMapping("/status/{statusId}")
     public String deleteStatus(@PathVariable Long statusId) {
 

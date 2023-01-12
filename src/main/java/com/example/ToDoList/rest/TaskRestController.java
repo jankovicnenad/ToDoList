@@ -49,7 +49,7 @@ public class TaskRestController {
 
 
     @Operation(summary = " Fetch all tasks from database")
-    @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Fetched all tasks from database", content = {@Content(mediaType = "application/json")})})
+    @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Fetched all tasks from database")})
     @GetMapping("/tasks")
     public List<TaskDtoResponse> getAllTasks(@RequestParam(required = false, name = "priority") Long priorityId, @RequestParam(required = false, name = "status") Long statusId) {
         return taskService.getAllTasks(priorityId, statusId);
@@ -58,7 +58,7 @@ public class TaskRestController {
     @Operation(summary = "Update task with multipart file (not required)")
     @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Updated task in database", content = {@Content(mediaType = "application/json")})})
     @PutMapping(value = "/tasks", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
-    public ResponseEntity<?> updateTask(@RequestPart(value = "file") MultipartFile multipartFile, @RequestPart TaskDtoRequest taskDtoRequest) throws IOException {
+    public ResponseEntity<?> updateTask(@RequestPart(value = "file", required = false) MultipartFile multipartFile, @RequestPart TaskDtoRequest taskDtoRequest) throws IOException {
         if (multipartFile.isEmpty()) {
             return new ResponseEntity<>(taskService.save(taskDtoRequest), HttpStatus.OK);
         } else if (!multipartFile.getOriginalFilename().endsWith(".jpg") && !multipartFile.getOriginalFilename().endsWith(".png")) {
@@ -69,7 +69,7 @@ public class TaskRestController {
     }
 
     @Operation(summary = "Get task from database with specific ID")
-    @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Fetched task from database with specific ID", content = {@Content(mediaType = "application/json")})})
+    @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Fetched task from database with specific ID")})
     @GetMapping("/tasks/{taskId}")
     public TaskDtoResponse getTasks(@PathVariable Long taskId) {
         TaskDtoResponse taskDtoResponse = taskService.findById(taskId);
@@ -80,7 +80,7 @@ public class TaskRestController {
     }
 
     @Operation(summary = "Delete task in database")
-    @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Deleted task from database", content = {@Content(mediaType = "application/json")})})
+    @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Deleted task from database")})
     @DeleteMapping("/tasks/{taskId}")
     public String deleteTasks(@PathVariable Long taskId) {
         TaskDtoResponse taskDtoResponse = taskService.findById(taskId);
