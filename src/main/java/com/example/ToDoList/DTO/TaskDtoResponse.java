@@ -9,6 +9,8 @@ public class TaskDtoResponse {
 
     private Long id;
     private String task_name;
+
+    private String imageUrl;
     @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate start_date;
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
@@ -89,5 +91,12 @@ public class TaskDtoResponse {
         this.priority_dto = priority_dto;
     }
 
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
 }
 

@@ -73,6 +73,7 @@ public class TaskServiceImpl implements TaskService {
         return tDto;
     }
 
+
     public TaskDtoResponse saveTask(TaskDtoRequest taskDtoRequest, MultipartFile multipartFile) {
         Task task = mapperDto.convertTaskDtoRequestToTask(taskDtoRequest);
         Optional<Status> status = Optional.ofNullable(statusRepository.findById(taskDtoRequest.getStatus_id()).orElseThrow(() -> new NotFoundException("Status id not found - " + taskDtoRequest.getStatus_id())));;
@@ -126,17 +127,21 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public TaskDtoResponse updateTask(TaskDtoRequest taskDtoRequest, MultipartFile multipartFile) throws IOException {
-        Long id = taskDtoRequest.getId();
-        Task task = taskRepository.findById(id).orElseThrow(() -> new NotFoundException("Task id is not found - " + id));
-        Task task1 = mapperDto.convertTaskDtoRequestToTask(taskDtoRequest);
-        task1.setId(task.getId());
-        Status status = statusRepository.findById(taskDtoRequest.getStatus_id()).orElseThrow(() -> new NotFoundException("Task id is not found - " + id));
-        Priority priority = priorityRepository.findById(taskDtoRequest.getPriority_id()).orElseThrow(() -> new NotFoundException("Task id is not found - " + id));
-        task1.setStatus(status);
-        task1.setPriority(priority);
+
+        Task task = taskRepository.findById(taskDtoRequest.getId()).orElseThrow(() -> new NotFoundException("Task id is not found - " + taskDtoRequest.getId()));
+        task.setId(taskDtoRequest.getId());
+        Status status = statusRepository.findById(taskDtoRequest.getStatus_id()).orElseThrow(() -> new NotFoundException("Task id is not found - " + taskDtoRequest.getId()));
+        Priority priority = priorityRepository.findById(taskDtoRequest.getPriority_id()).orElseThrow(() -> new NotFoundException("Task id is not found - " + taskDtoRequest.getId()));
+        task.setStatus(status);
+        task.setPriority(priority);
+        task.setStatus(status);
+        task.setPriority(priority);
+        task.setTask_name(taskDtoRequest.getTask_name());
+        task.setStart_date(taskDtoRequest.getStart_date());
+
         if (status.getStatus_name() != null) {
             if (status.getStatus_name().equals("DONE")) {
-                task1.setEndDate(LocalDateTime.now());
+                task.setEndDate(LocalDateTime.now());
             }
         }
         if (Objects.nonNull(multipartFile)) {
@@ -156,7 +161,7 @@ public class TaskServiceImpl implements TaskService {
             task.getImages().add(image);
         }
 
-        taskRepository.save(task1);
-        return mapperDto.convertTaskToTaskDtoResponse(task1);
+        taskRepository.save(task);
+        return mapperDto.convertTaskToTaskDtoResponse(task);
 
     }}

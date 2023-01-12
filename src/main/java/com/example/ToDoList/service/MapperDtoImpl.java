@@ -11,11 +11,12 @@ public class MapperDtoImpl implements MapperDto {
     public Task convertTaskDtoResponseToTask(TaskDtoResponse taskDtoResponse) {
         Task task = new Task();
         task.setId(taskDtoResponse.getId());
-        task.setName(taskDtoResponse.getTask_name());
+        task.setTask_name(taskDtoResponse.getTask_name());
         task.setStart_date(taskDtoResponse.getStart_date());
         task.setEndDate(taskDtoResponse.getEnd_date());
         task.setCreatedDate(taskDtoResponse.getCreatedDate());
         task.setModifiedDate(taskDtoResponse.getModifiedDate());
+
 
         Status status = new Status();
         status.setId(taskDtoResponse.getStatus_dto().getId());
@@ -33,11 +34,17 @@ public class MapperDtoImpl implements MapperDto {
         TaskDtoResponse taskDtoResponse = new TaskDtoResponse();
 
         taskDtoResponse.setId(task.getId());
-        taskDtoResponse.setTask_name(task.getName());
+        taskDtoResponse.setTask_name(task.getTask_name());
         taskDtoResponse.setStart_date(task.getStart_date());
         taskDtoResponse.setEnd_date(task.getEndDate());
         taskDtoResponse.setCreatedDate(task.getCreatedDate());
         taskDtoResponse.setModifiedDate(task.getModifiedDate());
+
+        if(task.getImages().isEmpty()){
+            taskDtoResponse.setImageUrl("No Image");
+        }
+        else
+            taskDtoResponse.setImageUrl(task.getImages().stream().skip(task.getImages().size() - 1).findFirst().get().getUrl());
 
         PriorityDtoResponse priorityDtoResponse = new PriorityDtoResponse();
         priorityDtoResponse.setId(task.getPriority().getId());
@@ -60,7 +67,7 @@ public class MapperDtoImpl implements MapperDto {
         Task task = new Task();
 
         task.setId(taskDtoRequest.getId());
-        task.setName(taskDtoRequest.getTask_name());
+        task.setTask_name(taskDtoRequest.getTask_name());
         task.setStart_date(taskDtoRequest.getStart_date());
         Priority priority = new Priority();
         priority.setId(taskDtoRequest.getPriority_id());
@@ -79,7 +86,7 @@ public class MapperDtoImpl implements MapperDto {
         TaskDtoRequest taskDtoRequest = new TaskDtoRequest();
 
         taskDtoRequest.setId(task.getId());
-        taskDtoRequest.setTask_name(task.getName());
+        taskDtoRequest.setTask_name(task.getTask_name());
         taskDtoRequest.setStart_date(task.getStart_date());
         taskDtoRequest.setPriority_id(task.getPriority().getId());
         taskDtoRequest.setStatus_id(task.getStatus().getId());
@@ -168,7 +175,7 @@ public class MapperDtoImpl implements MapperDto {
         TaskDtoResponse taskDtoResponse = new TaskDtoResponse();
 
         taskDtoResponse.setId(comment.getTask().getId());
-        taskDtoResponse.setTask_name(comment.getTask().getName());
+        taskDtoResponse.setTask_name(comment.getTask().getTask_name());
         taskDtoResponse.setStart_date(comment.getTask().getStart_date());
         taskDtoResponse.setEnd_date(comment.getTask().getEndDate());
         taskDtoResponse.setModifiedDate(comment.getTask().getModifiedDate());
@@ -222,7 +229,7 @@ public class MapperDtoImpl implements MapperDto {
         imageDTO.setOriginalName(image.getOriginalName());
         TaskDtoResponse taskDtoResponse = new TaskDtoResponse();
         taskDtoResponse.setId(image.getTask().getId());
-        taskDtoResponse.setTask_name(image.getTask().getName());
+        taskDtoResponse.setTask_name(image.getTask().getTask_name());
         taskDtoResponse.setStart_date(image.getTask().getStart_date());
         taskDtoResponse.setEnd_date(image.getTask().getEndDate());
         imageDTO.setTask_dto(taskDtoResponse);
@@ -236,7 +243,7 @@ public class MapperDtoImpl implements MapperDto {
         image.setOriginalName(imageDTO.getOriginalName());
         Task task = new Task();
         task.setId(imageDTO.getTask_dto().getId());
-        task.setName(imageDTO.getTask_dto().getTask_name());
+        task.setTask_name(imageDTO.getTask_dto().getTask_name());
         task.setStart_date(imageDTO.getTask_dto().getStart_date());
         task.setEndDate(imageDTO.getTask_dto().getEnd_date());
         image.setTask(task);
