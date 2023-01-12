@@ -6,12 +6,12 @@ import java.util.List;
 
 @Entity
 @Table(name="priority")
-public class Priority {
+public class Priority  extends  Auditable{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="id")
-    private int id;
+    private Long id;
     @Column(name="priority")
     private String priority;
     @OneToMany(mappedBy = "priority")
@@ -22,11 +22,11 @@ public class Priority {
         this.priority = priority;
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -42,7 +42,8 @@ public class Priority {
         return tasks;
     }
 
-    public void setTasks(List<Task> tasks) {
+    public void setTasks(List<Task> tasks)
+    {
         this.tasks = tasks;
     }
 

@@ -1,9 +1,9 @@
 package com.example.ToDoList.service;
 
 import com.example.ToDoList.DAO.StatusRepository;
-import com.example.ToDoList.DTO.StatusDto;
+import com.example.ToDoList.DTO.StatusDtoResponse;
+import com.example.ToDoList.DTO.StatusDtoRequest;
 import com.example.ToDoList.entity.Status;
-import com.example.ToDoList.entity.Task;
 import com.example.ToDoList.rest.NotFoundException;
 import org.springframework.stereotype.Service;
 
@@ -12,67 +12,54 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class StatusServiceImpl implements StatusService{
+public class StatusServiceImpl implements StatusService {
 
     private StatusRepository statusRepository;
-    public StatusServiceImpl(StatusRepository theStatus) {
+
+    private final MapperDto mapperDto;
+
+    public StatusServiceImpl(StatusRepository theStatus, MapperDto mapperDto) {
         this.statusRepository = theStatus;
-    }
-
-
-    private StatusDto convertStatusToStatusDto(Status status){
-
-        StatusDto statustDto = new StatusDto();
-        statustDto.setId(status.getId());
-        statustDto.setStatus_name(status.getStatus());
-        return statustDto;
-    }
-    private Status convertStatusDtoToStatus(StatusDto statusD){
-
-        Status status = new Status();
-        status.setId(statusD.getId());
-        status.setStatus(statusD.getStatus_name());
-        return status;
+        this.mapperDto = mapperDto;
     }
 
     @Override
-    public List<StatusDto> getAllStatus() {
+    public List<StatusDtoResponse> getAllStatus() {
         List<Status> statusList = statusRepository.findAll();
-        List <StatusDto> sDto = new ArrayList<>();
-        for (Status s : statusList){
-            StatusDto statDto = convertStatusToStatusDto(s);
+        List<StatusDtoResponse> sDto = new ArrayList<>();
+        for (Status s : statusList) {
+            StatusDtoResponse statDto = mapperDto.convertStatusToStatusDtoResponse(s);
             sDto.add(statDto);
         }
         return sDto;
     }
 
     @Override
-    public StatusDto findById(int id) {
+    public StatusDtoResponse findById(Long id) {
         Optional<Status> status = Optional.ofNullable(statusRepository.findById(id).orElseThrow(() -> new NotFoundException("Status id not found - " + id)));
-        StatusDto statusDto = convertStatusToStatusDto(status.get());
+        StatusDtoResponse statusDtoResponse = mapperDto.convertStatusToStatusDtoResponse(status.get());
 
-        return statusDto;
-    }
-
-    /*@Override
-    public List<StatusDto> findById(@PathVariable int id) {
-        Optional<Status> statList = statusRepository.findById(id);
-        List<StatusDto> sDto = new ArrayList<>();
-        for(Status s : statList)
-        {StatusDto statusDto = statusD(s);
-        sDto.add(statusDto);
-        return sDto;
-        }
-    }*/
-    @Override
-    public void save(StatusDto statusDto) {
-    Status s = convertStatusDtoToStatus(statusDto);
-    statusRepository.save(s);
+        return statusDtoResponse;
     }
 
     @Override
-    public void delete(int id) {
+    public StatusDtoResponse save(StatusDtoRequest statusDtoRequest) {
+        Status status = mapperDto.convertStatusDtoRequestToStatus(statusDtoRequest);
+        statusRepository.save(status);
+        return mapperDto.convertStatusToStatusDtoResponse(status);
+    }
+
+    @Override
+    public void delete(Long id) {
         Optional<Status> status = Optional.ofNullable(statusRepository.findById(id).orElseThrow(() -> new NotFoundException("Status id not found - " + id)));
         statusRepository.delete(status.get());
+    }
+
+    @Override
+    public void updateStatus(Long id, StatusDtoRequest statusDto) {
+        Status status = statusRepository.findById(id).orElseThrow(() -> new NotFoundException("Task id is not found - " + id));
+        Status status1 = mapperDto.convertStatusDtoRequestToStatus(statusDto);
+        status1.setId(status.getId());
+        statusRepository.save(status1);
     }
 }

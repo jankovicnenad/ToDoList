@@ -1,9 +1,9 @@
 package com.example.ToDoList.service;
 
 import com.example.ToDoList.DAO.PriorityRepository;
-import com.example.ToDoList.DTO.PriorityDto;
+import com.example.ToDoList.DTO.PriorityDtoResponse;
+import com.example.ToDoList.DTO.PriorityDtoRequest;
 import com.example.ToDoList.entity.Priority;
-import com.example.ToDoList.entity.Status;
 import com.example.ToDoList.rest.NotFoundException;
 import org.springframework.stereotype.Service;
 
@@ -11,38 +11,27 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+
 @Service
-public class PriorityServiceImpl implements PriorityService{
+public class PriorityServiceImpl implements PriorityService {
 
-    private PriorityRepository priorityRepository;
+    private final PriorityRepository priorityRepository;
 
-    public PriorityServiceImpl(PriorityRepository thePriority)
-    {
+    private final MapperDto mapperDto;
+
+
+    public PriorityServiceImpl(PriorityRepository thePriority, MapperDto mapperDto) {
         priorityRepository = thePriority;
+        this.mapperDto = mapperDto;
     }
-
-    private PriorityDto convertPriorityToPriorityDto(Priority priority){
-        PriorityDto priorityDto = new PriorityDto();
-        priorityDto.setId(priority.getId());
-        priorityDto.setPriority(priority.getPriority());
-        return priorityDto;
-    }
-    private Priority convertPriorityDtoToPriority(PriorityDto priorityDto){
-        Priority priority = new Priority();
-        priority.setId(priorityDto.getId());
-        priority.setPriority(priorityDto.getPriority());
-        return priority;
-    }
-
 
     @Override
-    public List<PriorityDto> getAllPriority() {
+    public List<PriorityDtoResponse> getAllPriority() {
         List<Priority> priorities = priorityRepository.findAll();
-        List<PriorityDto> pDto = new ArrayList<>();
-        for(Priority p : priorities)
-        {
-            PriorityDto priorityDto = convertPriorityToPriorityDto(p);
-            pDto.add(priorityDto);
+        List<PriorityDtoResponse> pDto = new ArrayList<>();
+        for (Priority p : priorities) {
+            PriorityDtoResponse priorityDtoResponse = mapperDto.convertPriorityToPriorityDtoResponse(p);
+            pDto.add(priorityDtoResponse);
         }
 
 
@@ -50,21 +39,32 @@ public class PriorityServiceImpl implements PriorityService{
     }
 
     @Override
-    public PriorityDto findById(int id) {
+    public PriorityDtoResponse findById(Long id) {
         Optional<Priority> priority = Optional.ofNullable(priorityRepository.findById(id).orElseThrow(() -> new NotFoundException("Priority id not found - " + id)));
-       PriorityDto priorityDto = convertPriorityToPriorityDto(priority.get());
-       return priorityDto;
+        PriorityDtoResponse priorityDtoResponse = mapperDto.convertPriorityToPriorityDtoResponse(priority.get());
+        return priorityDtoResponse;
     }
 
     @Override
-    public void savePriority(PriorityDto priorityDto) {
-        Priority p = convertPriorityDtoToPriority(priorityDto);
-        priorityRepository.save(p);
+    public PriorityDtoResponse savePriority(PriorityDtoRequest priorityDtoRequest) {
+        Priority priority = mapperDto.convertPriorityDtoRequestToPriority(priorityDtoRequest);
+        priorityRepository.save(priority);
+        return mapperDto.convertPriorityToPriorityDtoResponse(priority);
+
     }
 
     @Override
-    public void delete(int id) {
+    public void delete(Long id) {
         Optional<Priority> priority = Optional.ofNullable(priorityRepository.findById(id).orElseThrow(() -> new NotFoundException("Priority id not found - " + id)));
         priorityRepository.delete(priority.get());
     }
+
+    @Override
+    public void updatePriority(Long id, PriorityDtoRequest priorityDtoRequest) {
+        Priority priority = priorityRepository.findById(id).orElseThrow(() -> new NotFoundException("Task id is not found - " + id));
+        Priority priority1 = mapperDto.convertPriorityDtoRequestToPriority(priorityDtoRequest);
+        priority1.setId(priority.getId());
+        priorityRepository.save(priority1);
+    }
+
 }

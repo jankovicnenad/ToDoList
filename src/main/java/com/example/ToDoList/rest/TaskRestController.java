@@ -1,74 +1,93 @@
 package com.example.ToDoList.rest;
 
 import com.example.ToDoList.DAO.TaskRepository;
-import com.example.ToDoList.DTO.TaskDto;
+import com.example.ToDoList.DTO.TaskDtoResponse;
+import com.example.ToDoList.DTO.TaskDtoRequest;
+import com.example.ToDoList.service.ImageService;
 import com.example.ToDoList.service.TaskServiceImpl;
-import org.springframework.beans.factory.annotation.Autowired;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
-@CrossOrigin(origins = "localhost:8080")
 @RestController
 @RequestMapping("/api")
 public class TaskRestController {
 
-        private final TaskServiceImpl taskService;
+    private final TaskServiceImpl taskService;
 
-        private final TaskRepository taskRepository;
+    private final TaskRepository taskRepository;
 
-        public TaskRestController(TaskServiceImpl TheTask, TaskRepository theRepo)
-        {
-            taskService = TheTask;
-            taskRepository = theRepo;
+    private final ImageService imageService;
+
+    public TaskRestController(TaskServiceImpl TheTask, TaskRepository theRepo, ImageService imageService) {
+        taskService = TheTask;
+        taskRepository = theRepo;
+        this.imageService = imageService;
+    }
+
+    @Operation(summary = "Insert task with multipart file (not required)")
+    @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Inserted tasks", content = {@Content(mediaType = "application/json")})})
+    @PostMapping(value = "/tasks", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
+    public ResponseEntity<?> saveTask(@RequestPart(value = "file", required = false) MultipartFile multipartFile, @RequestPart TaskDtoRequest taskDtoRequest) throws Exception {
+        if (multipartFile.isEmpty()) {
+            return new ResponseEntity<>(taskService.save(taskDtoRequest), HttpStatus.OK);
+        } else if (!multipartFile.getOriginalFilename().endsWith(".jpg") && !multipartFile.getOriginalFilename().endsWith(".png")) {
+            throw new BadRequestException("Invalid image type!");
         }
+//            System.out.println(imageService.uploadFile(multipartFile));
+        return new ResponseEntity<>(taskService.saveTask(taskDtoRequest, multipartFile), HttpStatus.OK);
+    }
 
-        @GetMapping("/tasks")
-        public List<TaskDto> getAllTasks(){
-            return taskService.getAllTasks();
+
+    @Operation(summary = " Fetch all tasks from database")
+    @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Fetched all tasks from database")})
+    @GetMapping("/tasks")
+    public List<TaskDtoResponse> getAllTasks(@RequestParam(required = false, name = "priority") Long priorityId, @RequestParam(required = false, name = "status") Long statusId) {
+        return taskService.getAllTasks(priorityId, statusId);
+    }
+
+    @Operation(summary = "Update task with multipart file (not required)")
+    @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Updated task in database", content = {@Content(mediaType = "application/json")})})
+    @PutMapping(value = "/tasks", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
+    public ResponseEntity<?> updateTask(@RequestPart(value = "file", required = false) MultipartFile multipartFile, @RequestPart TaskDtoRequest taskDtoRequest) throws IOException {
+        if (multipartFile.isEmpty()) {
+            return new ResponseEntity<>(taskService.save(taskDtoRequest), HttpStatus.OK);
+        } else if (!multipartFile.getOriginalFilename().endsWith(".jpg") && !multipartFile.getOriginalFilename().endsWith(".png")) {
+            throw new BadRequestException("Invalid image type!");
         }
+        taskService.updateTask(taskDtoRequest, multipartFile);
+        return new ResponseEntity<>(taskService.saveTask(taskDtoRequest, multipartFile), HttpStatus.OK);
+    }
 
-       /* @GetMapping("/tasks/{taskId}")
-        public Optional<Task> getTasks(@PathVariable int taskId){
-            Optional<Task> theTask = taskService.findById(taskId);
-
-            if(theTask == null){
-                throw new RuntimeException("Task id not found: " +taskId);
-            }
-            return theTask;
-        }*/
-
-        @PostMapping("/tasks")
-        public TaskDto addTask(@RequestBody TaskDto theTask){
-
-
-            return taskService.save(theTask);
+    @Operation(summary = "Get task from database with specific ID")
+    @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Fetched task from database with specific ID")})
+    @GetMapping("/tasks/{taskId}")
+    public TaskDtoResponse getTasks(@PathVariable Long taskId) {
+        TaskDtoResponse taskDtoResponse = taskService.findById(taskId);
+        if (taskDtoResponse == null) {
+            throw new NotFoundException("Task id not found - " + taskId);
         }
-        @PutMapping("/tasks")
-        public TaskDto updateTask(@RequestBody TaskDto taskDto){
-            return taskService.save(taskDto);
-        }
+        return taskDtoResponse;
+    }
 
-        @GetMapping("/tasks/{taskId}")
-        public TaskDto getTasks(@PathVariable int taskId){
-            TaskDto taskDto = taskService.findById(taskId);
-            if (taskDto == null){
-                throw new NotFoundException("Task id not found - " +taskId);
-            }
-            return taskDto;
-        }
-
-        @DeleteMapping("/tasks/{taskId}")
-        public void deleteTasks(@PathVariable int taskId){
-            TaskDto taskDto = taskService.findById(taskId);
-            if(taskDto == null)
-                throw new NotFoundException("Task id not found - " +taskId);
-            taskService.deleteById(taskId);
-//          if((tasks.size()<= taskId) || taskId<0)
-//          {
-//              throw new NotFoundException("Task id not found - " +taskId);
-//          }
-        }
+    @Operation(summary = "Delete task in database")
+    @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Deleted task from database")})
+    @DeleteMapping("/tasks/{taskId}")
+    public String deleteTasks(@PathVariable Long taskId) {
+        TaskDtoResponse taskDtoResponse = taskService.findById(taskId);
+        if (taskDtoResponse == null) throw new NotFoundException("Task id not found - " + taskId);
+        taskService.deleteById(taskId);
+        return "Deleted task with id - " + taskId;
+    }
 
 
 }

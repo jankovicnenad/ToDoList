@@ -1,51 +1,70 @@
 package com.example.ToDoList.rest;
 
-import com.example.ToDoList.DTO.StatusDto;
-import com.example.ToDoList.entity.Status;
+import com.example.ToDoList.DTO.StatusDtoResponse;
+import com.example.ToDoList.DTO.StatusDtoRequest;
 import com.example.ToDoList.service.StatusServiceImpl;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-@CrossOrigin(origins = "localhost:8080")
+
 @RestController
 @RequestMapping("/api")
 public class StatusRestController {
 
     private StatusServiceImpl statusService;
 
-    public StatusRestController(StatusServiceImpl theService)
-    {
+    public StatusRestController(StatusServiceImpl theService) {
         statusService = theService;
     }
 
+    @Operation(summary = "Get all statuses from database")
+    @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "All statuses are extracted from database")})
     @GetMapping("/status")
-    public List<StatusDto> getAllStatus(){
+    public List<StatusDtoResponse> getAllStatus() {
         return statusService.getAllStatus();
     }
+
+    @Operation(summary = "Get status from database with specific ID")
+    @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Fetched status with specific ID")})
     @GetMapping("/status/{statusId}")
-    public StatusDto findById(@PathVariable int statusId){
+    public StatusDtoResponse findById(@PathVariable Long statusId) {
 
-        StatusDto statusDto = statusService.findById(statusId);
-        if(statusDto == null)
-        throw new NotFoundException("Status id is not found - " +statusId);
-        return statusDto;
+        StatusDtoResponse statusDtoResponse = statusService.findById(statusId);
+        if (statusDtoResponse == null)
+            throw new NotFoundException("Status id is not found - " + statusId);
+        return statusDtoResponse;
     }
+
+    @Operation(summary = "Save status in database")
+    @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Saved status in the database")})
     @PostMapping("/status")
-    public StatusDto addStatus(@RequestBody StatusDto theStatus){
-        statusService.save(theStatus);
-        return theStatus;
-    }
-    @PutMapping("/status")
-    public StatusDto updateStatus(@RequestBody StatusDto statusDto){
-        statusService.save(statusDto);
-        return statusDto;
-    }
-    @DeleteMapping("/status/{statusId}")
-    public void deleteStatus(@PathVariable int statusId){
+    public StatusDtoResponse saveStatus(@RequestBody StatusDtoRequest theStatus) {
+        return statusService.save(theStatus);
 
-        StatusDto statusDto = statusService.findById(statusId);
-        if(statusDto == null)
-            throw new NotFoundException("Status id not found - " +statusId);
+    }
+
+    @Operation(summary = "Update status in database")
+    @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Fetched status with specific ID")})
+    @PutMapping("/status")
+    public String updateStatus(@RequestBody StatusDtoRequest statusDto) {
+        Long statusId = statusDto.getId();
+        statusService.updateStatus(statusId, statusDto);
+        return "Update status with id - " + statusId;
+    }
+
+    @Operation(summary = "Delete status from database")
+    @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Deleted status from database")})
+    @DeleteMapping("/status/{statusId}")
+    public String deleteStatus(@PathVariable Long statusId) {
+
+        StatusDtoResponse statusDtoResponse = statusService.findById(statusId);
+        if (statusDtoResponse == null)
+            throw new NotFoundException("Status id not found - " + statusId);
         statusService.delete(statusId);
+        return "Deleted status with id - " + statusId;
     }
 }

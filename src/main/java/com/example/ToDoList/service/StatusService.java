@@ -1,18 +1,19 @@
 package com.example.ToDoList.service;
 
-import com.example.ToDoList.DTO.StatusDto;
-import com.example.ToDoList.entity.Status;
+import com.example.ToDoList.DTO.StatusDtoResponse;
+import com.example.ToDoList.DTO.StatusDtoRequest;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface StatusService {
 
-    public List<StatusDto> getAllStatus();
+    public List<StatusDtoResponse> getAllStatus();
 
-    public StatusDto findById(int id);
+    public StatusDtoResponse findById(Long id);
 
-    public void save(StatusDto statusDto);
+    public StatusDtoResponse save(StatusDtoRequest statusDto);
 
-    public void delete(int id);
+    public void delete(Long id);
+
+    void updateStatus(Long id, StatusDtoRequest statusDto);
 }

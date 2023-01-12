@@ -1,18 +1,25 @@
 package com.example.ToDoList.service;
 
-import com.example.ToDoList.DTO.TaskDto;
-import com.example.ToDoList.entity.Task;
+import com.example.ToDoList.DTO.TaskDtoResponse;
+import com.example.ToDoList.DTO.TaskDtoRequest;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 public interface TaskService {
 
-    public List<TaskDto> getAllTasks();
+    public List<TaskDtoResponse> getAllTasks(Long priorityId, Long statusId);
 
-    public TaskDto findById(int id);
+    public TaskDtoResponse findById(Long id);
 
-    public TaskDto save(TaskDto taskDto);
+    public TaskDtoResponse saveTask(TaskDtoRequest taskDtoRequest, MultipartFile multipartFile);
 
-    public void deleteById(int id);
+    public TaskDtoRequest save(TaskDtoRequest taskDtoRequest);
+
+    public void deleteById(Long id);
+
+    public TaskDtoResponse updateTask(TaskDtoRequest taskDto, MultipartFile multipartFile) throws IOException;
+
 
 }
