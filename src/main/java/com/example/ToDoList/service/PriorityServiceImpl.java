@@ -60,11 +60,11 @@ public class PriorityServiceImpl implements PriorityService {
     }
 
     @Override
-    public void updatePriority(Long id, PriorityDtoRequest priorityDtoRequest) {
-        Priority priority = priorityRepository.findById(id).orElseThrow(() -> new NotFoundException("Task id is not found - " + id));
-        Priority priority1 = mapperDto.convertPriorityDtoRequestToPriority(priorityDtoRequest);
-        priority1.setId(priority.getId());
-        priorityRepository.save(priority1);
+    public PriorityDtoResponse updatePriority(PriorityDtoRequest priorityDtoRequest) {
+        Priority priority = priorityRepository.findById(priorityDtoRequest.getId()).orElseThrow(() -> new NotFoundException("Task id is not found - " + priorityDtoRequest.getId()));
+        priority.setPriority(priorityDtoRequest.getPriority());
+        return mapperDto.convertPriorityToPriorityDtoResponse(priorityRepository.save(priority));
+
     }
 
 }

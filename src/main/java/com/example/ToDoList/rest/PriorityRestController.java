@@ -7,6 +7,8 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -48,10 +50,9 @@ public class PriorityRestController {
     @Operation(summary = "Update priority in database")
     @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Updated priority in database")})
     @PutMapping("/priority")
-    public String updatePriority(@RequestBody PriorityDtoRequest priorityDtoRequest){
-        Long priorityId = priorityDtoRequest.getId();
-        priorityService.updatePriority(priorityId, priorityDtoRequest);
-        return "Updated priority with id - " +priorityId;
+    public ResponseEntity<?> updatePriority(@RequestBody PriorityDtoRequest priorityDtoRequest){
+        return new ResponseEntity<>(priorityService.updatePriority(priorityDtoRequest), HttpStatus.OK) ;
+
     }
 
     @Operation(summary = "Delete priority from database")

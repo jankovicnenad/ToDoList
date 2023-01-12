@@ -17,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Objects;
 
 @RestController
 @RequestMapping("/api")
@@ -38,7 +39,7 @@ public class TaskRestController {
     @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Inserted tasks", content = {@Content(mediaType = "application/json")})})
     @PostMapping(value = "/tasks", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
     public ResponseEntity<?> saveTask(@RequestPart(value = "file", required = false) MultipartFile multipartFile, @RequestPart TaskDtoRequest taskDtoRequest) throws Exception {
-        if (multipartFile.isEmpty()) {
+        if (Objects.isNull(multipartFile)) {
             return new ResponseEntity<>(taskService.save(taskDtoRequest), HttpStatus.OK);
         } else if (!multipartFile.getOriginalFilename().endsWith(".jpg") && !multipartFile.getOriginalFilename().endsWith(".png")) {
             throw new BadRequestException("Invalid image type!");
@@ -59,7 +60,7 @@ public class TaskRestController {
     @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Updated task in database", content = {@Content(mediaType = "application/json")})})
     @PutMapping(value = "/tasks", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
     public ResponseEntity<?> updateTask(@RequestPart(value = "file", required = false) MultipartFile multipartFile, @RequestPart TaskDtoRequest taskDtoRequest) throws IOException {
-        if (multipartFile.isEmpty()) {
+        if (Objects.isNull(multipartFile)) {
             return new ResponseEntity<>(taskService.save(taskDtoRequest), HttpStatus.OK);
         } else if (!multipartFile.getOriginalFilename().endsWith(".jpg") && !multipartFile.getOriginalFilename().endsWith(".png")) {
             throw new BadRequestException("Invalid image type!");
