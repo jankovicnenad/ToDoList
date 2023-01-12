@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 public class TaskDtoResponse {
 
     private Long id;
-    private String name;
+    private String task_name;
     @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate start_date;
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
@@ -57,12 +57,12 @@ public class TaskDtoResponse {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getTask_name() {
+        return task_name;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setTask_name(String task_name) {
+        this.task_name = task_name;
     }
 
     public LocalDate getStart_date() {

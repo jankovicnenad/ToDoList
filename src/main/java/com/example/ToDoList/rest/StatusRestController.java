@@ -7,8 +7,12 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.function.EntityResponse;
 
+import java.util.Collections;
 import java.util.List;
 
 @RestController
@@ -50,21 +54,21 @@ public class StatusRestController {
     @Operation(summary = "Update status in database")
     @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Fetched status with specific ID")})
     @PutMapping("/status")
-    public String updateStatus(@RequestBody StatusDtoRequest statusDto) {
+    public ResponseEntity<?> updateStatus(@RequestBody StatusDtoRequest statusDto) {
         Long statusId = statusDto.getId();
-        statusService.updateStatus(statusId, statusDto);
-        return "Update status with id - " + statusId;
+        return new ResponseEntity<>(statusService.updateStatus(statusDto), HttpStatus.OK);
     }
 
     @Operation(summary = "Delete status from database")
     @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Deleted status from database")})
     @DeleteMapping("/status/{statusId}")
-    public String deleteStatus(@PathVariable Long statusId) {
+    public ResponseEntity<?> deleteStatus(@PathVariable Long statusId) {
 
         StatusDtoResponse statusDtoResponse = statusService.findById(statusId);
-        if (statusDtoResponse == null)
+        if (statusDtoResponse == null){
             throw new NotFoundException("Status id not found - " + statusId);
+        }
         statusService.delete(statusId);
-        return "Deleted status with id - " + statusId;
+        return new ResponseEntity<>(Collections.singletonMap("message", "deleted status with id: " + statusId), HttpStatus.OK );
     }
 }

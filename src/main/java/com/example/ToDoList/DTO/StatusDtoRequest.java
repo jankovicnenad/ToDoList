@@ -3,7 +3,7 @@ package com.example.ToDoList.DTO;
 public class StatusDtoRequest {
 
     private Long id;
-    private String status;
+    private String status_name;
 
     public Long getId() {
         return id;
@@ -13,11 +13,11 @@ public class StatusDtoRequest {
         this.id = id;
     }
 
-    public String getStatus() {
-        return status;
+    public String getStatus_name() {
+        return status_name;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public void setStatus_name(String status_name) {
+        this.status_name = status_name;
     }
 }

@@ -134,8 +134,8 @@ public class TaskServiceImpl implements TaskService {
         Priority priority = priorityRepository.findById(taskDtoRequest.getPriority_id()).orElseThrow(() -> new NotFoundException("Task id is not found - " + id));
         task1.setStatus(status);
         task1.setPriority(priority);
-        if (status.getStatus() != null) {
-            if (status.getStatus().equals("DONE")) {
+        if (status.getStatus_name() != null) {
+            if (status.getStatus_name().equals("DONE")) {
                 task1.setEndDate(LocalDateTime.now());
             }
         }

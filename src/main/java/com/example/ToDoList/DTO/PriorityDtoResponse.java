@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 public class PriorityDtoResponse {
 
     private Long id;
-    private String priority;
+    private String priority_name;
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime createdDate;
@@ -33,12 +33,12 @@ public class PriorityDtoResponse {
         this.modifiedDate = modifiedDate;
     }
 
-    public String getPriority() {
-        return priority;
+    public String getPriority_name() {
+        return priority_name;
     }
 
-    public void setPriority(String priority) {
-        this.priority = priority;
+    public void setPriority_name(String priority_name) {
+        this.priority_name = priority_name;
     }
 
     public Long getId() {

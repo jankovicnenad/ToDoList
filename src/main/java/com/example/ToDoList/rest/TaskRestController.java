@@ -16,8 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 @RestController
 @RequestMapping("/api")
@@ -83,11 +82,11 @@ public class TaskRestController {
     @Operation(summary = "Delete task in database")
     @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Deleted task from database")})
     @DeleteMapping("/tasks/{taskId}")
-    public String deleteTasks(@PathVariable Long taskId) {
+    public ResponseEntity<?> deleteTasks(@PathVariable Long taskId) {
         TaskDtoResponse taskDtoResponse = taskService.findById(taskId);
         if (taskDtoResponse == null) throw new NotFoundException("Task id not found - " + taskId);
         taskService.deleteById(taskId);
-        return "Deleted task with id - " + taskId;
+        return new ResponseEntity<>(Collections.singletonMap("message", "deleted task with id: " + taskId), HttpStatus.OK);
     }
 
 
