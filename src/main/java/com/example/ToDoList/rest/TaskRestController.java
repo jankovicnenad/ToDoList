@@ -65,7 +65,7 @@ public class TaskRestController {
             throw new BadRequestException("Invalid image type!");
         }
         taskService.updateTask(taskDtoRequest, multipartFile);
-        return new ResponseEntity<>(taskService.saveTask(taskDtoRequest, multipartFile), HttpStatus.OK);
+        return new ResponseEntity<>(taskService.updateTask(taskDtoRequest, multipartFile), HttpStatus.OK);
     }
 
     @Operation(summary = "Get task from database with specific ID")
