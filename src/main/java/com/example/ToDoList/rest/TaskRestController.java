@@ -60,12 +60,12 @@ public class TaskRestController {
     @PutMapping(value = "/tasks", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
     public ResponseEntity<?> updateTask(@RequestPart(value = "file", required = false) MultipartFile multipartFile, @RequestPart TaskDtoRequest taskDtoRequest) throws IOException {
         if (Objects.isNull(multipartFile) || multipartFile.isEmpty()) {
-            return new ResponseEntity<>(taskService.save(taskDtoRequest), HttpStatus.OK);
+            return new ResponseEntity<>(taskService.updateTask(taskDtoRequest,multipartFile), HttpStatus.OK);
         } else if (!multipartFile.getOriginalFilename().endsWith(".jpg") && !multipartFile.getOriginalFilename().endsWith(".png")) {
             throw new BadRequestException("Invalid image type!");
         }
         taskService.updateTask(taskDtoRequest, multipartFile);
-        return new ResponseEntity<>(taskService.saveTask(taskDtoRequest, multipartFile), HttpStatus.OK);
+        return new ResponseEntity<>(taskService.updateTask(taskDtoRequest, multipartFile), HttpStatus.OK);
     }
 
     @Operation(summary = "Get task from database with specific ID")
