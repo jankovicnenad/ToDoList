@@ -37,7 +37,9 @@ public class ImageServiceImpl implements ImageService {
 
     private final MapperDto mapperDto;
 
-    private final String storageBaseUrl = "storage.cloud.google.com/tasksimage.appspot.com/";
+    private final String storageBaseUrl = "https://firebasestorage.googleapis.com/v0/b/tasksimage.appspot.com/o/";
+
+    private final String sufix = "?alt=media";
 
     public ImageServiceImpl(ImageRepository imgRepo, Environment environment, MapperDto mapperDto) {
         imageRepository = imgRepo;
@@ -89,7 +91,7 @@ public class ImageServiceImpl implements ImageService {
         Blob blob = storage.create(blobInfo, Files.readAllBytes(filePath));
         file.delete();
         log.info("File " + filePath + " uploaded to bucket " + bucketName + " as " + objectName);
-        return storageBaseUrl + objectName;
+        return storageBaseUrl + objectName + sufix;
     }
 
     private InputStream createFirebaseCredential() throws JsonProcessingException {
