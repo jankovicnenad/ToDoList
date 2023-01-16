@@ -181,6 +181,12 @@ public class MapperDtoImpl implements MapperDto {
         taskDtoResponse.setModifiedDate(comment.getTask().getModifiedDate());
         taskDtoResponse.setCreatedDate(comment.getTask().getCreatedDate());
 
+        if(comment.getTask().getImages().isEmpty()){
+            taskDtoResponse.setImageUrl("No Image");
+        }
+        else
+            taskDtoResponse.setImageUrl(comment.getTask().getImages().stream().skip(comment.getTask().getImages().size() - 1).findFirst().get().getUrl());
+
         StatusDtoResponse statusDtoResponse = new StatusDtoResponse();
 
         statusDtoResponse.setId(comment.getTask().getStatus().getId());
