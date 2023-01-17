@@ -18,6 +18,12 @@ public class Comment extends Auditable {
     public Comment() {
     }
 
+    public Comment(Long id, String comment_name, Task task) {
+        this.id = id;
+        this.comment_name = comment_name;
+        this.task = task;
+    }
+
     public Comment(String comment_name) {
         this.comment_name = comment_name;
     }
