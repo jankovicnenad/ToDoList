@@ -8,6 +8,18 @@ public class CommentDtoRequest {
 
     private Long task_id;
 
+    public CommentDtoRequest() {
+    }
+
+    public CommentDtoRequest(Long id, String comment_name, Long task_id) {
+        this.id = id;
+        this.comment_name = comment_name;
+        this.task_id = task_id;
+    }
+
+    public CommentDtoRequest(Long id) {
+        this.id = id;
+    }
 
     public Long getId() {
         return id;

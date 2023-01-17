@@ -17,11 +17,6 @@ public class ImageRestController {
     public ImageRestController(ImageService imageService, TaskService taskService){this.imageService = imageService;
         this.taskService = taskService;
     }
-
-//    @GetMapping("/image")
-//    public List<ImageDTO> getImages(){
-//        return imageService.getAllImage();
-//    }
 }
 
 
